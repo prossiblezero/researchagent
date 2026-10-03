@@ -1,0 +1,1928 @@
+[
+  {
+    "id": "scifact-1000",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Pyridostatin stabilizes the G - quadruplex in the telomeric region.",
+    "source_id": "1000",
+    "gold_context_ids": [
+      "scifact:16472469"
+    ],
+    "gold_evidence": {
+      "scifact:16472469": [
+        4
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "16472469": [
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:16472469"
+    ]
+  },
+  {
+    "id": "scifact-1021",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Rapid up-regulation and higher basal expression of interferon-induced genes reduce survival of granule cell neurons that are infected by West Nile virus.",
+    "source_id": "1021",
+    "gold_context_ids": [
+      "scifact:9433958"
+    ],
+    "gold_evidence": {
+      "scifact:9433958": [
+        3
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "9433958": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:9433958"
+    ]
+  },
+  {
+    "id": "scifact-1049",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Ribosomopathies have a low degree of cell and tissue specific pathology.",
+    "source_id": "1049",
+    "gold_context_ids": [
+      "scifact:12486491"
+    ],
+    "gold_evidence": {
+      "scifact:12486491": [
+        5,
+        6
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "12486491": [
+        {
+          "sentences": [
+            5,
+            6
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:12486491"
+    ]
+  },
+  {
+    "id": "scifact-1056",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Rotator cuff exercises are more effective than general exercise therapy in reducing pain and improving function of the shoulder.",
+    "source_id": "1056",
+    "gold_context_ids": [
+      "scifact:4200695"
+    ],
+    "gold_evidence": {
+      "scifact:4200695": [
+        11
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "4200695": [
+        {
+          "sentences": [
+            11
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:4200695"
+    ]
+  },
+  {
+    "id": "scifact-1088",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Silencing of Bcl2 is important for the maintenance and progression of tumors.",
+    "source_id": "1088",
+    "gold_context_ids": [
+      "scifact:37549932"
+    ],
+    "gold_evidence": {
+      "scifact:37549932": [
+        3
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "37549932": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:37549932"
+    ]
+  },
+  {
+    "id": "scifact-1099",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Statins decrease blood cholesterol.",
+    "source_id": "1099",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:7662206"
+    ]
+  },
+  {
+    "id": "scifact-1127",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Systemic lupus erythematosus is a risk factor for cardiovascular disease.",
+    "source_id": "1127",
+    "gold_context_ids": [
+      "scifact:27466734"
+    ],
+    "gold_evidence": {
+      "scifact:27466734": [
+        7
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "27466734": [
+        {
+          "sentences": [
+            7
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:27466734"
+    ]
+  },
+  {
+    "id": "scifact-1180",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The PRR MDA5 is a sensor of RNA virus infection.",
+    "source_id": "1180",
+    "gold_context_ids": [
+      "scifact:31272411"
+    ],
+    "gold_evidence": {
+      "scifact:31272411": [
+        0
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "31272411": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:31272411"
+    ]
+  },
+  {
+    "id": "scifact-1187",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The YAP1 and TEAD complex tanslocates into the nucleus where it interacts with transcription factors and DNA-binding proteins that modulate target gene transcription.",
+    "source_id": "1187",
+    "gold_context_ids": [
+      "scifact:52873726"
+    ],
+    "gold_evidence": {
+      "scifact:52873726": [
+        3
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "52873726": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:52873726"
+    ]
+  },
+  {
+    "id": "scifact-1199",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The benefits of colchicine were achieved with effective widespread use of secondary prevention strategies such as high-dose statins.",
+    "source_id": "1199",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:16760369"
+    ]
+  },
+  {
+    "id": "scifact-1200",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The binding orientation of the ML-SA1 activator at hTRPML2 is different from the binding orientation of the ML-SA1 activator at hTRPML1.",
+    "source_id": "1200",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:3441524"
+    ]
+  },
+  {
+    "id": "scifact-1226",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The loss of the TET protein functions may have dire biological consequences, such as myeloid cancers.",
+    "source_id": "1226",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:13777138"
+    ]
+  },
+  {
+    "id": "scifact-1232",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The minor G allele of FOXO3 is related to more severe symptoms of Crohn's Disease.",
+    "source_id": "1232",
+    "gold_context_ids": [
+      "scifact:13905670"
+    ],
+    "gold_evidence": {
+      "scifact:13905670": [
+        3
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "13905670": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:13905670"
+    ]
+  },
+  {
+    "id": "scifact-1245",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The one-child policy has been successful in lowering population growth.",
+    "source_id": "1245",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:7662395",
+      "scifact:7662395"
+    ]
+  },
+  {
+    "id": "scifact-1265",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "The risk of breast cancer among parous women decreases with placental weight of pregnancies.",
+    "source_id": "1265",
+    "gold_context_ids": [
+      "scifact:37480103"
+    ],
+    "gold_evidence": {
+      "scifact:37480103": [
+        10,
+        12
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "37480103": [
+        {
+          "sentences": [
+            10
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            12
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:37480103"
+    ]
+  },
+  {
+    "id": "scifact-1272",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The single flash-evoked ERG b-wave is generated by activity of ON-bipolar cells.",
+    "source_id": "1272",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:17081238"
+    ]
+  },
+  {
+    "id": "scifact-1274",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "The tip of the inner tube of the toxic type VI secretion system (T6SS) antibacterial effector in Escherichia coli (E. coli) carries toxic effector proteins.",
+    "source_id": "1274",
+    "gold_context_ids": [
+      "scifact:4406819"
+    ],
+    "gold_evidence": {
+      "scifact:4406819": [
+        4,
+        5,
+        7
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "4406819": [
+        {
+          "sentences": [
+            4,
+            5
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            7
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:12428814",
+      "scifact:27731651",
+      "scifact:4406819"
+    ]
+  },
+  {
+    "id": "scifact-1311",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Trans-acting factors, such as lncRNAs, influence mRNA translation.",
+    "source_id": "1311",
+    "gold_context_ids": [
+      "scifact:13763195"
+    ],
+    "gold_evidence": {
+      "scifact:13763195": [
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "13763195": [
+        {
+          "sentences": [
+            1
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            3
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            5
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            6
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:13763195"
+    ]
+  },
+  {
+    "id": "scifact-1315",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Transcription rates in S. cerevisiae range between 7 and 12 kb/min.",
+    "source_id": "1315",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:13072112",
+      "scifact:16237005"
+    ]
+  },
+  {
+    "id": "scifact-1319",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Transplanted human glial cells can differentiate within the host animal.",
+    "source_id": "1319",
+    "gold_context_ids": [
+      "scifact:16284655"
+    ],
+    "gold_evidence": {
+      "scifact:16284655": [
+        2
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "16284655": [
+        {
+          "sentences": [
+            2
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:16284655"
+    ]
+  },
+  {
+    "id": "scifact-163",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Bariatric surgery has a positive impact on mental health.",
+    "source_id": "163",
+    "gold_context_ids": [
+      "scifact:18872233"
+    ],
+    "gold_evidence": {
+      "scifact:18872233": [
+        9,
+        12
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "18872233": [
+        {
+          "sentences": [
+            9
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            12
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:18872233"
+    ]
+  },
+  {
+    "id": "scifact-172",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Basophils promote disease development in patients with systemic lupus erythematosus (SLE).",
+    "source_id": "172",
+    "gold_context_ids": [
+      "scifact:12670680"
+    ],
+    "gold_evidence": {
+      "scifact:12670680": [
+        1,
+        2,
+        4
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "12670680": [
+        {
+          "sentences": [
+            1
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            2
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:12670680"
+    ]
+  },
+  {
+    "id": "scifact-227",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Cancers that initially benefit from epidermal growth factor receptor targeted therapies later become refractory through several mechanisms.",
+    "source_id": "227",
+    "gold_context_ids": [
+      "scifact:26973393"
+    ],
+    "gold_evidence": {
+      "scifact:26973393": [
+        0
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "26973393": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:26973393"
+    ]
+  },
+  {
+    "id": "scifact-230",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Carriers of the alcohol aldehyde dehydrogenase deficiency mutation drink less that non-carries.",
+    "source_id": "230",
+    "gold_context_ids": [
+      "scifact:3067015"
+    ],
+    "gold_evidence": {
+      "scifact:3067015": [
+        4
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "3067015": [
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:3067015"
+    ]
+  },
+  {
+    "id": "scifact-233",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Cell autonomous sex determination in somatic cells does not occur in Galliformes.",
+    "source_id": "233",
+    "gold_context_ids": [
+      "scifact:4388470"
+    ],
+    "gold_evidence": {
+      "scifact:4388470": [
+        3,
+        6,
+        7
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "4388470": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            6
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            7
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:4388470"
+    ]
+  },
+  {
+    "id": "scifact-249",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Chenodeosycholic acid treatment reduces whole-body energy expenditure.",
+    "source_id": "249",
+    "gold_context_ids": [
+      "scifact:1568684"
+    ],
+    "gold_evidence": {
+      "scifact:1568684": [
+        1,
+        3,
+        4
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "1568684": [
+        {
+          "sentences": [
+            1,
+            3
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            4
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:1568684"
+    ]
+  },
+  {
+    "id": "scifact-26",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "A 100g dose of chloroquine chemoprophylactic regimen results in retinal toxicity after 1 year of weekly intake.",
+    "source_id": "26",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:32390525"
+    ]
+  },
+  {
+    "id": "scifact-261",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Chronic aerobic exercise alters endothelial function, improving vasodilating mechanisms mediated by NO.",
+    "source_id": "261",
+    "gold_context_ids": [
+      "scifact:10697096",
+      "scifact:1122279"
+    ],
+    "gold_evidence": {
+      "scifact:1122279": [
+        5,
+        10
+      ],
+      "scifact:10697096": [
+        12
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "1122279": [
+        {
+          "sentences": [
+            5,
+            10
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "10697096": [
+        {
+          "sentences": [
+            12
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:1122279",
+      "scifact:10697096"
+    ]
+  },
+  {
+    "id": "scifact-290",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Cost effectiveness evaluations based on cRCT data accurately reflect prices for patients in actual clinical practice.",
+    "source_id": "290",
+    "gold_context_ids": [
+      "scifact:15048300"
+    ],
+    "gold_evidence": {
+      "scifact:15048300": [
+        10,
+        11,
+        12
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "15048300": [
+        {
+          "sentences": [
+            10,
+            11
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            12
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:15048300"
+    ]
+  },
+  {
+    "id": "scifact-295",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Crosstalk between dendritic cells (DCs) and innate lymphoid cells (ILCs) is important in the regulation of intestinal homeostasis.",
+    "source_id": "295",
+    "gold_context_ids": [
+      "scifact:20310709"
+    ],
+    "gold_evidence": {
+      "scifact:20310709": [
+        2,
+        4,
+        5,
+        6
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "20310709": [
+        {
+          "sentences": [
+            2,
+            4
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            5,
+            6
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:20310709"
+    ]
+  },
+  {
+    "id": "scifact-301",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Cytosolic proteins bind to iron-responsive elements on mRNAs coding for TFRC1.",
+    "source_id": "301",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:3553087"
+    ]
+  },
+  {
+    "id": "scifact-342",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Diabetic patients with acute coronary syndrome experience decreased short-term and long-term risk for bleeding events.",
+    "source_id": "342",
+    "gold_context_ids": [
+      "scifact:5884524"
+    ],
+    "gold_evidence": {
+      "scifact:5884524": [
+        5
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "5884524": [
+        {
+          "sentences": [
+            5
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:7873737",
+      "scifact:5884524"
+    ]
+  },
+  {
+    "id": "scifact-345",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Differentiated E2f-1, -2, -3 TKO cells in the intestine do not exhibit apoptosis.",
+    "source_id": "345",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:4394817"
+    ]
+  },
+  {
+    "id": "scifact-388",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Ethanol stress decreases the expression of IBP in bacteria.",
+    "source_id": "388",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:1148122"
+    ]
+  },
+  {
+    "id": "scifact-39",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "A diminished ovarian reserve does not solely indicate infertility in an a priori non-infertile population.",
+    "source_id": "39",
+    "gold_context_ids": [
+      "scifact:13497630"
+    ],
+    "gold_evidence": {
+      "scifact:13497630": [
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "13497630": [
+        {
+          "sentences": [
+            7
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            8
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            9
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            10
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            11
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:13497630"
+    ]
+  },
+  {
+    "id": "scifact-392",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Ethanol stress lowers the expression of PSP in bacteria.",
+    "source_id": "392",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:1148122"
+    ]
+  },
+  {
+    "id": "scifact-4",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "1-1% of colorectal cancer patients are diagnosed with regional or distant metastases.",
+    "source_id": "4",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:22942787"
+    ]
+  },
+  {
+    "id": "scifact-411",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Febrile seizures reduce the threshold for development of epilepsy.",
+    "source_id": "411",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:14924526"
+    ]
+  },
+  {
+    "id": "scifact-417",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Female carriers of the Apolipoprotein E4 (APOE4) allele have shorter lifetime exposure to estrogen due to a decreased reproductive period.",
+    "source_id": "417",
+    "gold_context_ids": [
+      "scifact:6309659"
+    ],
+    "gold_evidence": {
+      "scifact:6309659": [
+        12
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "6309659": [
+        {
+          "sentences": [
+            12
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:6309659"
+    ]
+  },
+  {
+    "id": "scifact-445",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "GATA3 regulates self-renewal capacity in bone marrow hematopoietic stem cells.",
+    "source_id": "445",
+    "gold_context_ids": [
+      "scifact:10165258"
+    ],
+    "gold_evidence": {
+      "scifact:10165258": [
+        4,
+        6
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "10165258": [
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            6
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:10165258"
+    ]
+  },
+  {
+    "id": "scifact-491",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "HNF4A mutations can cause diabetes in mutant carriers by the age of 14 years",
+    "source_id": "491",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:56893404"
+    ]
+  },
+  {
+    "id": "scifact-499",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "HbA1c consistently overestimates glycemic control in black individuals with Sickle cell trait (SCT).",
+    "source_id": "499",
+    "gold_context_ids": [
+      "scifact:26064662"
+    ],
+    "gold_evidence": {
+      "scifact:26064662": [
+        10,
+        11,
+        13,
+        14,
+        15
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "26064662": [
+        {
+          "sentences": [
+            10
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            11
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            13
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            14
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            15
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:26064662"
+    ]
+  },
+  {
+    "id": "scifact-50",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "AIRE is expressed in some skin tumors.",
+    "source_id": "50",
+    "gold_context_ids": [
+      "scifact:12580014"
+    ],
+    "gold_evidence": {
+      "scifact:12580014": [
+        1
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "12580014": [
+        {
+          "sentences": [
+            1
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:12580014"
+    ]
+  },
+  {
+    "id": "scifact-502",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Healthcare delivery efficiency in crowded delivery centers is impaired by improving structural, logistical, and interpersonal elements.",
+    "source_id": "502",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:13071728"
+    ]
+  },
+  {
+    "id": "scifact-516",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "High levels of CRP reduces the risk of exacerbations in chronic obstructive pulmonary disease (COPD).",
+    "source_id": "516",
+    "gold_context_ids": [
+      "scifact:29564505"
+    ],
+    "gold_evidence": {
+      "scifact:29564505": [
+        8,
+        13
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "29564505": [
+        {
+          "sentences": [
+            8
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            13
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:29564505"
+    ]
+  },
+  {
+    "id": "scifact-529",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Human embryonic stem cells give rise to cell types from all three embryonic germ layers.",
+    "source_id": "529",
+    "gold_context_ids": [
+      "scifact:10546779",
+      "scifact:25413327",
+      "scifact:36651210"
+    ],
+    "gold_evidence": {
+      "scifact:10546779": [
+        2
+      ],
+      "scifact:25413327": [
+        0,
+        5
+      ],
+      "scifact:36651210": [
+        0
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "10546779": [
+        {
+          "sentences": [
+            2
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "25413327": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            5
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "36651210": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:10546779",
+      "scifact:25413327",
+      "scifact:36651210"
+    ]
+  },
+  {
+    "id": "scifact-536",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Hypocretin neurones induce panicprone state in rats.",
+    "source_id": "536",
+    "gold_context_ids": [
+      "scifact:16056514"
+    ],
+    "gold_evidence": {
+      "scifact:16056514": [
+        4
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "16056514": [
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:16056514"
+    ]
+  },
+  {
+    "id": "scifact-626",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Induction of urokinase receptor signaling in podocytes causes foot process effacement and proteinuria.",
+    "source_id": "626",
+    "gold_context_ids": [
+      "scifact:16355392"
+    ],
+    "gold_evidence": {
+      "scifact:16355392": [
+        2
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "16355392": [
+        {
+          "sentences": [
+            2
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:16355392"
+    ]
+  },
+  {
+    "id": "scifact-632",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Inhibiting focal adhesion formation enables cells to convert mechanical strain into eventual scarring.",
+    "source_id": "632",
+    "gold_context_ids": [
+      "scifact:5172048"
+    ],
+    "gold_evidence": {
+      "scifact:5172048": [
+        3,
+        5,
+        6,
+        7
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "5172048": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            5
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            6
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            7
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:5172048"
+    ]
+  },
+  {
+    "id": "scifact-655",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Intra-cerebroventricular infusion of amyloid-β oligomers reduces expression of fibronectin type-III domain-containing protein 5 mRNA in mice hippocampi.",
+    "source_id": "655",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:57574395"
+    ]
+  },
+  {
+    "id": "scifact-803",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Monoclonal antibody targeting of N-cadherin inhibits castration resistance.",
+    "source_id": "803",
+    "gold_context_ids": [
+      "scifact:22180793"
+    ],
+    "gold_evidence": {
+      "scifact:22180793": [
+        5
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "22180793": [
+        {
+          "sentences": [
+            5
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:22180793"
+    ]
+  },
+  {
+    "id": "scifact-837",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "NR5A2 is important in development of endometrial tissues.",
+    "source_id": "837",
+    "gold_context_ids": [
+      "scifact:15928989"
+    ],
+    "gold_evidence": {
+      "scifact:15928989": [
+        7,
+        8
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "15928989": [
+        {
+          "sentences": [
+            7
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            8
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:15928989"
+    ]
+  },
+  {
+    "id": "scifact-844",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Neutrophil extracellular trap (NET) antigens may contain the targeted autoantigens PR3 and MPO.",
+    "source_id": "844",
+    "gold_context_ids": [
+      "scifact:17741440"
+    ],
+    "gold_evidence": {
+      "scifact:17741440": [
+        1
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "17741440": [
+        {
+          "sentences": [
+            1
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:17741440"
+    ]
+  },
+  {
+    "id": "scifact-857",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Nonsteroidal antinflammatory drugs show potential anticancer indications.",
+    "source_id": "857",
+    "gold_context_ids": [
+      "scifact:43334921"
+    ],
+    "gold_evidence": {
+      "scifact:43334921": [
+        6,
+        8,
+        10
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "43334921": [
+        {
+          "sentences": [
+            6
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            8
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            10
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:43334921"
+    ]
+  },
+  {
+    "id": "scifact-945",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Physical activity level has no association with the difference in maximal oxygen consumption between black and white youth.",
+    "source_id": "945",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:8428935",
+      "scifact:26112696",
+      "scifact:4463588",
+      "scifact:13083189"
+    ]
+  },
+  {
+    "id": "scifact-955",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Pioneer factor OCT3/4 interacts with major chromatin remodeling factors.",
+    "source_id": "955",
+    "gold_context_ids": [
+      "scifact:2078658",
+      "scifact:30507607"
+    ],
+    "gold_evidence": {
+      "scifact:2078658": [
+        3
+      ],
+      "scifact:30507607": [
+        3
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "2078658": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "30507607": [
+        {
+          "sentences": [
+            3
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:2078658",
+      "scifact:30507607"
+    ]
+  },
+  {
+    "id": "scifact-971",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Primary cervical cancer screening with HPV detection has higher longitudinal sensitivity than conventional cytology to detect cervical intraepithelial neoplasia grade 2.",
+    "source_id": "971",
+    "gold_context_ids": [
+      "scifact:27873158",
+      "scifact:28617573",
+      "scifact:46695481",
+      "scifact:9764256"
+    ],
+    "gold_evidence": {
+      "scifact:46695481": [
+        0,
+        9
+      ],
+      "scifact:27873158": [
+        0,
+        15,
+        21
+      ],
+      "scifact:28617573": [
+        8
+      ],
+      "scifact:9764256": [
+        13
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "46695481": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            9
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "27873158": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            15
+          ],
+          "label": "SUPPORT"
+        },
+        {
+          "sentences": [
+            21
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "28617573": [
+        {
+          "sentences": [
+            8
+          ],
+          "label": "SUPPORT"
+        }
+      ],
+      "9764256": [
+        {
+          "sentences": [
+            13
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:46695481",
+      "scifact:27873158",
+      "scifact:28617573",
+      "scifact:9764256"
+    ]
+  },
+  {
+    "id": "scifact-972",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Primary cervical cancer screening with HPV detection has lower longitudinal sensitivity than conventional cytology to detect cervical intraepithelial neoplasia grade 2.",
+    "source_id": "972",
+    "gold_context_ids": [
+      "scifact:27873158",
+      "scifact:28617573",
+      "scifact:46695481",
+      "scifact:9764256"
+    ],
+    "gold_evidence": {
+      "scifact:46695481": [
+        0,
+        9
+      ],
+      "scifact:27873158": [
+        0,
+        15,
+        21
+      ],
+      "scifact:28617573": [
+        8
+      ],
+      "scifact:9764256": [
+        13
+      ]
+    },
+    "label": "CONTRADICT",
+    "rationale_sets": {
+      "46695481": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            9
+          ],
+          "label": "CONTRADICT"
+        }
+      ],
+      "27873158": [
+        {
+          "sentences": [
+            0
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            15
+          ],
+          "label": "CONTRADICT"
+        },
+        {
+          "sentences": [
+            21
+          ],
+          "label": "CONTRADICT"
+        }
+      ],
+      "28617573": [
+        {
+          "sentences": [
+            8
+          ],
+          "label": "CONTRADICT"
+        }
+      ],
+      "9764256": [
+        {
+          "sentences": [
+            13
+          ],
+          "label": "CONTRADICT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:46695481",
+      "scifact:27873158",
+      "scifact:28617573",
+      "scifact:9764256"
+    ]
+  },
+  {
+    "id": "scifact-982",
+    "benchmark": "scifact",
+    "split": "held_out",
+    "query": "Proteins synthesized at the growth cone are ubiquitinated at a higher rate than proteins from the cell body.",
+    "source_id": "982",
+    "gold_context_ids": [
+      "scifact:2988714"
+    ],
+    "gold_evidence": {
+      "scifact:2988714": [
+        4
+      ]
+    },
+    "label": "SUPPORT",
+    "rationale_sets": {
+      "2988714": [
+        {
+          "sentences": [
+            4
+          ],
+          "label": "SUPPORT"
+        }
+      ]
+    },
+    "unanswerable": false,
+    "cited_doc_ids": [
+      "scifact:2988714"
+    ]
+  },
+  {
+    "id": "scifact-989",
+    "benchmark": "scifact",
+    "split": "dev",
+    "query": "Pure neural progenitor cell (NPC) populations can only be obtained from cell cultures that undergo passaging, filtration, or other isolation and cell sorting methods.",
+    "source_id": "989",
+    "gold_context_ids": [],
+    "gold_evidence": {},
+    "label": "NEI",
+    "rationale_sets": {},
+    "unanswerable": true,
+    "cited_doc_ids": [
+      "scifact:9988425"
+    ]
+  }
+]

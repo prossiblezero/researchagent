@@ -1,0 +1,28 @@
+{
+  "schema": "locomo-agent-subset/v1",
+  "official_url": "https://github.com/snap-research/locomo",
+  "revision": "3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376",
+  "source_url": "https://github.com/snap-research/locomo/blob/3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376/data/locomo10.json",
+  "raw_sha256": "79fa87e90f04081343b8c8debecb80a9a6842b76a7aa537dc9fdf651ea698ff4",
+  "license": "CC-BY-NC-4.0",
+  "license_source": "https://github.com/snap-research/locomo/blob/3eb6f2c585f5e1699204e3c3bdf7adc5c28cb376/LICENSE.txt",
+  "splits": {
+    "development": [
+      "conv-26",
+      "conv-30"
+    ],
+    "holdout": [
+      "conv-41",
+      "conv-42"
+    ]
+  },
+  "task_count": 80,
+  "questions_per_conversation": 20,
+  "selection": "First four official conversations, split by conversation before experiments; categories 1-4 round robin, each hash-ranked by locomo-agent-v1:conversation_id:qa_index.",
+  "category_5": "Excluded: upstream A-MEM uses the reference answer as an option, a different evaluation protocol.",
+  "conversation_content": "Complete original conversations, including distractor turns, timestamps and image captions; no reference answers in corpus or prediction tasks.",
+  "labels_boundary": "labels.json is for host scoring. Do not pass it to memory building, retrieval or QA generation; holdout outcomes cannot guide method selection.",
+  "evidence_mapping": "Split semicolon-delimited annotations only; retain unknown IDs and exclude those tasks from evidence-recall means, never from answer-quality scores.",
+  "execution_status": "not_run",
+  "benchmark_claim": "Project subset, not the full LoCoMo or A-MEM published result."
+}

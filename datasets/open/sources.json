@@ -1,0 +1,66 @@
+{
+  "schema": "researchagent-open-source-sources/v1",
+  "retrieved_at": "2026-09-28",
+  "raw_root": "D:/paper/researchagent-benchmarks/raw",
+  "sources": {
+    "qasper": {
+      "official_url": "https://huggingface.co/datasets/allenai/qasper",
+      "license": "CC-BY-4.0",
+      "files": [
+        {
+          "name": "qasper_train.parquet",
+          "split": "train",
+          "sha256": "9af08092ee26c4f700202c1f90d1592b662926f23f3a308a10ff0a53345e37fe"
+        },
+        {
+          "name": "qasper_validation.parquet",
+          "split": "validation",
+          "sha256": "089781b91c337d348dd9e8b57cc8adc100ed2d9cab84a6127402bcccf1559222"
+        }
+      ],
+      "license_source": "https://huggingface.co/datasets/allenai/qasper/blob/main/README.md",
+      "license_checked_at": "2026-09-29"
+    },
+    "scifact": {
+      "official_url": "https://github.com/allenai/scifact",
+      "download_url": "https://scifact.s3-us-west-2.amazonaws.com/release/latest/data.tar.gz",
+      "license": "CC-BY-NC-2.0",
+      "files": [
+        {
+          "name": "scifact_data.tar.gz",
+          "sha256": "11c621288d41ac144d29b13b0f8503b3820b7d6e8b1f6ff24dff335c196d76be"
+        }
+      ],
+      "license_source": "https://huggingface.co/datasets/allenai/scifact/blob/main/README.md",
+      "license_checked_at": "2026-09-29"
+    },
+    "hotpotqa-distractor": {
+      "official_url": "https://hotpotqa.github.io/",
+      "dataset_url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa",
+      "license": "CC-BY-SA-4.0",
+      "files": [
+        {
+          "name": "hotpotqa_distractor_validation.parquet",
+          "split": "validation/distractor",
+          "sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6"
+        }
+      ],
+      "license_source": "https://hotpotqa.github.io/",
+      "license_checked_at": "2026-09-29"
+    },
+    "longmemeval-cleaned": {
+      "official_url": "https://github.com/xiaowu0162/LongMemEval",
+      "dataset_url": "https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned",
+      "license": "MIT",
+      "files": [
+        {
+          "name": "longmemeval_s_cleaned.json",
+          "condition": "S cleaned",
+          "sha256": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442"
+        }
+      ],
+      "license_source": "https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned/blob/main/README.md",
+      "license_checked_at": "2026-09-29"
+    }
+  }
+}

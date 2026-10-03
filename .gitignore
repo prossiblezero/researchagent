@@ -1,0 +1,35 @@
+# Local credentials and Python environments
+.env
+.env.*
+!.env.example
+.venv*/
+venv/
+__pycache__/
+*.py[cod]
+
+# Runtime state stays on disk, outside source control
+/traces/
+/data/
+/experiments/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.db.lock
+*.sqlite.lock
+*.sqlite3.lock
+**/chroma/
+**/chroma.lock
+*.log
+.pytest_cache/
+
+# Historical results stay local. Already tracked history is excluded by
+# scripts/export_source.py, not by these ignore rules alone.
+/evals/archives/
+/evals/reports/
+/evals/*.json
+/evals/*.jsonl
+/evals/*.patch
+*.zip

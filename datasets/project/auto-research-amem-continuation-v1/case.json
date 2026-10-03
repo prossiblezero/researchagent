@@ -1,0 +1,76 @@
+{
+  "schema": "auto-research-amem-continuation/v1",
+  "origin": "Project research goal with pinned official A-MEM robust implementation and frozen LoCoMo development subset",
+  "campaign": {
+    "id": "amem-locomo-development-continuation-v1",
+    "provenance": "Official LoCoMo complete conversations conv-26/conv-30; 40 original category 1-4 questions; development only; held-out conv-41/conv-42 excluded.",
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-tasks.json",
+        "destination": "data/locomo/tasks.json",
+        "sha256": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-corpus.json",
+        "destination": "data/locomo/corpus.json",
+        "sha256": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261001/cache/conv-26.json",
+        "destination": "results/baseline-state/conv-26.json",
+        "sha256": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261001/cache/conv-26.slot0.npy",
+        "destination": "results/baseline-state/conv-26.slot0.npy",
+        "sha256": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-continuation-v1/cache-condition.json",
+        "destination": "results/baseline-condition.json",
+        "sha256": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b"
+      }
+    ],
+    "labels_sha256": "11b837faff579a307ff1667febba4b3f4a081291ecc5ab7f0110fd24f777f7b0",
+    "assets_sha256": "e6bb7c433bb337983342c641f99d16500e739d5d7e860d8802f3e2fc4a0dfd26",
+    "goal": "这是一个明确的新研究阶段；旧运行已终态，不重启旧任务。先阅读项目CONTINUATION.md，它记录已修复的传输问题与唯一许可的人工审核缓存导入。完整基线脚本已冻结，优先保存方案并用run_experiments继续完整baseline，而不是重新编写或截断提示词。conv-26完整419条记忆已绑定条件；conv-30的369条需要完整构建，40题预测须全部本次生成。新预算独立记录，旧记忆构建成本另列。至少一次聚焦的原文调研核对方法依据即可，利用资料库原文与固定upstream，避免重复广泛检索。然后执行原目标：\n完成一个真实的 Agent 记忆研究案例。先在资料库阅读已导入的 A-MEM 原论文，结合项目 upstream/ 固定官方复现源码核对完整方法，保存有原文依据的 baseline 方案，再按需调用 Codex 实现宿主 stdio 适配。先完整运行 development 的两个 conversation（全部 turns）和40道原题，不得只跑前8 turns或只验证接口。官方robust版本包含记忆分析、MiniLM向量检索、条件式记忆演化、邻居更新、定期consolidate、查询生成与短答案生成；保留这些环节和官方prompt，不改成手写词法记忆。上游入口导入时的联网下载/整套评分副作用可以隔离，算法类与方法不能简化。读 PROTOCOL.md 获取本地权重、运行环境、宿主评分及输出协议。标准答案仅在宿主，代码不得读取或另行下载原始带QA标签的数据。baseline首先独立完整测量；模型调用可能需要数小时，要给完整构建充分预算并按turn保存可恢复状态，不以等待很久判断失败。得到baseline实测和宿主逐题反馈后，先 assess_results，再针对实际错误结合原文提出一个清晰的待验证改进与对应消融，保存新方案，由Codex实现并完整测量candidate和ablation。保留官方baseline源码、数据和评分器，不能改基线来获得增益。实验按seed=[13]记录；这一轮是方法开发，holdout尚未提供，不能宣称终验或SOTA。比较answer_f1、exact_match、evidence_recall_at_5/10及宿主模型请求/token、总耗时，报告失败和退化；若未改善，依据结果继续补充调研或修订一轮。最后给出代码、方法版本、模型条件、可追溯原文与可复验报告；未达成目标必须如实reported/blocked，不把脚本完成当科研成功。",
+    "requires_method_iteration": true,
+    "requires_result_assessment": true,
+    "requires_multi_seed": false,
+    "seeds": [
+      13
+    ],
+    "audit_dataset": "locomo",
+    "requires_independent_audit": true,
+    "budget": {
+      "decisions": 100,
+      "research_calls": 6,
+      "coding_calls": 8,
+      "coding_seconds": 7200,
+      "coding_tokens": 4000000,
+      "experiment_seconds": 172800,
+      "preparations": 4,
+      "download_mb": 512,
+      "experiment_model_calls": 24000,
+      "experiment_model_seconds": 150000
+    },
+    "wall_seconds": 172800,
+    "targets": [],
+    "protocol_sha256": "2a691d7b2e6c1d2300fb709f23b46e87bd57029be7eb08c941412c46cffc88f9",
+    "frozen_sources": {
+      "upstream": "directory:95b225660243a47f06c76cd8916c28f2edc6d235857c3b32eeb64a30d49f54a2",
+      "run_baseline.py": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+      "CONTINUATION.md": "24310bd84016adee5d27f283e6854c2014b4bff678c1d939e38ffc396dd5253e",
+      "results/baseline-state/conv-26.json": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f",
+      "results/baseline-state/conv-26.slot0.npy": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39",
+      "results/baseline-condition.json": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b"
+    },
+    "cache_migration": {
+      "manual_preparation": true,
+      "old_campaign": "4ee6b17ded384c609d08dc8fb695af55",
+      "imported_memories": 419,
+      "imported_predictions": 0,
+      "audit": "evals/reports/amem-continuation-preparation-20261001/cache-migration-audit.json"
+    }
+  }
+}

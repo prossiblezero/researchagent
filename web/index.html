@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ResearchAgent · 炉边书房</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/highlight.min.js" defer></script>
+  <script src="/app.js" defer></script>
+  <script src="/research-records.js" defer></script>
+  <script src="/strategies.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/" aria-label="ResearchAgent 首页"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 28" fill="none"><path d="M4 24V13a8 8 0 0 1 16 0v11H4Z" stroke="currentColor"/><path d="M8 22c-5-6 5-8 3-14 6 4 1 7 5 7 3 5-1 9-8 7Z" fill="currentColor"/><path d="M2 26h20" stroke="currentColor"/></svg></span><span>ResearchAgent<small>炉边书房 · THE QUIET STUDY</small></span></a>
+    <div id="hearth-audio" class="hearth-audio" role="group" aria-label="炉火环境音" data-playing="false">
+      <button id="fire-sound" class="sound-button" type="button" aria-pressed="false" title="循环播放炉火白噪音"><span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="fire-sound-label">开启炉火声</span></button>
+      <label class="sound-volume" for="fire-volume">音量<input id="fire-volume" type="range" min="0" max="100" step="1" value="25" aria-label="炉火音量"><output id="fire-volume-value" for="fire-volume">25%</output></label>
+      <span id="fire-sound-status" class="sound-status" role="status" aria-live="polite"></span>
+    </div>
+    <div class="service"><span id="connection" class="badge">正在连接</span><span id="mode" class="muted">V3 研究工作台</span></div>
+  </header>
+  <div id="error" class="error" role="alert"></div>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="row"><h2 class="section-label">研究区</h2><button id="new-space" class="subtle" aria-label="新建研究区">＋ 新建</button></div>
+      <p class="session-hint">一个研究方向，共享资料与多段会话</p><nav id="spaces" class="spaces" aria-label="研究区列表"></nav><button id="open-session-trash" class="link" type="button">归档与回收站</button><button id="open-library" class="library-entry" type="button">▤ 研究资料库 <span id="library-count" class="count">0</span></button>
+      <div class="section-heading row"><h2 class="section-label">研究任务</h2><span id="job-count" class="count">0</span></div>
+      <p class="muted sidebar-note">后台持续研究，过程自动更新</p>
+      <nav id="jobs" class="jobs" aria-label="后台研究任务"></nav>
+      <button id="legacy" class="link legacy">查看全部运行记录 ↗</button>
+      <button id="open-research-records" class="library-entry" type="button">▧ 研究成果与实验</button>
+      <button id="open-strategies" class="library-entry" type="button">↻ 策略改进与反馈</button>
+      <a href="/harness-evaluation/report.html" target="_blank" rel="noopener" class="legacy">策略对照与失败案例 ↗</a>
+      <a href="/evidence-qa-evaluation/report.html" target="_blank" rel="noopener" class="legacy">本轮问答与多轮实验验收 ↗</a>
+      <a href="/v4-evaluation/feedback-improvement-20260923/report.html" target="_blank" rel="noopener" class="legacy">V4 编码实验与失败记录 ↗</a>
+      <a href="/v3-evaluation/report.html" target="_blank" rel="noopener" class="legacy">V3 验收与真实案例 ↗</a>
+      <a href="/evaluation/session-model-20260920/report.html" target="_blank" rel="noopener" class="legacy">历史评测 ↗</a>
+      <p class="sidebar-footer">Good things take quiet.<span>让思考慢慢沉淀</span></p>
+    </aside>
+    <main>
+      <div class="workspace-heading"><div class="hero-copy"><p class="eyebrow">A LITTLE QUIET. A DEEPER THOUGHT.</p><h1 id="space-title">炉火正暖，慢慢想。</h1><p id="space-description" class="muted">新建一个研究区，围绕你的问题持续积累。</p><span class="hero-caption">炉火、书页，和一段不被打扰的思考。</span><button id="edit-space" class="hidden">研究区设置</button></div>
+      <svg class="cabin-scene" viewBox="0 0 700 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="暮色中的欧式木屋书房，石砌壁炉燃着微火，木摇椅旁放着书与热茶">
+        <defs>
+          <linearGradient id="cabin-wall" x2="0" y2="1"><stop stop-color="#493427"/><stop offset="1" stop-color="#281f19"/></linearGradient>
+          <linearGradient id="cabin-night" x2="0" y2="1"><stop stop-color="#253537"/><stop offset="1" stop-color="#465047"/></linearGradient>
+          <linearGradient id="cabin-floor" x2="0" y2="1"><stop stop-color="#39281d"/><stop offset="1" stop-color="#6b472a"/></linearGradient>
+          <linearGradient id="cabin-stone" x2="1" y2=".7"><stop stop-color="#6e5d49"/><stop offset=".5" stop-color="#8d7556"/><stop offset="1" stop-color="#544333"/></linearGradient>
+          <linearGradient id="cabin-brass" x2="1" y2=".3"><stop stop-color="#72502b"/><stop offset=".5" stop-color="#d4ad69"/><stop offset="1" stop-color="#977340"/></linearGradient>
+          <radialGradient id="cabin-glow"><stop stop-color="#e8a04a" stop-opacity=".5"/><stop offset=".44" stop-color="#d68435" stop-opacity=".15"/><stop offset="1" stop-color="#d68435" stop-opacity="0"/></radialGradient>
+          <radialGradient id="cabin-hearth"><stop stop-color="#9d4520"/><stop offset="1" stop-color="#201813"/></radialGradient>
+          <linearGradient id="cabin-flame" x2="0" y2="1"><stop stop-color="#f6c26d"/><stop offset=".5" stop-color="#e5993e"/><stop offset="1" stop-color="#b75b28"/></linearGradient>
+          <pattern id="cabin-boards" width="75" height="300" patternUnits="userSpaceOnUse"><path d="M1 0V300M74 0V300" stroke="#170e08" stroke-opacity=".4"/><path d="M6 0V300M67 0V300" stroke="#e5b678" stroke-opacity=".055"/><path d="M18 0C9 65 27 95 20 145S10 215 19 300M31 0C26 52 40 83 34 134S39 236 32 300M55 0C48 77 60 99 51 178S55 259 51 300" fill="none" stroke="#18100b" stroke-opacity=".14"/><ellipse cx="25" cy="168" rx="6" ry="25" fill="none" stroke="#20160e" stroke-opacity=".17"/></pattern>
+          <filter id="cabin-texture"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".055"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+          <clipPath id="cabin-fire-clip"><path d="M337 240V198Q337 174 391 174Q445 174 445 198V240Z"/></clipPath>
+        </defs>
+        <g filter="url(#cabin-texture)">
+          <path fill="url(#cabin-wall)" d="M0 0H700V300H0z"/><path fill="url(#cabin-boards)" d="M0 0H700V254H0z"/>
+          <path d="M0 25H700M0 30H700" stroke="#150e09" stroke-width="7"/><path d="M0 21H700" stroke="#8b6240" stroke-opacity=".5" stroke-width="2"/>
+          <path d="M0 247H700V300H0z" fill="url(#cabin-floor)"/>
+          <g stroke="#251a13" stroke-width="1" opacity=".6"><path d="M0 271H700M0 294H700M150 247L99 300M290 247L270 300M470 247L500 300M603 247L667 300"/></g>
+          <!-- The blue hour beyond a leaded window. -->
+          <path d="M159 184V62Q159 46 175 46H257Q274 46 274 62V184Z" fill="#1b1713" stroke="#755333" stroke-width="7"/>
+          <path d="M168 175V63Q168 55 177 55H255Q265 55 265 64V175Z" fill="url(#cabin-night)"/>
+          <circle cx="245" cy="78" r="10" fill="#c8ccb1" opacity=".6"/>
+          <path d="M168 151L192 130L218 145L242 126L265 144V175H168Z" fill="#22312d"/>
+          <g fill="#172824"><path d="M187 113L175 143H181L170 161H201L190 143H197Z"/><path d="M243 128L229 161H236L227 175H263L250 159H256Z"/></g>
+          <path d="M216 54V180M165 116H269" stroke="#725132" stroke-width="6"/><path d="M166 57L265 175M266 57L169 175" stroke="#b3b08d" stroke-opacity=".13"/>
+          <path d="M153 184H281V191H153Z" fill="#85603a"/><path d="M155 191H278" stroke="#19120d" stroke-width="5"/>
+          <!-- Stone chimney, a broad oak mantel and a softly lit hearth. -->
+          <path d="M325 0H458L476 142H309Z" fill="#564939"/>
+          <g fill="none" stroke="#30291f" stroke-width="2" opacity=".6"><path d="M321 39H463M319 73H467M314 107H473M368 0V39M417 39V73M362 73V107M425 107V139"/></g>
+          <path d="M302 155H482V246H302Z" fill="url(#cabin-stone)"/>
+          <g fill="none" stroke="#433627" stroke-width="2"><path d="M302 183H327M455 183H482M302 215H326M456 215H482M315 155V183M472 184V215M313 215V244M469 215V244"/></g>
+          <path d="M329 242V196Q329 161 391 161Q453 161 453 196V242Z" fill="#1c1611" stroke="#aa8b5d" stroke-opacity=".45" stroke-width="5"/>
+          <path d="M337 240V198Q337 174 391 174Q445 174 445 198V240Z" fill="url(#cabin-hearth)"/>
+          <path d="M290 139H494V153H290Z" fill="#805934"/><path d="M288 138H497V143H288Z" fill="#a57845"/><path d="M299 154H483V160H299Z" fill="#362517"/>
+          <path d="M291 244H490L504 258H278Z" fill="#746048"/><path d="M278 258H504V264H278Z" fill="#30261c"/>
+          <ellipse class="fire-light" cx="394" cy="230" rx="158" ry="130" fill="url(#cabin-glow)"/>
+          <ellipse cx="395" cy="271" rx="117" ry="25" fill="url(#cabin-glow)" opacity=".6"/>
+          <g stroke-linecap="round"><path d="M358 231L425 242M363 243L428 228" stroke="#291b12" stroke-width="10"/><path d="M361 231L417 240M366 242L425 229" stroke="#b4652e" stroke-width="2"/></g>
+          <g clip-path="url(#cabin-fire-clip)">
+          <path class="fire-flame" d="M365 230C351 214 378 207 373 187C389 197 377 207 389 210C397 201 388 182 404 171C398 196 420 202 418 217C432 211 427 202 433 197C438 220 427 235 409 237C388 242 373 238 365 230Z" fill="url(#cabin-flame)"/>
+          <path class="fire-flame small" d="M384 233C377 224 391 218 390 205C401 214 398 221 404 222C410 216 407 209 413 203C415 221 424 224 414 233Z" fill="#f7d393"/>
+          <path class="fire-flame side" d="M361 234C348 219 373 213 369 194C385 210 375 217 380 222C388 214 386 207 389 203C395 225 384 239 371 239Z" fill="url(#cabin-flame)"/>
+          <g fill="#f2c17b"><circle class="fire-spark" cx="376" cy="231" r="1.1"/><circle class="fire-spark second" cx="412" cy="233" r=".9"/><circle class="fire-spark third" cx="393" cy="228" r=".8"/></g>
+          </g>
+          <g fill="#e6a452" opacity=".6"><circle cx="376" cy="243" r="1.4"/><circle cx="411" cy="245" r="1.6"/><circle cx="391" cy="241" r="1"/></g>
+          <g stroke="#201914" stroke-width="3"><path d="M350 247V228M366 247V231M384 250V234M403 250V234M422 247V231M439 246V228M350 244Q398 252 439 243" fill="none"/></g>
+          <!-- Mantel clock, candlestick and worn books. -->
+          <path d="M359 135V106Q359 86 381 86Q403 86 403 106V135Z" fill="#34261b" stroke="#a07b48" stroke-width="1.5"/>
+          <circle cx="381" cy="109" r="16" fill="#bdae8a" stroke="#644b2f" stroke-width="3"/><g stroke="#4b3925"><path d="M381 97V109L390 114" stroke-width="1.5"/><path d="M381 95V98M394 109H391M381 122V119M368 109H371"/></g>
+          <path d="M354 133H408V138H354Z" fill="#6b4c2d"/>
+          <path d="M435 136H453L448 131V110H440V131Z" fill="url(#cabin-brass)"/><path d="M441 95H447V112H441Z" fill="#d1ba89"/><path d="M444 95Q439 91 444 85Q449 91 444 95Z" fill="#e9ba68"/>
+          <path d="M309 135L307 111L317 109L320 136Z" fill="#706342"/><path d="M321 136V116H330V136Z" fill="#965e3b"/><path d="M331 137V105H340V137Z" fill="#514e37"/>
+          <g stroke="#d1ac68" opacity=".6"><path d="M310 116L317 115M311 129L319 128M324 119H328M324 133H328M333 111H338M333 130H338"/></g>
+          <!-- A woven rug and an empty rocking chair, ready for a long read. -->
+          <path d="M469 261L638 257L686 296L436 300Z" fill="#70503a" stroke="#a87e52" stroke-width="2"/><path d="M483 266L628 263L662 290L458 293Z" fill="none" stroke="#b2966380"/><path d="M495 270L618 268M481 285L640 282" stroke="#342e23" stroke-width="3"/>
+          <g fill="none" stroke-linecap="round"><path d="M530 175L553 250M590 165L613 249" stroke="#302016" stroke-width="7"/><path d="M504 205L583 189L601 220L524 237Z" fill="#5b5036" stroke="#9b7345" stroke-width="5"/><path d="M508 209L581 196L596 219L527 230Z" fill="#6c6546" stroke="#ada06b" stroke-opacity=".3"/>
+          <path d="M533 203L514 132Q510 121 521 118L564 109Q572 108 576 120L596 190" fill="#493b28" stroke="#a17a47" stroke-width="6"/>
+          <path d="M524 131L541 194M537 126L554 191M550 122L567 187M563 119L580 184" stroke="#ac8650" stroke-width="3"/>
+          <path d="M515 190L596 173M513 188L518 202M595 173L602 218" stroke="#b18a53" stroke-width="5"/>
+          <path d="M526 234L515 272M595 221L607 267" stroke="#906a3e" stroke-width="6"/><path d="M492 264Q545 294 627 264" stroke="#b48b51" stroke-width="6"/><path d="M526 274Q582 288 645 256" stroke="#795734" stroke-width="5"/></g>
+          <path d="M540 190L565 184L581 216L557 226Z" fill="#b39a6b" opacity=".8"/><path d="M545 190L562 223M552 188L569 220" stroke="#655641" stroke-width="1"/>
+          <!-- Tea and a book on a small side table. -->
+          <path d="M641 208V259M675 208V263" stroke="#815e36" stroke-width="4"/><ellipse cx="657" cy="206" rx="29" ry="7" fill="#997444" stroke="#c09b60" stroke-width="1"/>
+          <path d="M643 198H667V203H643Z" fill="#afa180"/><path d="M641 196H666V199H641Z" fill="#5f6650"/><path d="M664 185H676V195Q670 201 664 195Z" fill="#c3ad80"/><path d="M676 187Q686 186 680 194H676" fill="none" stroke="#c3ad80" stroke-width="2"/>
+          <path d="M669 181Q674 175 669 169" fill="none" stroke="#c8b890" stroke-opacity=".22"/>
+        </g>
+      </svg>
+</div>
+      <div id="welcome" class="welcome"><span class="welcome-mark" aria-hidden="true">❧</span><h2>翻开新的一页</h2><p>整理研究方向，追踪检索过程，回看每一条来源。</p><button id="start-space" class="primary">＋ 创建第一个研究区</button><div class="welcome-steps"><span>01 提出问题</span><span>02 查找证据</span><span>03 沉淀结论</span></div></div>
+      <div id="work" class="work-grid hidden">
+        <section class="conversation panel" aria-label="研究对话">
+          <div class="panel-heading row"><div><h2>研究对话</h2><p class="muted">把想法变成值得追问的问题</p></div><div class="session-controls"><button id="new-conversation" type="button">＋ 新会话</button><button id="open-memory" class="subtle" type="button">记忆与上下文</button><details id="session-menu" class="session-tools"><summary>更多操作</summary><div class="actions"><button id="rename-conversation" type="button">重命名会话</button><button id="fork-conversation" type="button">从当前进度分支</button><button id="archive-conversation" type="button">归档当前会话</button><button id="archive-space" type="button">归档整个研究区</button><button id="delete-branch" type="button">删除当前会话</button><button id="open-branch-trash" type="button">会话归档与回收站</button></div></details></div></div>
+          <div id="branch-picker" class="conversation-picker hidden"><label for="conversations">当前会话</label><select id="conversations" aria-label="当前会话"></select></div>
+          <p id="conversation-origin" class="muted session-hint"></p>
+          <div id="messages" class="messages" aria-label="会话历史"><div id="history-messages"></div><div id="chat-live" aria-label="当前任务进度"></div></div>
+          <form id="send-form" class="composer">
+            <div class="model-picker"><label for="model-select">当前模型</label><select id="model-select" aria-describedby="model-hint" disabled><option>正在加载模型…</option></select></div>
+            <p id="model-hint" class="muted model-hint" aria-live="polite">正在读取模型配置…</p>
+            <label class="sr-only" for="content">发送消息</label><textarea id="content" maxlength="4000" required placeholder="想研究什么？例如：Agent Harness 有哪些值得关注的论文和研究方向？"></textarea>
+            <div class="row composer-actions"><span class="auto-research" title="根据你的问题自动选择论文库、会议官网、官方文档等来源，并安排研究深度。">✦ 自动规划 · 自主择源</span><button id="copy-draft" type="button" class="link">复制输入</button><button id="stop-generation" type="button" class="danger hidden">■ 停止生成</button><button id="send" class="primary">发送 ↗</button></div>
+            <div class="row keyboard-hint"><span>Enter 发送 · Shift+Enter 换行</span><span id="copy-status" role="status" aria-live="polite"></span></div>
+            <p id="send-status" class="muted">普通聊天直接回答 · 研究任务在后台继续</p>
+          </form>
+        </section>
+        <section class="inspector panel" aria-label="研究详情">
+          <div id="no-job" class="empty inspector-empty"><span class="empty-symbol" aria-hidden="true">❧</span><h2>让思考落在纸上</h2><p>发起研究或选中左侧任务，<br>在这里看见每一步发现与证据。</p><div class="hint">寻找线索 → 阅读资料 → 核实结论</div></div>
+          <div id="detail" class="hidden">
+            <div class="panel-heading"><div class="row"><span class="eyebrow">NOTES FROM THE STUDY</span><span id="job-state" class="badge"></span></div><h2 id="job-title"></h2><p id="job-meta" class="muted"></p><p id="job-progress" class="muted"></p></div>
+            <div class="tabs" role="tablist" aria-label="研究详情"><button id="tab-report" role="tab" data-tab="report" aria-controls="pane-report">研究结果</button><button id="tab-sources" role="tab" data-tab="sources" aria-controls="pane-sources">来源与证据</button><button id="tab-trace" role="tab" data-tab="trace" aria-controls="pane-trace">实时过程 <span id="event-count" class="count">0</span></button></div>
+            <div id="pane-report" class="tab-pane" role="tabpanel" aria-labelledby="tab-report"><div id="job-actions" class="actions"></div><details class="brief"><summary>研究计划与默认假设</summary><p id="job-budget" class="plan-budget"></p><p id="job-brief" class="plain"></p><p id="job-assumptions" class="muted"></p></details><p id="job-error" class="inline-error"></p><div id="job-summary" class="markdown"></div></div>
+            <div id="pane-sources" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-sources"><div id="sources"></div></div>
+            <div id="pane-trace" class="tab-pane hidden" role="tabpanel" aria-labelledby="tab-trace"><div class="row trace-toolbar"><span id="trace-status" class="muted">等待任务开始</span><a id="trace-download" class="hidden" download>下载完整 Trace</a></div><p class="muted trace-note">展示实际工具调用与运行事件，不展示模型内部思考。</p><div id="events" class="timeline"></div><p id="trace-empty" class="empty">任务开始后，过程会自动出现在这里。</p></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <dialog id="memory-dialog" class="memory-dialog"><div class="row"><h2>研究区记忆与上下文</h2><button id="close-memory" type="button" aria-label="关闭">✕</button></div><p class="muted">会话记忆跟随来源历史及其分支；研究区记忆用于本区所有会话；全局偏好用于所有研究区。回忆其他会话会标注来源，不自动沿用其中的指令。忘记记忆不会删除聊天原文。</p><div id="context-status" class="memory-status"></div><div id="memory-items"></div><p id="memory-error" role="alert"></p></dialog>
+  <dialog id="space-dialog"><form id="space-form"><div class="row"><h2 id="dialog-title">新建研究区</h2><button id="close-dialog" type="button" class="subtle" aria-label="关闭">✕</button></div><label for="name">研究区名称</label><input id="name" maxlength="100" required placeholder="例如：Agent Harness"><label for="description">研究方向</label><textarea id="description" maxlength="2000" placeholder="你关注的问题、方向或目标"></textarea><label for="download-root">资料保存文件夹</label><div class="folder-row"><input id="download-root" maxlength="2000" placeholder="留空使用默认目录"><button id="pick-folder" type="button">选择文件夹…</button></div><p id="folder-hint" class="muted">本机可打开系统文件夹窗口。文件保存到后端这台电脑。默认只读资料；开启下方选项后，按每次任务预算自动收集论文。</p><label class="check-label"><input id="auto-download" type="checkbox">研究后自动下载可获取的论文</label><div class="budget-fields"><label for="download-count">每次最多篇数<input id="download-count" type="number" min="1" max="20" value="3" required></label><label for="download-mb">每次总容量（MB）<input id="download-mb" type="number" min="1" max="500" value="50" required></label></div><p class="muted">单个文件上限 25 MB。技术文档和 GitHub 默认只读；只有明确选择保存时才下载原文或源码快照。</p><p id="dialog-error" class="inline-error" role="alert"></p><div class="row dialog-actions"><button id="delete-space" type="button" class="danger hidden">删除研究区</button><button id="save-space" class="primary">保存研究区</button></div></form></dialog>
+  <dialog id="legacy-dialog"><div class="row"><h2>全部运行记录</h2><button id="close-legacy" aria-label="关闭运行记录">✕</button></div><p class="muted">包含旧版与各研究区的历史运行。</p><div id="legacy-list"></div></dialog>
+
+  <dialog id="library-dialog" aria-labelledby="library-title">
+    <div class="row"><div><p class="eyebrow">THE STUDY SHELF</p><h2 id="library-title">研究资料库</h2></div><button id="close-library" class="subtle" aria-label="关闭资料库">✕</button></div>
+    <p id="library-context" class="muted"></p>
+    <div class="library-layout">
+      <form id="material-form" class="material-form">
+        <h3>添一本新资料</h3><p class="muted">论文、技术文档或 GitHub 项目，都会留在当前研究区。</p>
+        <label for="material-url">资料链接</label><input id="material-url" type="url" placeholder="论文页 / PDF / 官方文档 / GitHub" maxlength="2000">
+        <label for="material-topic">整理到主题</label><input id="material-topic" value="资料整理" maxlength="100" required>
+        <label class="check-label"><input id="material-download" type="checkbox">保存原文到研究区文件夹</label>
+        <p class="muted">不勾选时只建立阅读索引。GitHub 保存指定提交的 ZIP 源码快照，不运行代码。</p>
+        <button id="add-material" type="submit" class="primary">阅读与分析 ↗</button>
+        <div class="upload-area"><label for="material-file">或从电脑导入文件</label><input id="material-file" type="file" accept=".pdf,.txt,.md"><p class="muted">PDF / Markdown / UTF-8 文本，最大 25 MB。选择后复制到当前研究区。</p></div>
+        <p id="material-error" class="inline-error" role="alert"></p>
+      </form>
+      <div class="library-shelf"><div class="row"><h3>书架上的资料</h3><button id="refresh-library" class="subtle">刷新</button></div><label class="sr-only" for="library-search">搜索资料标题</label><input id="library-search" type="search" placeholder="按标题筛选论文、文档、报告…"><div id="material-list" aria-live="polite"></div></div>
+    </div>
+  </dialog>
+  <dialog id="conversation-dialog" aria-labelledby="conversation-dialog-title">
+    <form id="conversation-form">
+      <div class="row"><h2 id="conversation-dialog-title">新建会话</h2><button id="close-conversation" type="button" class="link" aria-label="关闭新建会话">✕</button></div>
+      <label for="conversation-name">会话名称</label><input id="conversation-name" maxlength="100" required autocomplete="off">
+      <p id="conversation-error" class="inline-error" role="alert"></p>
+      <div class="row dialog-actions"><button id="create-conversation" class="primary">创建会话</button></div>
+    </form>
+  </dialog>
+<dialog id="recycle-dialog" class="memory-dialog"><div class="row"><h2 id="recycle-title">归档与回收站</h2><button id="close-recycle" type="button" aria-label="关闭回收站">✕</button></div><p class="muted">归档或删除的研究区、会话和对话均可恢复。原始文件不会被删除。</p><div id="recycle-items"></div><p id="recycle-error" role="alert"></p></dialog>
+<dialog id="research-records-dialog" aria-labelledby="records-title">
+  <div class="row"><div><p class="eyebrow">THE RESEARCH NOTEBOOK</p><h2 id="records-title">研究成果与实验</h2></div><button id="close-research-records" type="button" aria-label="关闭研究成果">✕</button></div>
+  <p id="records-context" class="muted"></p>
+  <nav class="actions" aria-label="研究成果分类"><button data-record-tab="reports">报告版本</button><button data-record-tab="graph">结论与关系</button><button data-record-tab="ideas">创新候选</button><button data-record-tab="experiments">实验与基线</button></nav>
+  <p id="records-error" class="inline-error" role="alert"></p>
+  <section id="records-reports">
+    <label for="records-report">研究报告</label><select id="records-report"></select>
+    <div class="record-columns"><div><label for="records-version">查看版本</label><select id="records-version"></select></div><div><label for="records-compare-version">与版本比较</label><select id="records-compare-version"></select></div><button id="records-compare-report" type="button">比较正文</button></div>
+    <pre id="records-report-diff" class="record-diff"></pre><div id="records-report-status"></div><div id="records-report-content" class="markdown"></div>
+    <details><summary>结论、原文和验证状态</summary><div id="records-evidence"></div></details>
+    <details><summary>修改并保存为新草稿</summary><form id="records-draft-form"><label for="records-draft">正文（Markdown）</label><textarea id="records-draft" rows="12" required maxlength="60000"></textarea><label for="records-draft-note">修改说明</label><input id="records-draft-note" required maxlength="2000"><button type="submit">保存新版本</button></form></details>
+    <form id="records-review-form"><label for="records-review-note">审核 / 发布说明</label><input id="records-review-note" required maxlength="2000" placeholder="记录已核对的依据、仍保留的限制"><label class="check-label"><input id="records-review-attest" type="checkbox" required>我已逐项核对主要事实与原文，确认假设和未知项已明确标注</label><div class="actions"><button id="records-review" type="submit" value="reviewed">标记已审核</button><button id="records-publish" type="submit" value="published">发布此版本</button></div></form>
+    <details><summary>版本操作记录</summary><div id="records-report-events"></div></details>
+  </section>
+  <section id="records-graph" hidden><p class="muted">论文、项目、方法、数据集、指标与结论共享于本研究区。关系会显示其依据；标为假设的关系尚未验证。</p><div id="records-graph-view"></div>
+    <details><summary>添加研究对象</summary><form id="records-entity-form" class="record-columns"><label>类型<select id="records-entity-kind"><option value="method">方法</option><option value="dataset">数据集</option><option value="metric">指标</option><option value="paper">论文</option><option value="project">项目</option><option value="conclusion">结论</option></select></label><label>名称<input id="records-entity-title" required maxlength="500"></label><label>来源资料（可选）<select id="records-entity-origin"></select></label><button type="submit">添加对象</button></form></details>
+    <details><summary>关联对象与依据</summary><form id="records-relation-form"><div class="record-columns"><label>起点<select id="records-relation-source" required></select></label><label>关系<input id="records-relation-label" required maxlength="200" placeholder="采用 / 评估于 / 报告指标"></label><label>终点<select id="records-relation-target" required></select></label><label>状态<select id="records-relation-status"><option value="UNVERIFIED">待核验</option><option value="HYPOTHESIS">假设</option><option value="HUMAN_REVIEWED">人工已审核</option></select></label></div><label for="records-relation-anchors">原文依据（可多选）</label><select id="records-relation-anchors" multiple size="7" required></select><button type="submit">保存关系</button></form></details>
+  </section>
+  <section id="records-ideas" hidden><p>在聊天中提出创新问题，后台会先读取至少两篇已有论文，再生成带原文依据的 HYPOTHESIS 候选。</p><div id="records-idea-list"></div><button id="records-compare-ideas" type="button">比较所选候选</button><div id="records-idea-comparison"></div></section>
+  <section id="records-experiments" hidden><p class="muted">保留外部结果录入；V4 受控实验可调用本机 Codex 完成最多三轮代码修改和实测。改变数据划分或指标口径时，不判定达标。</p>
+    <details><summary>V4 · 创建检索实验</summary><form id="records-execution-plan">
+      <label>实验名称<input id="records-execution-title" value="公开原文检索改进" required maxlength="200"></label>
+      <label>检索实验<select id="records-execution-suite"><option value="public-retrieval-feedback-v2">已有混合检索 · 开发反馈与选优</option><option value="public-evidence-rerank-v1">Luna 原文重排 · 额外模型调用</option></select></label>
+      <label>待验证假设<textarea id="records-execution-hypothesis" rows="3" maxlength="1960" required>根据开发集失败原文诊断混合检索排序问题，提出可推广的修改并验证 Recall@5 和 MRR；收益尚未验证，保留退化与运行耗时。</textarea></label>
+      <p class="muted">复用 6 份公开来源、151 段原文与已有 BGE-M3/FTS5。24 题用于开发选优，12 题以不同原文事实终验；旧 60 题保留历史回归。原文重排模式另需最多 36 次 Luna 判断，每题最多 120 秒、4 路并行，缓存与新增用量分开记录。</p>
+      <button type="submit">保存方案与固定基线</button>
+    </form></details>
+    <div class="record-columns"><label>编码总时限（秒）<input id="records-execution-seconds" type="number" min="30" max="600" value="240"></label><label>编码总 token 预算（含缓存输入）<input id="records-execution-tokens" type="number" min="2000" max="500000" value="300000"></label><label>最多编码轮次<select id="records-execution-rounds"><option value="1">1 轮</option><option value="2">2 轮</option><option value="3">3 轮</option></select></label><button id="records-execution-refresh" type="button">刷新执行记录</button></div>
+    <p class="muted">点击「运行实验」后，Luna 在总预算内进行所选轮次，每轮根据开发结果修改代码；达到开发目标或连续两轮无改善就提前停止。始终保留开发集上的最佳版本，锁定后再做最终测试。原始 FTS5 套件仅支持 1 轮。编码命令禁网，原文重排另计模型用量；实验不会自动替换默认检索。</p>
+    <div id="records-execution-list"></div>
+    <div class="actions"><button id="records-new-experiment" type="button">新建基线 / 实验</button></div><div id="records-experiment-list"></div>
+    <div class="record-columns"><label>对照版本<select id="records-experiment-left"></select></label><label>目标版本<select id="records-experiment-right"></select></label><button id="records-compare-experiments" type="button">比较版本与指标</button></div><div id="records-experiment-comparison"></div>
+    <details id="records-experiment-editor"><summary id="records-experiment-editor-title">新建基线 / 实验</summary><form id="records-experiment-form">
+      <div class="record-columns"><label>名称<input id="records-experiment-title" maxlength="300" required></label><label>类型<select id="records-experiment-kind"><option value="baseline">基线</option><option value="experiment">实验方案</option></select></label><label>固定基线版本<select id="records-baseline-version"></select></label><label>关联创新候选<select id="records-experiment-idea"></select></label></div>
+      <div class="record-columns"><label>数据集<input id="records-dataset" required></label><label>数据集版本<input id="records-dataset-version" required></label><label>划分<select id="records-split"><option value="validation">验证集</option><option value="test">冻结测试集</option><option value="train">训练集</option></select></label><label>划分标识 / 哈希<input id="records-split-hash" required></label><label>随机种子（逗号分隔）<input id="records-seeds" value="42" required></label><label>代码版本<input id="records-code-revision" required></label></div>
+      <label for="records-command">复现命令（仅记录）</label><input id="records-command" required><label for="records-environment">依赖与硬件环境</label><input id="records-environment" required><label for="records-parameters">实验参数（JSON 对象）</label><textarea id="records-parameters" rows="3" required>{}</textarea>
+      <h3>指标与目标</h3><p class="muted">绝对差值与指标单位一致；百分数用 0–100 记，比例用 0–1 记。相对改善填写百分数。结果留空表示尚未测量。</p><div class="record-table"><table><thead><tr><th>指标名</th><th>单位</th><th>方向</th><th>目标口径</th><th>目标值</th><th>测量结果</th><th></th></tr></thead><tbody id="records-metric-rows"></tbody></table></div><button id="records-add-metric" type="button">添加指标</button>
+      <label for="records-experiment-status">实验状态</label><select id="records-experiment-status"><option value="planned">待执行计划</option><option value="completed">外部实验已完成</option><option value="failed">实验失败</option></select><label for="records-result-source">实际结果来源 / 日志位置 / 测量时间</label><textarea id="records-result-source" rows="2" maxlength="4000"></textarea><label for="records-experiment-note">本版本说明 / 失败原因</label><input id="records-experiment-note" required maxlength="2000"><button type="submit">保存不可变版本</button>
+    </form></details>
+  </section>
+</dialog>
+</body>
+</html>

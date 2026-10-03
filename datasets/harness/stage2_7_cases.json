@@ -1,0 +1,5 @@
+[
+  {"id":"greeting","question":"你好","expect_status":"ok","expect_tools":0},
+  {"id":"search_read","question":"请核验 learn-claude-code 的仓库说明。","expect_status":"ok","expect_tools":2},
+  {"id":"failure","question":"请核验一个事实","fail":true,"expect_status":"insufficient","expect_tools":1}
+]

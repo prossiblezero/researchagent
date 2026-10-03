@@ -1,0 +1,594 @@
+{
+  "schema": "evidence-qa-panel/v1",
+  "version": "20260927-independent-r1",
+  "authored_before_model_answers": true,
+  "source_corpus": "datasets/evidence_qa/independent_evidence_corpus_20260927.json",
+  "source_corpus_sha256": "c811bc655ff5e6257c8ec942141836c3519e34838a4fbefd22cb431d5f0f1de2",
+  "evaluation_scope": "Every gold fact comes from two newly downloaded official repositories; six historical sources are distractors. Small authored transfer panel, not a public benchmark or broad generalization claim.",
+  "counts": {
+    "ordinary": 4,
+    "cross_document": 4,
+    "false_premise": 4,
+    "unanswerable": 4
+  },
+  "cases": [
+    {
+      "id": "ind-normal-01",
+      "category": "ordinary",
+      "query": "LangGraph 持久化指南中，checkpointer 和 store 分别保存什么？作用域是单线程还是跨线程？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "checkpoint",
+          "expected": "checkpointer保存graph state snapshots，thread-scoped短期记忆。",
+          "prefilter_patterns": [
+            "checkpoint|检查点"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 2,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "8fce8f2e0c63f104851c52ad08b8dd9d8ff312ca777bbf3a0544a7bd523d6337",
+              "quote": "## Checkpointer vs. store\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |"
+            }
+          ]
+        },
+        {
+          "id": "store",
+          "expected": "store保存application-defined key-value data，用于跨线程长期记忆。",
+          "prefilter_patterns": [
+            "store|存储",
+            "跨"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 2,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "8fce8f2e0c63f104851c52ad08b8dd9d8ff312ca777bbf3a0544a7bd523d6337",
+              "quote": "## Checkpointer vs. store\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-normal-02",
+      "category": "ordinary",
+      "query": "LlamaIndex QueryFusionRetriever 默认 num_queries 是多少？传入的 retriever_weights 总和不是1时，构造函数如何处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "queries",
+          "expected": "num_queries默认4。",
+          "prefilter_patterns": [
+            "4"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 1,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "25678beb974eda0e7fc8085ab09357ae0213f8726c0266284a80365b85bc04b7",
+              "quote": "def __init__(\n        self,\n        retrievers: List[BaseRetriever],\n        llm: Optional[LLMType] = None,\n        query_gen_prompt: Optional[str] = None,\n        mode: FUSION_MODES = FUSION_MODES.SIMPLE,\n        similarity_top_k: int = DEFAULT_SIMILARITY_TOP_K,\n        num_queries: int = 4,\n        use_async: bool = True,\n        verbose: bool = False,\n        callback_manager: Optional[CallbackManager] = None,\n        objects: Optional[List[IndexNode]] = None,\n        object_map: Optional[dict] = None,\n        retriever_weights: Optional[List[float]] = None,\n    ) -> None:\n        self.num_queries = num_queries\n        self.query_gen_prompt = query_gen_prompt or QUERY_GEN_PROMPT\n        self.similarity_top_k = similarity_top_k\n        self.mode = mode\n        self.use_async = use_async\n\n        self._retrievers = retrievers\n        if retriever_weights is None:\n            self._retriever_weights = [1.0 / len(retrievers)] * len(retrievers)\n        else:\n            # Sum of retriever_weights must be 1\n            total_weight = sum(retriever_weights)\n            self._retriever_weights = [w / total_weight for w in retriever_weights]\n        self._llm = (\n            resolve_llm(llm, callback_manager=callback_manager) if llm else Settings.llm\n        )\n        super().__init__(\n            callback_manager=callback_manager,\n            object_map=object_map,\n            objects=objects,\n            verbose=verbose,\n        )"
+            }
+          ]
+        },
+        {
+          "id": "weights",
+          "expected": "各权重除以输入权重总和。",
+          "prefilter_patterns": [
+            "权重",
+            "总和|求和|归一"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 1,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "25678beb974eda0e7fc8085ab09357ae0213f8726c0266284a80365b85bc04b7",
+              "quote": "def __init__(\n        self,\n        retrievers: List[BaseRetriever],\n        llm: Optional[LLMType] = None,\n        query_gen_prompt: Optional[str] = None,\n        mode: FUSION_MODES = FUSION_MODES.SIMPLE,\n        similarity_top_k: int = DEFAULT_SIMILARITY_TOP_K,\n        num_queries: int = 4,\n        use_async: bool = True,\n        verbose: bool = False,\n        callback_manager: Optional[CallbackManager] = None,\n        objects: Optional[List[IndexNode]] = None,\n        object_map: Optional[dict] = None,\n        retriever_weights: Optional[List[float]] = None,\n    ) -> None:\n        self.num_queries = num_queries\n        self.query_gen_prompt = query_gen_prompt or QUERY_GEN_PROMPT\n        self.similarity_top_k = similarity_top_k\n        self.mode = mode\n        self.use_async = use_async\n\n        self._retrievers = retrievers\n        if retriever_weights is None:\n            self._retriever_weights = [1.0 / len(retrievers)] * len(retrievers)\n        else:\n            # Sum of retriever_weights must be 1\n            total_weight = sum(retriever_weights)\n            self._retriever_weights = [w / total_weight for w in retriever_weights]\n        self._llm = (\n            resolve_llm(llm, callback_manager=callback_manager) if llm else Settings.llm\n        )\n        super().__init__(\n            callback_manager=callback_manager,\n            object_map=object_map,\n            objects=objects,\n            verbose=verbose,\n        )"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-normal-03",
+      "category": "ordinary",
+      "query": "LlamaIndex relative score fusion 遇到一个结果集所有分数相等时，正分数和零分数各会缩放成什么？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "equal-scores",
+          "expected": "max等于min时，正值变1，否则0。",
+          "prefilter_patterns": [
+            "1",
+            "0"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 7,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "dccd2bb492da8f45b47ea0a4e7724417f5492957592a0a9a248e4346c560d633",
+              "quote": "def _relative_score_fusion(\n        self,\n        results: Dict[Tuple[str, int], List[NodeWithScore]],\n        dist_based: Optional[bool] = False,\n    ) -> List[NodeWithScore]:\n        \"\"\"Apply relative score fusion.\"\"\"\n        # MinMax scale scores of each result set (highest value becomes 1, lowest becomes 0)\n        # then scale by the weight of the retriever\n        min_max_scores = {}\n        for query_tuple, nodes_with_scores in results.items():\n            if not nodes_with_scores:\n                min_max_scores[query_tuple] = (0.0, 0.0)\n                continue\n            scores = [\n                node_with_score.score or 0.0 for node_with_score in nodes_with_scores\n            ]\n            if dist_based:\n                # Set min and max based on mean and std dev\n                mean_score = sum(scores) / len(scores)\n                std_dev = (\n                    sum((x - mean_score) ** 2 for x in scores) / len(scores)\n                ) ** 0.5\n                min_score = mean_score - 3 * std_dev\n                max_score = mean_score + 3 * std_dev\n            else:\n                min_score = min(scores)\n                max_score = max(scores)\n            min_max_scores[query_tuple] = (min_score, max_score)\n\n        for query_tuple, nodes_with_scores in results.items():\n            for node_with_score in nodes_with_scores:\n                min_score, max_score = min_max_scores[query_tuple]\n                # Scale the score to be between 0 and 1\n                if max_score == min_score:\n                    node_with_score.score = 1.0 if max_score > 0 else 0.0\n                else:\n                    node_with_score.score = (node_with_score.score - min_score) / (\n                        max_score - min_score\n                    )\n                # Scale by the weight of the retriever\n                retriever_idx = query_tuple[1]\n                existing_score = node_with_score.score or 0.0\n                node_with_score.score = (\n                    existing_score * self._retriever_weights[retriever_idx]\n                )\n                # Divide by the number of queries\n                node_with_score.score /= self.num_queries\n\n        # Use a dict to de-duplicate nodes\n        all_nodes: Dict[str, NodeWithScore] = {}\n\n        # Sum scores for each node\n        for nodes_with_scores in results.values():\n            for node_with_score in nodes_with_scores:\n                hash = node_with_score.node.hash\n                if hash in all_nodes:\n                    cur_score = all_nodes[hash].score or 0.0\n                    all_nodes[hash].score = cur_score + (node_with_score.score or 0.0)\n                else:\n                    all_nodes[hash] = node_with_score\n\n        return sorted(all_nodes.values(), key=lambda x: x.score or 0.0, reverse=True)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-normal-04",
+      "category": "ordinary",
+      "query": "LlamaIndex reciprocal rank fusion 的 k 常量是多少？代码枚举排名从0还是1开始，第一名贡献多少？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "rrf",
+          "expected": "k=60，enumerate从0开始，首名贡献1/60。",
+          "prefilter_patterns": [
+            "60",
+            "0"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 6,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "a510cc419a6909a67c0248a0ba2ab21c6d83f72d7090bf35a33ca0b599cb6dfb",
+              "quote": "def _reciprocal_rerank_fusion(\n        self, results: Dict[Tuple[str, int], List[NodeWithScore]]\n    ) -> List[NodeWithScore]:\n        \"\"\"\n        Apply reciprocal rank fusion.\n\n        The original paper uses k=60 for best results:\n        https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf\n        \"\"\"\n        k = 60.0  # `k` is a parameter used to control the impact of outlier rankings.\n        fused_scores = {}\n        hash_to_node = {}\n\n        # compute reciprocal rank scores\n        for nodes_with_scores in results.values():\n            for rank, node_with_score in enumerate(\n                sorted(nodes_with_scores, key=lambda x: x.score or 0.0, reverse=True)\n            ):\n                hash = node_with_score.node.hash\n                hash_to_node[hash] = node_with_score\n                if hash not in fused_scores:\n                    fused_scores[hash] = 0.0\n                fused_scores[hash] += 1.0 / (rank + k)\n\n        # sort results\n        reranked_results = dict(\n            sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)\n        )\n\n        # adjust node scores\n        reranked_nodes: List[NodeWithScore] = []\n        for hash, score in reranked_results.items():\n            reranked_nodes.append(hash_to_node[hash])\n            reranked_nodes[-1].score = score\n\n        return reranked_nodes"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-cross-01",
+      "category": "cross_document",
+      "query": "分别解释 LangGraph 的 checkpointer 用什么标识选择线程，以及 LlamaIndex simple fusion 用什么键给节点去重。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "thread",
+          "expected": "graph config中传thread_id。",
+          "prefilter_patterns": [
+            "thread_id"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 2,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "8fce8f2e0c63f104851c52ad08b8dd9d8ff312ca777bbf3a0544a7bd523d6337",
+              "quote": "## Checkpointer vs. store\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |"
+            }
+          ]
+        },
+        {
+          "id": "node",
+          "expected": "以node.hash去重。",
+          "prefilter_patterns": [
+            "hash"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 8,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "d4fa9df3323e8fb96a4795e475d2add6b28d6e4792cd030596bb15c7309597fa",
+              "quote": "def _simple_fusion(\n        self, results: Dict[Tuple[str, int], List[NodeWithScore]]\n    ) -> List[NodeWithScore]:\n        \"\"\"Apply simple fusion.\"\"\"\n        # Use a dict to de-duplicate nodes\n        all_nodes: Dict[str, NodeWithScore] = {}\n        for nodes_with_scores in results.values():\n            for node_with_score in nodes_with_scores:\n                hash = node_with_score.node.hash\n                if hash in all_nodes:\n                    max_score = max(\n                        node_with_score.score or 0.0, all_nodes[hash].score or 0.0\n                    )\n                    all_nodes[hash].score = max_score\n                else:\n                    all_nodes[hash] = node_with_score\n\n        return sorted(all_nodes.values(), key=lambda x: x.score or 0.0, reverse=True)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-cross-02",
+      "category": "cross_document",
+      "query": "LangGraph 的 MemorySaver 进程重启后会保留检查点吗？LlamaIndex 查询生成模型返回太多查询时，代码如何限制数量？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "restart",
+          "expected": "RAM保存，重启丢失。",
+          "prefilter_patterns": [
+            "RAM|内存",
+            "丢失|不.*保留"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 5,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "99ca192803affd7ab65852741604dcaaca7c9668a8e3c3287fcf71573c0d90ac",
+              "quote": "### `MemorySaver` does not persist between restarts\n\n`MemorySaver` and `InMemorySaver` store checkpoints in RAM. When the process restarts, all checkpoints are lost.\n\n**Fix:** Use a persistent checkpointer for production:\n\n- `PostgresSaver`: PostgreSQL with async support\n- `SqliteSaver`: Local file-based storage for development"
+            }
+          ]
+        },
+        {
+          "id": "trim",
+          "expected": "清理空行后截取num_queries-1条。",
+          "prefilter_patterns": [
+            "num_queries",
+            "1"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 5,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "5c043749717add9f1b6f305a785473df4eb31f7e83fcf2631cc6820b938773a8",
+              "quote": "def _get_queries(self, original_query: str) -> List[QueryBundle]:\n        prompt_str = self.query_gen_prompt.format(\n            num_queries=self.num_queries - 1,\n            query=original_query,\n        )\n        response = self._llm.complete(prompt_str)\n\n        # Strip code block and assume LLM properly put each query on a newline\n        queries = response.text.strip(\"`\").split(\"\\n\")\n        queries = [q.strip() for q in queries if q.strip()]\n        if self._verbose:\n            queries_str = \"\\n\".join(queries)\n            print(f\"Generated queries:\\n{queries_str}\")\n\n        # The LLM often returns more queries than we asked for, so trim the list.\n        return [QueryBundle(q) for q in queries[: self.num_queries - 1]]"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-cross-03",
+      "category": "cross_document",
+      "query": "LangGraph 指南对 PostgresSaver 的 thread_id 长度提出什么限制？LlamaIndex RRF 的60控制什么？请区分用途。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "length",
+          "expected": "thread_id保持under255字符，可用UUID或hash。",
+          "prefilter_patterns": [
+            "255"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 4,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "57467ce5c692968084b4e5a31b46bedce3c7a7abe901f8ed9e4089e3ae3a9a09",
+              "quote": "### PostgresSaver: `thread_id` too long\n\nWhen using `PostgresSaver` (or `AsyncPostgresSaver`), the `thread_id` is stored in a column with limited length. If your `thread_id` exceeds the column size, you will see a database error.\n\n**Fix:** Keep `thread_id` values under 255 characters. Use a UUID or hash if you need deterministic IDs:\n\n:::python\n```python\nimport uuid\n\nconfig = {\"configurable\": {\"thread_id\": str(uuid.uuid4())[:255]}}\n```\n:::"
+            }
+          ]
+        },
+        {
+          "id": "smoothing",
+          "expected": "k=60控制异常排名影响，是RRF分母平滑参数。",
+          "prefilter_patterns": [
+            "60",
+            "排名|rank|平滑"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 6,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "a510cc419a6909a67c0248a0ba2ab21c6d83f72d7090bf35a33ca0b599cb6dfb",
+              "quote": "def _reciprocal_rerank_fusion(\n        self, results: Dict[Tuple[str, int], List[NodeWithScore]]\n    ) -> List[NodeWithScore]:\n        \"\"\"\n        Apply reciprocal rank fusion.\n\n        The original paper uses k=60 for best results:\n        https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf\n        \"\"\"\n        k = 60.0  # `k` is a parameter used to control the impact of outlier rankings.\n        fused_scores = {}\n        hash_to_node = {}\n\n        # compute reciprocal rank scores\n        for nodes_with_scores in results.values():\n            for rank, node_with_score in enumerate(\n                sorted(nodes_with_scores, key=lambda x: x.score or 0.0, reverse=True)\n            ):\n                hash = node_with_score.node.hash\n                hash_to_node[hash] = node_with_score\n                if hash not in fused_scores:\n                    fused_scores[hash] = 0.0\n                fused_scores[hash] += 1.0 / (rank + k)\n\n        # sort results\n        reranked_results = dict(\n            sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)\n        )\n\n        # adjust node scores\n        reranked_nodes: List[NodeWithScore] = []\n        for hash, score in reranked_results.items():\n            reranked_nodes.append(hash_to_node[hash])\n            reranked_nodes[-1].score = score\n\n        return reranked_nodes"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-cross-04",
+      "category": "cross_document",
+      "query": "LangGraph 父图和子图需要共享状态时，指南建议什么？LlamaIndex relative score fusion 在归一化后怎样合并同节点贡献？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "shared",
+          "expected": "用Store共享跨图状态，或配置写父checkpoint。",
+          "prefilter_patterns": [
+            "Store|store",
+            "父|parent"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 7,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "e5a4dcdb5e08e51584ca8861a2a872f64eddd165a8043f688b8a22ee6e7199d9",
+              "quote": "### State access from parent graph to subgraph\n\nWhen a subgraph updates state, the parent graph may not see the changes immediately. This is because each subgraph manages its own checkpoint namespace.\n\n**Fix:** Use [shared state via Store](/oss/langgraph/stores) for data that needs to cross graph boundaries, or configure your subgraph to write to the parent checkpoint."
+            }
+          ]
+        },
+        {
+          "id": "aggregate",
+          "expected": "乘retriever权重，除以num_queries，按node.hash求和。",
+          "prefilter_patterns": [
+            "权重",
+            "num_queries|查询数",
+            "求和|相加|累加"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 7,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "dccd2bb492da8f45b47ea0a4e7724417f5492957592a0a9a248e4346c560d633",
+              "quote": "def _relative_score_fusion(\n        self,\n        results: Dict[Tuple[str, int], List[NodeWithScore]],\n        dist_based: Optional[bool] = False,\n    ) -> List[NodeWithScore]:\n        \"\"\"Apply relative score fusion.\"\"\"\n        # MinMax scale scores of each result set (highest value becomes 1, lowest becomes 0)\n        # then scale by the weight of the retriever\n        min_max_scores = {}\n        for query_tuple, nodes_with_scores in results.items():\n            if not nodes_with_scores:\n                min_max_scores[query_tuple] = (0.0, 0.0)\n                continue\n            scores = [\n                node_with_score.score or 0.0 for node_with_score in nodes_with_scores\n            ]\n            if dist_based:\n                # Set min and max based on mean and std dev\n                mean_score = sum(scores) / len(scores)\n                std_dev = (\n                    sum((x - mean_score) ** 2 for x in scores) / len(scores)\n                ) ** 0.5\n                min_score = mean_score - 3 * std_dev\n                max_score = mean_score + 3 * std_dev\n            else:\n                min_score = min(scores)\n                max_score = max(scores)\n            min_max_scores[query_tuple] = (min_score, max_score)\n\n        for query_tuple, nodes_with_scores in results.items():\n            for node_with_score in nodes_with_scores:\n                min_score, max_score = min_max_scores[query_tuple]\n                # Scale the score to be between 0 and 1\n                if max_score == min_score:\n                    node_with_score.score = 1.0 if max_score > 0 else 0.0\n                else:\n                    node_with_score.score = (node_with_score.score - min_score) / (\n                        max_score - min_score\n                    )\n                # Scale by the weight of the retriever\n                retriever_idx = query_tuple[1]\n                existing_score = node_with_score.score or 0.0\n                node_with_score.score = (\n                    existing_score * self._retriever_weights[retriever_idx]\n                )\n                # Divide by the number of queries\n                node_with_score.score /= self.num_queries\n\n        # Use a dict to de-duplicate nodes\n        all_nodes: Dict[str, NodeWithScore] = {}\n\n        # Sum scores for each node\n        for nodes_with_scores in results.values():\n            for node_with_score in nodes_with_scores:\n                hash = node_with_score.node.hash\n                if hash in all_nodes:\n                    cur_score = all_nodes[hash].score or 0.0\n                    all_nodes[hash].score = cur_score + (node_with_score.score or 0.0)\n                else:\n                    all_nodes[hash] = node_with_score\n\n        return sorted(all_nodes.values(), key=lambda x: x.score or 0.0, reverse=True)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-false-01",
+      "category": "false_premise",
+      "query": "我认为 LangGraph 的 InMemorySaver 会把检查点自动保存到磁盘，重启后仍存在。请按指南核实并指出替代项。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "volatile",
+          "expected": "内存保存，重启丢失；文档推荐PostgresSaver或SqliteSaver。",
+          "prefilter_patterns": [
+            "PostgresSaver",
+            "SqliteSaver",
+            "内存|RAM"
+          ],
+          "evidence": [
+            {
+              "document": "langgraph",
+              "ordinal": 5,
+              "title": "LangGraph official persistence guide",
+              "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+              "page": null,
+              "sha256": "99ca192803affd7ab65852741604dcaaca7c9668a8e3c3287fcf71573c0d90ac",
+              "quote": "### `MemorySaver` does not persist between restarts\n\n`MemorySaver` and `InMemorySaver` store checkpoints in RAM. When the process restarts, all checkpoints are lost.\n\n**Fix:** Use a persistent checkpointer for production:\n\n- `PostgresSaver`: PostgreSQL with async support\n- `SqliteSaver`: Local file-based storage for development"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-false-02",
+      "category": "false_premise",
+      "query": "LlamaIndex QueryFusionRetriever 默认是不是 reciprocal rank 模式？simple fusion 同节点多次出现时是求和还是取最大分？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "default",
+          "expected": "默认FUSION_MODES.SIMPLE。",
+          "prefilter_patterns": [
+            "SIMPLE|simple"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 1,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "25678beb974eda0e7fc8085ab09357ae0213f8726c0266284a80365b85bc04b7",
+              "quote": "def __init__(\n        self,\n        retrievers: List[BaseRetriever],\n        llm: Optional[LLMType] = None,\n        query_gen_prompt: Optional[str] = None,\n        mode: FUSION_MODES = FUSION_MODES.SIMPLE,\n        similarity_top_k: int = DEFAULT_SIMILARITY_TOP_K,\n        num_queries: int = 4,\n        use_async: bool = True,\n        verbose: bool = False,\n        callback_manager: Optional[CallbackManager] = None,\n        objects: Optional[List[IndexNode]] = None,\n        object_map: Optional[dict] = None,\n        retriever_weights: Optional[List[float]] = None,\n    ) -> None:\n        self.num_queries = num_queries\n        self.query_gen_prompt = query_gen_prompt or QUERY_GEN_PROMPT\n        self.similarity_top_k = similarity_top_k\n        self.mode = mode\n        self.use_async = use_async\n\n        self._retrievers = retrievers\n        if retriever_weights is None:\n            self._retriever_weights = [1.0 / len(retrievers)] * len(retrievers)\n        else:\n            # Sum of retriever_weights must be 1\n            total_weight = sum(retriever_weights)\n            self._retriever_weights = [w / total_weight for w in retriever_weights]\n        self._llm = (\n            resolve_llm(llm, callback_manager=callback_manager) if llm else Settings.llm\n        )\n        super().__init__(\n            callback_manager=callback_manager,\n            object_map=object_map,\n            objects=objects,\n            verbose=verbose,\n        )"
+            }
+          ]
+        },
+        {
+          "id": "maximum",
+          "expected": "simple fusion重复节点取最大分。",
+          "prefilter_patterns": [
+            "最大|max"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 8,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "d4fa9df3323e8fb96a4795e475d2add6b28d6e4792cd030596bb15c7309597fa",
+              "quote": "def _simple_fusion(\n        self, results: Dict[Tuple[str, int], List[NodeWithScore]]\n    ) -> List[NodeWithScore]:\n        \"\"\"Apply simple fusion.\"\"\"\n        # Use a dict to de-duplicate nodes\n        all_nodes: Dict[str, NodeWithScore] = {}\n        for nodes_with_scores in results.values():\n            for node_with_score in nodes_with_scores:\n                hash = node_with_score.node.hash\n                if hash in all_nodes:\n                    max_score = max(\n                        node_with_score.score or 0.0, all_nodes[hash].score or 0.0\n                    )\n                    all_nodes[hash].score = max_score\n                else:\n                    all_nodes[hash] = node_with_score\n\n        return sorted(all_nodes.values(), key=lambda x: x.score or 0.0, reverse=True)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-false-03",
+      "category": "false_premise",
+      "query": "默认 num_queries=4 时，LlamaIndex 是否丢弃原查询，再生成4条查询？请依据源码说明。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "original",
+          "expected": "_retrieve中queries=[query_bundle]保留原查询。",
+          "prefilter_patterns": [
+            "原查询|原始查询"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 12,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "81c48f104984c3b6c0bb7b7c3d3191675f1868ab949fd420658d1c1d7e2ae6aa",
+              "quote": "def _retrieve(self, query_bundle: QueryBundle) -> List[NodeWithScore]:\n        queries: List[QueryBundle] = [query_bundle]\n        if self.num_queries > 1:\n            queries.extend(self._get_queries(query_bundle.query_str))\n\n        if self.use_async:\n            results = self._run_nested_async_queries(queries)\n        else:\n            results = self._run_sync_queries(queries)\n\n        if self.mode == FUSION_MODES.RECIPROCAL_RANK:\n            return self._reciprocal_rerank_fusion(results)[: self.similarity_top_k]\n        elif self.mode == FUSION_MODES.RELATIVE_SCORE:\n            return self._relative_score_fusion(results)[: self.similarity_top_k]\n        elif self.mode == FUSION_MODES.DIST_BASED_SCORE:\n            return self._relative_score_fusion(results, dist_based=True)[\n                : self.similarity_top_k\n            ]\n        elif self.mode == FUSION_MODES.SIMPLE:\n            return self._simple_fusion(results)[: self.similarity_top_k]\n        else:\n            raise ValueError(f\"Invalid fusion mode: {self.mode}\")"
+            }
+          ]
+        },
+        {
+          "id": "generated",
+          "expected": "请求并至多返回num_queries-1即3条新查询。",
+          "prefilter_patterns": [
+            "3|num_queries.*1"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 5,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "5c043749717add9f1b6f305a785473df4eb31f7e83fcf2631cc6820b938773a8",
+              "quote": "def _get_queries(self, original_query: str) -> List[QueryBundle]:\n        prompt_str = self.query_gen_prompt.format(\n            num_queries=self.num_queries - 1,\n            query=original_query,\n        )\n        response = self._llm.complete(prompt_str)\n\n        # Strip code block and assume LLM properly put each query on a newline\n        queries = response.text.strip(\"`\").split(\"\\n\")\n        queries = [q.strip() for q in queries if q.strip()]\n        if self._verbose:\n            queries_str = \"\\n\".join(queries)\n            print(f\"Generated queries:\\n{queries_str}\")\n\n        # The LLM often returns more queries than we asked for, so trim the list.\n        return [QueryBundle(q) for q in queries[: self.num_queries - 1]]"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-false-04",
+      "category": "false_premise",
+      "query": "LlamaIndex 的 dist_based score fusion 是否总是用观察到的最小/最大值归一化？如果不是，范围如何计算？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "range",
+          "expected": "使用均值±3倍标准差作为min/max。",
+          "prefilter_patterns": [
+            "3",
+            "均值|mean",
+            "标准差|std"
+          ],
+          "evidence": [
+            {
+              "document": "llamaindex",
+              "ordinal": 7,
+              "title": "LlamaIndex QueryFusionRetriever implementation",
+              "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+              "page": null,
+              "sha256": "dccd2bb492da8f45b47ea0a4e7724417f5492957592a0a9a248e4346c560d633",
+              "quote": "def _relative_score_fusion(\n        self,\n        results: Dict[Tuple[str, int], List[NodeWithScore]],\n        dist_based: Optional[bool] = False,\n    ) -> List[NodeWithScore]:\n        \"\"\"Apply relative score fusion.\"\"\"\n        # MinMax scale scores of each result set (highest value becomes 1, lowest becomes 0)\n        # then scale by the weight of the retriever\n        min_max_scores = {}\n        for query_tuple, nodes_with_scores in results.items():\n            if not nodes_with_scores:\n                min_max_scores[query_tuple] = (0.0, 0.0)\n                continue\n            scores = [\n                node_with_score.score or 0.0 for node_with_score in nodes_with_scores\n            ]\n            if dist_based:\n                # Set min and max based on mean and std dev\n                mean_score = sum(scores) / len(scores)\n                std_dev = (\n                    sum((x - mean_score) ** 2 for x in scores) / len(scores)\n                ) ** 0.5\n                min_score = mean_score - 3 * std_dev\n                max_score = mean_score + 3 * std_dev\n            else:\n                min_score = min(scores)\n                max_score = max(scores)\n            min_max_scores[query_tuple] = (min_score, max_score)\n\n        for query_tuple, nodes_with_scores in results.items():\n            for node_with_score in nodes_with_scores:\n                min_score, max_score = min_max_scores[query_tuple]\n                # Scale the score to be between 0 and 1\n                if max_score == min_score:\n                    node_with_score.score = 1.0 if max_score > 0 else 0.0\n                else:\n                    node_with_score.score = (node_with_score.score - min_score) / (\n                        max_score - min_score\n                    )\n                # Scale by the weight of the retriever\n                retriever_idx = query_tuple[1]\n                existing_score = node_with_score.score or 0.0\n                node_with_score.score = (\n                    existing_score * self._retriever_weights[retriever_idx]\n                )\n                # Divide by the number of queries\n                node_with_score.score /= self.num_queries\n\n        # Use a dict to de-duplicate nodes\n        all_nodes: Dict[str, NodeWithScore] = {}\n\n        # Sum scores for each node\n        for nodes_with_scores in results.values():\n            for node_with_score in nodes_with_scores:\n                hash = node_with_score.node.hash\n                if hash in all_nodes:\n                    cur_score = all_nodes[hash].score or 0.0\n                    all_nodes[hash].score = cur_score + (node_with_score.score or 0.0)\n                else:\n                    all_nodes[hash] = node_with_score\n\n        return sorted(all_nodes.values(), key=lambda x: x.score or 0.0, reverse=True)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。"
+    },
+    {
+      "id": "ind-absent-01",
+      "category": "unanswerable",
+      "query": "LangGraph 这份指南中，MemorySaver 与 PostgresSaver 在同机的恢复 P95 各是多少毫秒？没有实测就不要估算。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。",
+      "absence_basis": {
+        "scope": "Frozen corpus only.",
+        "expected": "说明当前证据不足以给出所要求实测量，不编造，不从代码常量推算效果。",
+        "corpus_search_review": "Two complete official files were read before freezing; no requested benchmark, timing, cost or confidence interval was present. Historical sources are distractors.",
+        "related_originals": [
+          {
+            "document": "langgraph",
+            "ordinal": 5,
+            "title": "LangGraph official persistence guide",
+            "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+            "page": null,
+            "sha256": "99ca192803affd7ab65852741604dcaaca7c9668a8e3c3287fcf71573c0d90ac",
+            "quote": "### `MemorySaver` does not persist between restarts\n\n`MemorySaver` and `InMemorySaver` store checkpoints in RAM. When the process restarts, all checkpoints are lost.\n\n**Fix:** Use a persistent checkpointer for production:\n\n- `PostgresSaver`: PostgreSQL with async support\n- `SqliteSaver`: Local file-based storage for development"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ind-absent-02",
+      "category": "unanswerable",
+      "query": "这份 LlamaIndex 源码实测了 SIMPLE 与 RECIPROCAL_RANK 在 BEIR 上的 Recall@5 吗？请给两个实测值，没有就说明不能确定。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。",
+      "absence_basis": {
+        "scope": "Frozen corpus only.",
+        "expected": "说明当前证据不足以给出所要求实测量，不编造，不从代码常量推算效果。",
+        "corpus_search_review": "Two complete official files were read before freezing; no requested benchmark, timing, cost or confidence interval was present. Historical sources are distractors.",
+        "related_originals": [
+          {
+            "document": "llamaindex",
+            "ordinal": 6,
+            "title": "LlamaIndex QueryFusionRetriever implementation",
+            "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+            "page": null,
+            "sha256": "a510cc419a6909a67c0248a0ba2ab21c6d83f72d7090bf35a33ca0b599cb6dfb",
+            "quote": "def _reciprocal_rerank_fusion(\n        self, results: Dict[Tuple[str, int], List[NodeWithScore]]\n    ) -> List[NodeWithScore]:\n        \"\"\"\n        Apply reciprocal rank fusion.\n\n        The original paper uses k=60 for best results:\n        https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf\n        \"\"\"\n        k = 60.0  # `k` is a parameter used to control the impact of outlier rankings.\n        fused_scores = {}\n        hash_to_node = {}\n\n        # compute reciprocal rank scores\n        for nodes_with_scores in results.values():\n            for rank, node_with_score in enumerate(\n                sorted(nodes_with_scores, key=lambda x: x.score or 0.0, reverse=True)\n            ):\n                hash = node_with_score.node.hash\n                hash_to_node[hash] = node_with_score\n                if hash not in fused_scores:\n                    fused_scores[hash] = 0.0\n                fused_scores[hash] += 1.0 / (rank + k)\n\n        # sort results\n        reranked_results = dict(\n            sorted(fused_scores.items(), key=lambda x: x[1], reverse=True)\n        )\n\n        # adjust node scores\n        reranked_nodes: List[NodeWithScore] = []\n        for hash, score in reranked_results.items():\n            reranked_nodes.append(hash_to_node[hash])\n            reranked_nodes[-1].score = score\n\n        return reranked_nodes"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ind-absent-03",
+      "category": "unanswerable",
+      "query": "依据这些资料，LangGraph 改用 Store 后用户满意度提高多少？要求95%置信区间，不能把功能描述当效果实验。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。",
+      "absence_basis": {
+        "scope": "Frozen corpus only.",
+        "expected": "说明当前证据不足以给出所要求实测量，不编造，不从代码常量推算效果。",
+        "corpus_search_review": "Two complete official files were read before freezing; no requested benchmark, timing, cost or confidence interval was present. Historical sources are distractors.",
+        "related_originals": [
+          {
+            "document": "langgraph",
+            "ordinal": 2,
+            "title": "LangGraph official persistence guide",
+            "url": "https://github.com/langchain-ai/docs/blob/264fdf88d3fc53d5d2397fadf3b6dba36b95dd0e/src/oss/langgraph/persistence.mdx",
+            "page": null,
+            "sha256": "8fce8f2e0c63f104851c52ad08b8dd9d8ff312ca777bbf3a0544a7bd523d6337",
+            "quote": "## Checkpointer vs. store\n\n| | Checkpointer | Store |\n| ---- | ---- | ---- |\n| Persists | Graph state snapshots | Application-defined key-value data |\n| Scope | A single thread | Across threads |\n| Memory type | Short-term, thread-scoped memory | Long-term, cross-thread memory |\n| Use for | Conversation continuity, human-in-the-loop, time travel, and fault tolerance | User preferences, facts, and shared knowledge |\n| Access pattern | Pass a `thread_id` in graph config | Read and write items from nodes or application code |\n| Full guide | [Checkpointers](/oss/langgraph/checkpointers) | [Stores](/oss/langgraph/stores) |"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ind-absent-04",
+      "category": "unanswerable",
+      "query": "LlamaIndex num_queries 从1增到4，在所给资料的生产实验中每千次请求成本增加多少美元？只报实测，不自行设定模型价格。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "Codex逐事实核阅实际答复及其绑定原文；关键词仅预筛，未核验稿与运行失败单列。",
+      "absence_basis": {
+        "scope": "Frozen corpus only.",
+        "expected": "说明当前证据不足以给出所要求实测量，不编造，不从代码常量推算效果。",
+        "corpus_search_review": "Two complete official files were read before freezing; no requested benchmark, timing, cost or confidence interval was present. Historical sources are distractors.",
+        "related_originals": [
+          {
+            "document": "llamaindex",
+            "ordinal": 1,
+            "title": "LlamaIndex QueryFusionRetriever implementation",
+            "url": "https://github.com/run-llama/llama_index/blob/169e450aa54d26ed3e0536b1a0f1ea537871aa5d/llama-index-core/llama_index/core/retrievers/fusion_retriever.py",
+            "page": null,
+            "sha256": "25678beb974eda0e7fc8085ab09357ae0213f8726c0266284a80365b85bc04b7",
+            "quote": "def __init__(\n        self,\n        retrievers: List[BaseRetriever],\n        llm: Optional[LLMType] = None,\n        query_gen_prompt: Optional[str] = None,\n        mode: FUSION_MODES = FUSION_MODES.SIMPLE,\n        similarity_top_k: int = DEFAULT_SIMILARITY_TOP_K,\n        num_queries: int = 4,\n        use_async: bool = True,\n        verbose: bool = False,\n        callback_manager: Optional[CallbackManager] = None,\n        objects: Optional[List[IndexNode]] = None,\n        object_map: Optional[dict] = None,\n        retriever_weights: Optional[List[float]] = None,\n    ) -> None:\n        self.num_queries = num_queries\n        self.query_gen_prompt = query_gen_prompt or QUERY_GEN_PROMPT\n        self.similarity_top_k = similarity_top_k\n        self.mode = mode\n        self.use_async = use_async\n\n        self._retrievers = retrievers\n        if retriever_weights is None:\n            self._retriever_weights = [1.0 / len(retrievers)] * len(retrievers)\n        else:\n            # Sum of retriever_weights must be 1\n            total_weight = sum(retriever_weights)\n            self._retriever_weights = [w / total_weight for w in retriever_weights]\n        self._llm = (\n            resolve_llm(llm, callback_manager=callback_manager) if llm else Settings.llm\n        )\n        super().__init__(\n            callback_manager=callback_manager,\n            object_map=object_map,\n            objects=objects,\n            verbose=verbose,\n        )"
+          }
+        ]
+      }
+    }
+  ]
+}

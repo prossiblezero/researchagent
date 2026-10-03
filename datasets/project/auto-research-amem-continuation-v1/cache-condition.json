@@ -1,0 +1,24 @@
+{
+  "schema": "amem-cache-condition/v1",
+  "model_id": "sudocode-luna",
+  "seed": 13,
+  "retrieve_k": 10,
+  "method": "official-robust-stdio-v1",
+  "script_sha256": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+  "tasks_sha256": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d",
+  "corpus_sha256": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34",
+  "upstream": {
+    "llm_text_parsers.py": "353b77f57ce081ee51789e953ae8604b0c57e6470a332adc0377cf48f76d3a90",
+    "load_dataset.py": "b249429a6624e6e79e5e099c90bfcf7ab96c8fd40f3b1074b750dd0b2823661b",
+    "memory_layer.py": "b9a5b5797881b25c5524b98a543b22a1bbbcc7f285437ca667a5673e7f293eba",
+    "memory_layer_robust.py": "1c5cd36b50c9113440db0523b1f3d781aebc3711ff9b86b72b20e0f9bc981aef",
+    "test_advanced_robust.py": "83fadc17d05af5694fa8c6532cff6d8b8df5db1453a34f43f6a4609b4a49e296",
+    "utils.py": "778236a617d27b7b9c2d0f052bb9e873586194960431cfa5935dd2302c66e73b"
+  },
+  "embedding": {
+    "modules.json": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+    "config.json": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+    "model.safetensors": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+    "tokenizer.json": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037"
+  }
+}

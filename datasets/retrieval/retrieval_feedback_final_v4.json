@@ -1,0 +1,329 @@
+[
+  {
+    "id": "final-direct-00",
+    "split": "held_out",
+    "category": "direct",
+    "query": "DocLayNet Mask R-CNN learning curve increasing data fraction saturation",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 29
+      }
+    ],
+    "fact_groups": [
+      "doclaynet-data-saturation"
+    ],
+    "evidence": [
+      {
+        "group": "doclaynet-data-saturation",
+        "document": "docling",
+        "ordinal": 29,
+        "quote": "Figure 5: Prediction performance (mAP@0.5-0.95) of a Mask\nR-CNN network with ResNet50 backbone trained on increas-\ning fractions of the DocLayNet dataset. The learning curve\n￿attens around the 80% mark, indicating that increasing the\nsize of the DocLayNet dataset with similar data will not yield\nsigni￿cantly better predictions.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 8,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "432de141fa6752f9452b06f9f696772549461c0246365aa996fa52fcaf38e402"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-direct-01",
+    "split": "held_out",
+    "category": "direct",
+    "query": "ReAct WebShop evaluation average score success rate test instructions",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 21
+      }
+    ],
+    "fact_groups": [
+      "react-webshop-evaluation"
+    ],
+    "evidence": [
+      {
+        "group": "react-webshop-evaluation",
+        "document": "react",
+        "ordinal": 21,
+        "quote": "This task is evaluated by average score\n(percentage of desired attributes covered by the chosen product averaged across all episodes) and\nsuccess rate (percentage of episodes where the chosen product satisﬁes all requirements) on 500 test\ninstructions.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 7,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "b321355caa56001695bdd20d10b812e2621846c2049e34443442c8ad895d38e8"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-direct-02",
+    "split": "held_out",
+    "category": "direct",
+    "query": "Pi modelOverrides exact case sensitive keys invalid token settings",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 10
+      }
+    ],
+    "fact_groups": [
+      "pi-model-override-validation"
+    ],
+    "evidence": [
+      {
+        "group": "pi-model-override-validation",
+        "document": "pi",
+        "ordinal": 10,
+        "quote": "Keys are exact, case-sensitive `provider/modelId` values, including any slashes within the model ID. Each `reserveTokens` and `keepRecentTokens` value falls back independently from the model override to the ordinary setting to the built-in default. Values must be non-negative safe integers. Invalid values in the matching model override produce an error when read; only omitted fields fall back to the ordinary setting. Model override entries must be objects. Invalid ordinary token settings produce an error when read, even if the active model has a valid override. Only omitted ordinary values use built-in defaults. `enabled` remains global, not model-specific.",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8fd41fa7f3f0ee1de432e655784801eaaf13aa14d1b20292076c6ecabc83777a"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-semantic-00",
+    "split": "held_out",
+    "category": "semantic",
+    "query": "记忆整合本轮没有选中任何输入时，Codex 怎样清理旧文件，并把哪些合并产物留给代理处理？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 3
+      }
+    ],
+    "fact_groups": [
+      "codex-empty-selection-cleanup"
+    ],
+    "evidence": [
+      {
+        "group": "codex-empty-selection-cleanup",
+        "document": "codex",
+        "ordinal": 3,
+        "quote": "- when the selected input set is empty, stale `rollout_summaries/` files are\n  removed and `raw_memories.md` is rewritten to the empty-input placeholder;\n  consolidated outputs such as `MEMORY.md`, `memory_summary.md`, and `skills/`\n  are left for the agent to update",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d0128da5abbdcbce6f0463f65d043cd7b4a39176b29ca58c8856c493f8ba4663"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-semantic-01",
+    "split": "held_out",
+    "category": "semantic",
+    "query": "OpenClaw 要严格只允许当前会话回忆，应选哪种可见性范围？私聊分组设置是否同时阻止跨会话查阅？",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 5
+      }
+    ],
+    "fact_groups": [
+      "openclaw-session-visibility"
+    ],
+    "evidence": [
+      {
+        "group": "openclaw-session-visibility",
+        "document": "openclaw",
+        "ordinal": 5,
+        "quote": "Session hits obey `tools.sessions.visibility`, which defaults to `\"all\"`.\n`memory_search` still searches the selected agent's indexed corpus; use\n[`sessions_search`](/concepts/session-search) for transcript search across agents\non the Gateway. Visible transcripts can include other users' conversations.\nCross-agent session access is on by default and governed by\n`tools.agentToAgent`; set `enabled: false` to block ordinary cross-agent access\n(requester-owned native subagent and ACP child sessions stay reachable under `tree` or `all`) or use `allow`\nto restrict agent pairs. A per-peer `session.dmScope`\nseparates DM context but does not restrict transcript access through session\ntools. Choose explicit `\"agent\"` for same-agent recall, `\"tree\"` for current plus\nspawned scope (with an agent-wide exception for main), or `\"self\"` for strict\ncurrent-session recall. Sandbox spawned-only clamps and\nincognito exclusions still apply.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "494ac76a71d7db49f525789c31d33e86ef493767f174a0d027760919f6361911"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-semantic-02",
+    "split": "held_out",
+    "category": "semantic",
+    "query": "Hermes 同步微压缩结果时，旧消息的哪一个数据库字段若仍为 1，会导致恢复时同时加载摘要与原消息？",
+    "gold": [
+      {
+        "document": "hermes",
+        "ordinal": 10
+      }
+    ],
+    "fact_groups": [
+      "hermes-persist-before-resume"
+    ],
+    "evidence": [
+      {
+        "group": "hermes-persist-before-resume",
+        "document": "hermes",
+        "ordinal": 10,
+        "quote": "\"\"\"Persist the micro-compacted set to the session DB atomically and stamp rows persisted.\n        Without this the old exchange rows stay ``active=1`` and a resume double-loads both the\n        summary and the originals.\"\"\"",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "577533ef4e5d96b2272d5326e28acf04049386b0e62da94ff8e86f20b1e5aa4e"
+      }
+    ],
+    "annotation_note": "The requested active=1 field and double-loading of summary plus originals are explicit in hermes:10; hermes:5 and hermes:11 mention duplicate resume only and do not specify the field."
+  },
+  {
+    "id": "final-cross-00",
+    "split": "held_out",
+    "category": "cross_document",
+    "query": "同时查找 DocLayNet 增加同类训练数据后的学习曲线变化，以及 WebShop 对所选商品的两种评价方式。",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 29
+      },
+      {
+        "document": "react",
+        "ordinal": 21
+      }
+    ],
+    "fact_groups": [
+      "doclaynet-data-saturation",
+      "react-webshop-evaluation"
+    ],
+    "evidence": [
+      {
+        "group": "doclaynet-data-saturation",
+        "document": "docling",
+        "ordinal": 29,
+        "quote": "Figure 5: Prediction performance (mAP@0.5-0.95) of a Mask\nR-CNN network with ResNet50 backbone trained on increas-\ning fractions of the DocLayNet dataset. The learning curve\n￿attens around the 80% mark, indicating that increasing the\nsize of the DocLayNet dataset with similar data will not yield\nsigni￿cantly better predictions.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 8,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "432de141fa6752f9452b06f9f696772549461c0246365aa996fa52fcaf38e402"
+      },
+      {
+        "group": "react-webshop-evaluation",
+        "document": "react",
+        "ordinal": 21,
+        "quote": "This task is evaluated by average score\n(percentage of desired attributes covered by the chosen product averaged across all episodes) and\nsuccess rate (percentage of episodes where the chosen product satisﬁes all requirements) on 500 test\ninstructions.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 7,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "b321355caa56001695bdd20d10b812e2621846c2049e34443442c8ad895d38e8"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-cross-01",
+    "split": "held_out",
+    "category": "cross_document",
+    "query": "同时查明 Pi 如何校验模型专用 token 配置，以及 Codex 没有选中记忆输入时哪些文件被清理。",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 10
+      },
+      {
+        "document": "codex",
+        "ordinal": 3
+      }
+    ],
+    "fact_groups": [
+      "pi-model-override-validation",
+      "codex-empty-selection-cleanup"
+    ],
+    "evidence": [
+      {
+        "group": "pi-model-override-validation",
+        "document": "pi",
+        "ordinal": 10,
+        "quote": "Keys are exact, case-sensitive `provider/modelId` values, including any slashes within the model ID. Each `reserveTokens` and `keepRecentTokens` value falls back independently from the model override to the ordinary setting to the built-in default. Values must be non-negative safe integers. Invalid values in the matching model override produce an error when read; only omitted fields fall back to the ordinary setting. Model override entries must be objects. Invalid ordinary token settings produce an error when read, even if the active model has a valid override. Only omitted ordinary values use built-in defaults. `enabled` remains global, not model-specific.",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8fd41fa7f3f0ee1de432e655784801eaaf13aa14d1b20292076c6ecabc83777a"
+      },
+      {
+        "group": "codex-empty-selection-cleanup",
+        "document": "codex",
+        "ordinal": 3,
+        "quote": "- when the selected input set is empty, stale `rollout_summaries/` files are\n  removed and `raw_memories.md` is rewritten to the empty-input placeholder;\n  consolidated outputs such as `MEMORY.md`, `memory_summary.md`, and `skills/`\n  are left for the agent to update",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d0128da5abbdcbce6f0463f65d043cd7b4a39176b29ca58c8856c493f8ba4663"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "final-cross-02",
+    "split": "held_out",
+    "category": "cross_document",
+    "query": "同时查明 OpenClaw 严格限制当前会话查阅的配置，以及 Hermes 恢复时旧消息的哪个数据库字段仍为 1 会使摘要与原消息重复加载。",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 5
+      },
+      {
+        "document": "hermes",
+        "ordinal": 10
+      }
+    ],
+    "fact_groups": [
+      "openclaw-session-visibility",
+      "hermes-persist-before-resume"
+    ],
+    "evidence": [
+      {
+        "group": "openclaw-session-visibility",
+        "document": "openclaw",
+        "ordinal": 5,
+        "quote": "Session hits obey `tools.sessions.visibility`, which defaults to `\"all\"`.\n`memory_search` still searches the selected agent's indexed corpus; use\n[`sessions_search`](/concepts/session-search) for transcript search across agents\non the Gateway. Visible transcripts can include other users' conversations.\nCross-agent session access is on by default and governed by\n`tools.agentToAgent`; set `enabled: false` to block ordinary cross-agent access\n(requester-owned native subagent and ACP child sessions stay reachable under `tree` or `all`) or use `allow`\nto restrict agent pairs. A per-peer `session.dmScope`\nseparates DM context but does not restrict transcript access through session\ntools. Choose explicit `\"agent\"` for same-agent recall, `\"tree\"` for current plus\nspawned scope (with an agent-wide exception for main), or `\"self\"` for strict\ncurrent-session recall. Sandbox spawned-only clamps and\nincognito exclusions still apply.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "494ac76a71d7db49f525789c31d33e86ef493767f174a0d027760919f6361911"
+      },
+      {
+        "group": "hermes-persist-before-resume",
+        "document": "hermes",
+        "ordinal": 10,
+        "quote": "\"\"\"Persist the micro-compacted set to the session DB atomically and stamp rows persisted.\n        Without this the old exchange rows stay ``active=1`` and a resume double-loads both the\n        summary and the originals.\"\"\"",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "577533ef4e5d96b2272d5326e28acf04049386b0e62da94ff8e86f20b1e5aa4e"
+      }
+    ],
+    "annotation_note": "The requested active=1 field and double-loading of summary plus originals are explicit in hermes:10; hermes:5 and hermes:11 mention duplicate resume only and do not specify the field."
+  },
+  {
+    "id": "final-absent-00",
+    "split": "held_out",
+    "category": "unanswerable",
+    "query": "这些资料给出的六种系统统一口径五年总拥有成本分别是多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "No shared five-year total-cost study is present in the frozen corpus."
+  },
+  {
+    "id": "final-absent-01",
+    "split": "held_out",
+    "category": "unanswerable",
+    "query": "DocLayNet 附录中，YOLOv9m 在测试集上的 mAP 数值是多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen DocLayNet excerpt discusses YOLOv5, not a YOLOv9m measurement."
+  },
+  {
+    "id": "final-absent-02",
+    "split": "held_out",
+    "category": "unanswerable",
+    "query": "哪段原文给出了 Pi 模型覆盖设置与 Hermes 会话恢复结合部署的端到端压力测试吞吐量？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "No joint Pi/Hermes deployment or throughput experiment is present."
+  }
+]

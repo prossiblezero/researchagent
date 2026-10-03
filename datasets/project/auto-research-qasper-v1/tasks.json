@@ -1,0 +1,797 @@
+{
+  "schema": "project-qasper-retrieval/v1",
+  "origin": "QASPER official dev subset selected from datasets/open/qasper/tasks.json",
+  "selection": "first 24 mapping_complete and retrieval_eligible tasks in frozen source order",
+  "source_sha256": "72aca32fe2f704e5ea8896268a9387bd54d2bb2058e7d208a7fba739b2921afb",
+  "tasks": [
+    {
+      "id": "qasper-013a8525dbf7a9e1e69acc1cff18bb7b8261cbad",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Do they use pretrained word embeddings?",
+      "source_id": "1811.00266",
+      "context_count": 38,
+      "gold_context_ids": [
+        "qasper:1811.00266:p:3"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "In this study, we tackle a task of describing (defining) a phrase when given its local context as BIBREF2 , while allowing access to other usage examples via word embeddings trained from massive text (global contexts) BIBREF0 , BIBREF1 . We present LOG-Cad, a neural network-based description generator (Figure FIGREF1 ) to directly solve this task. Given a word with its context, our generator takes advantage of the target word's embedding, pre-trained from massive text (global contexts), while also encoding the given local context, combining both to generate a natural language description. The local and global contexts complement one another and are both essential; global contexts are crucial when local contexts are short and vague, while the local context is crucial when the target phrase is polysemous, rare, or unseen."
+          ],
+          "gold_context_ids": [
+            "qasper:1811.00266:p:3"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": true,
+          "free_form_answer": "",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-0c3924214572579ddbc1b4a87c7f7842ef20ff1b",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What is one of the first writing systems in the world?",
+      "source_id": "1904.12087",
+      "context_count": 31,
+      "gold_context_ids": [
+        "qasper:1904.12087:p:1"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "As evidenced in Section \"Related Work\" , the focus of most of these studies is the identification of languages and dialects using contemporary data. A few exceptions include the work by trieschnigg2012exploration who applied language identification methods to historical varieties of Dutch and the work by CLIarxiv on languages written in cuneiform script: Sumerian and Akkadian. Cuneiform is an ancient writing system invented by the Sumerians for more than three millennia."
+          ],
+          "gold_context_ids": [
+            "qasper:1904.12087:p:1"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "Cuneiform"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-12d77ac09c659d2e04b5e3955a283101c3ad1058",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Which three Twitter sentiment classification datasets are used for experiments?",
+      "source_id": "1706.08032",
+      "context_count": 46,
+      "gold_context_ids": [
+        "qasper:1706.08032:p:12",
+        "qasper:1706.08032:p:13",
+        "qasper:1706.08032:p:14"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "Stanford - Twitter Sentiment Corpus (STS Corpus): STS Corpus contains 1,600K training tweets collected by a crawler from BIBREF0 . BIBREF0 constructed a test set manually with 177 negative and 182 positive tweets. The Stanford test set is small. However, it has been widely used in different evaluation tasks BIBREF0 BIBREF5 BIBREF13 .",
+            "Sanders - Twitter Sentiment Corpus: This dataset consists of hand-classified tweets collected by using search terms: INLINEFORM0 , #google, #microsoft and #twitter. We construct the dataset as BIBREF14 for binary classification.",
+            "Health Care Reform (HCR): This dataset was constructed by crawling tweets containing the hashtag #hcr BIBREF15 . Task is to predict positive/negative tweets BIBREF14 ."
+          ],
+          "gold_context_ids": [
+            "qasper:1706.08032:p:12",
+            "qasper:1706.08032:p:13",
+            "qasper:1706.08032:p:14"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "Stanford - Twitter Sentiment Corpus (STS Corpus)",
+            "Sanders - Twitter Sentiment Corpus",
+            "Health Care Reform (HCR)"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-17f5f4a5d943c91d46552fb75940b67a72144697",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "By how much do they outperform existing state-of-the-art VQA models?",
+      "source_id": "1808.00265",
+      "context_count": 48,
+      "gold_context_ids": [
+        "qasper:1808.00265:p:33"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "Table TABREF10 reports our main results. Our models are built on top of prior works with the additional Attention Supervision Module as described in Section SECREF3 . Specifically, we denote by Attn-* our adaptation of the respective model by including our Attention Supervision Module. We highlight that MCB model is the winner of VQA challenge 2016 and MFH model is the best single model in VQA challenge 2017. In Table TABREF10 , we can observe that our proposed model achieves a significantly boost on rank-correlation with respect to human attention. Furthermore, our model outperforms alternative state-of-art techniques in terms of accuracy in answer prediction. Specifically, the rank-correlation for MFH model increases by 36.4% when is evaluated in VQA-HAT dataset and 7.7% when is evaluated in VQA-X. This indicates that our proposed methods enable VQA models to provide more meaningful and interpretable results by generating more accurate visual grounding."
+          ],
+          "gold_context_ids": [
+            "qasper:1808.00265:p:33"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "the rank-correlation for MFH model increases by 36.4% when is evaluated in VQA-HAT dataset and 7.7% when is evaluated in VQA-X"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-1bdf7e9f3f804930b2933ebd9207a3e000b27742",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Does their model start with any prior knowledge of words?",
+      "source_id": "1602.01208",
+      "context_count": 102,
+      "gold_context_ids": [
+        "qasper:1602.01208:p:2"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The objectives of this study were to build a robot that learns words related to places and efficiently utilizes this learned vocabulary in self-localization. Lexical acquisition related to places is expected to enable a robot to improve its spatial cognition. A schematic representation depicting the target task of this study is shown in Fig. FIGREF3 . This study assumes that a robot does not have any vocabularies in advance but can recognize syllables or phonemes. The robot then performs self-localization while moving around in the environment, as shown in Fig. FIGREF3 (a). An utterer speaks a sentence including the name of the place to the robot, as shown in Fig. FIGREF3 (b). For the purposes of this study, we need to consider the problems of self-localization and lexical acquisition simultaneously."
+          ],
+          "gold_context_ids": [
+            "qasper:1602.01208:p:2"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": false,
+          "free_form_answer": "",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-2ed02be0c183fca7031ccb8be3fd7bc109f3694b",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "By how much they improve over the previous state-of-the-art?",
+      "source_id": "2003.00576",
+      "context_count": 51,
+      "gold_context_ids": [
+        "qasper:2003.00576:p:27"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "Finally, our combined model which uses both Latent and Explicit structure performs the best with a strong improvement of 1.08 points in ROUGE-L over our base pointer-generator model and 0.6 points in ROUGE-1. It shows that the latent and explicit information are complementary and a model can jointly leverage them to produce better summaries."
+          ],
+          "gold_context_ids": [
+            "qasper:2003.00576:p:27"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "1.08 points in ROUGE-L over our base pointer-generator model ",
+            "0.6 points in ROUGE-1"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-3786164eaf3965c11c9969c4463b8c3223627067",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What annotations are available in ICSI meeting corpus?",
+      "source_id": "1910.10869",
+      "context_count": 48,
+      "gold_context_ids": [
+        "qasper:1910.10869:p:8"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The ICSI Meeting Corpus BIBREF11 is a collection of meeting recordings that has been thoroughly annotated, including annotations for involvement hot spots BIBREF12, linguistic utterance units, and word time boundaries based on forced alignment. The dataset is comprised of 75 meetings and about 70 hours of real-time audio duration, with 6 speakers per meeting on average. Most of the participants are well-acquainted and friendly with each other. Hot spots were originally annotated with 8 levels and degrees, ranging from `not hot' to `luke warm' to `hot +'. Every utterance was labeled with one of these discrete labels by a single annotator. Hightened involvement is rare, being marked on only 1% of utterances."
+          ],
+          "gold_context_ids": [
+            "qasper:1910.10869:p:8"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "8 levels and degrees, ranging from `not hot' to `luke warm' to `hot +'. Every utterance was labeled with one of these discrete labels by a single annotator"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-3b7798a6bce1a5faf411bb12e2e011dbab1e279d",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Do any of the evaluations show that adversarial learning improves performance in at least two different language families?",
+      "source_id": "1909.00153",
+      "context_count": 39,
+      "gold_context_ids": [
+        "qasper:1909.00153:p:23"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "In Figure FIGREF15 , we plot the zero-resource German and Japanese test set accuracy as a function of the number of steps taken, with and without adversarial training. The plot shows that the variation in the test accuracy is reduced with adversarial training, which suggests that the cross-lingual performance is more consistent when adversarial training is applied. (We note that the batch size and learning rates are the same for all the languages in MLDoc, so the variation seen in Figure FIGREF15 are not affected by those factors.)"
+          ],
+          "gold_context_ids": [
+            "qasper:1909.00153:p:23"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": true,
+          "free_form_answer": "",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-47ecaca8adc7306e3014e8c4358e306a5f0e1716",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What models does this overview cover?",
+      "source_id": "1703.08098",
+      "context_count": 37,
+      "gold_context_ids": [
+        "qasper:1703.08098:p:10",
+        "qasper:1703.08098:p:11",
+        "qasper:1703.08098:p:12",
+        "qasper:1703.08098:p:13",
+        "qasper:1703.08098:p:16",
+        "qasper:1703.08098:p:2",
+        "qasper:1703.08098:p:5"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "This intuition inspired the TransE model—a well-known embedding model for KB completion or link prediction in KBs BIBREF2 .",
+            "Embedding models for KB completion have been proven to give state-of-the-art link prediction performances, in which entities are represented by latent feature vectors while relation types are represented by latent feature vectors and/or matrices and/or third-order tensors BIBREF24 , BIBREF25 , BIBREF2 , BIBREF26 , BIBREF27 , BIBREF28 , BIBREF29 , BIBREF19 , BIBREF30 , BIBREF3 , BIBREF31 , BIBREF32 , BIBREF33 . This article briefly overviews the embedding models for KB completion, and then summarizes up-to-date experimental results on two standard evaluation tasks: i) the entity prediction task—which is also referred to as the link prediction task BIBREF2 —and ii) the triple classification task BIBREF34 .",
+            "The Unstructured model BIBREF22 assumes that the head and tail entity vectors are similar. As the Unstructured model does not take the relationship into account, it cannot distinguish different relation types. The Structured Embedding (SE) model BIBREF35 assumes that the head and tail entities are similar only in a relation-dependent subspace, where each relation is represented by two different matrices. Furthermore, the SME model BIBREF22 uses four different matrices to project entity and relation vectors into a subspace. The TransE model BIBREF2 is inspired by models such as the Word2Vec Skip-gram model BIBREF0 where relationships between words often correspond to translations in latent feature space. TorusE BIBREF36 embeds entities and relations on a torus to handle TransE's regularization problem.",
+            "The TransH model BIBREF26 associates each relation with a relation-specific hyperplane and uses a projection vector to project entity vectors onto that hyperplane. TransD BIBREF37 and TransR/CTransR BIBREF28 extend the TransH model by using two projection vectors and a matrix to project entity vectors into a relation-specific space, respectively. Similar to TransR, TransR-FT BIBREF38 also uses a matrix to project head and tail entity vectors. TEKE_H BIBREF39 extends TransH to incorporate rich context information in an external text corpus. lppTransD BIBREF40 extends TransD to additionally use two projection vectors for representing each relation. STransE BIBREF41 and TranSparse BIBREF42 can be viewed as direct extensions of the TransR model, where head and tail entities are associated with their own projection matrices. Unlike STransE, the TranSparse model uses adaptive sparse matrices, whose sparse degrees are defined based on the number of entities linked by relations. TranSparse-DT BIBREF43 is an extension of TranSparse with a dynamic translation. ITransF BIBREF44 can be considered as a generalization of STransE, which allows sharing statistic regularities between relation projection matrices and alleviates data sparsity issue.",
+            "DISTMULT BIBREF45 is based on the Bilinear model BIBREF24 , BIBREF22 , BIBREF25 where each relation is represented by a diagonal rather than a full matrix. The neural tensor network (NTN) model BIBREF34 uses a bilinear tensor operator to represent each relation while ER-MLP BIBREF27 and ProjE BIBREF46 can be viewed as simplified versions of NTN. Such quadratic forms are also used to model entities and relations in KG2E BIBREF47 , TransG BIBREF48 , ComplEx BIBREF31 , TATEC BIBREF3 , RSTE BIBREF49 and ANALOGY BIBREF50 . In addition, the HolE model BIBREF33 uses circular correlation–a compositional operator–which can be interpreted as a compression of the tensor product.",
+            "ConvE BIBREF51 and ConvKB BIBREF52 are based on convolutional neural networks. ConvE uses a 2D convolutional layer directly over head-entity and relation vector embeddings while ConvKB applies a convolutional layer over embedding triples. Unlike ConvE and ConvKB, the IRN model BIBREF53 uses a shared memory and recurrent neural network-based controller to implicitly model multi-step structured relationships.",
+            "The Path Ranking Algorithm (PRA) BIBREF21 is a random walk inference technique which was proposed to predict a new relationship between two entities in KBs. BIBREF61 used PRA to estimate the probability of an unseen triple as a combination of weighted random walks that follow different paths linking the head entity and tail entity in the KB. BIBREF23 made use of an external text corpus to increase the connectivity of the KB used as the input to PRA. BIBREF62 improved PRA by proposing a subgraph feature extraction technique to make the generation of random walks in KBs more efficient and expressive, while BIBREF63 extended PRA to couple the path ranking of multiple relations. PRA can also be used in conjunction with first-order logic in the discriminative Gaifman model BIBREF64 . In addition, BIBREF65 used a recurrent neural network to learn vector representations of PRA-style relation paths between entities in the KB. Other random-walk based learning algorithms for KB completion can be also found in BIBREF66 , BIBREF67 , BIBREF68 and BIBREF69 . Recently, BIBREF70 have proposed a Neural Logic Programming (LP) framework to learning probabilistic first-order logical rules for KB reasoning, producing competitive link prediction performances. See other methods for learning from KBs and multi-relational data in BIBREF4 ."
+          ],
+          "gold_context_ids": [
+            "qasper:1703.08098:p:10",
+            "qasper:1703.08098:p:11",
+            "qasper:1703.08098:p:12",
+            "qasper:1703.08098:p:13",
+            "qasper:1703.08098:p:16",
+            "qasper:1703.08098:p:2",
+            "qasper:1703.08098:p:5"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "This article presented a brief overview of embedding models of entity and relationships for KB completion. "
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-48cf360a7753a23342f53f116eeccc2014bcc8eb",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Is Aristo just some modern NLP model (ex. BERT) finetuned od data specific for this task?",
+      "source_id": "1909.01958",
+      "context_count": 99,
+      "gold_context_ids": [
+        "qasper:1909.01958:p:12",
+        "qasper:1909.01958:p:13",
+        "qasper:1909.01958:p:14",
+        "qasper:1909.01958:p:15",
+        "qasper:1909.01958:p:16",
+        "qasper:1909.01958:p:17",
+        "qasper:1909.01958:p:38",
+        "qasper:1909.01958:p:39",
+        "qasper:1909.01958:p:40",
+        "qasper:1909.01958:p:42"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The current configuration of Aristo comprises of eight solvers, described shortly, each of which attempts to answer a multiple choice question. To study particular phenomena and develop solvers, the project has created larger datasets to amplify and study different problems, resulting in 10 new datasets and 5 large knowledge resources for the community.",
+            "The solvers can be loosely grouped into:",
+            "Statistical and information retrieval methods",
+            "Reasoning methods",
+            "Large-scale language model methods",
+            "Over the life of the project, the relative importance of the methods has shifted towards large-scale language methods.",
+            "The field of NLP has advanced substantially with the advent of large-scale language models such as ELMo (BID6), ULMFit (BID37), GPT (BID38), BERT (BID7), and RoBERTa (BID8). These models are trained to perform various language prediction tasks such as predicting a missing word or the next sentence, using large amounts of text (e.g., BERT was trained on Wikipedia + the Google Book Corpus of 10,000 books). They can also be fine-tuned to new language prediction tasks, such as question-answering, and have been remarkably successful in the few months that they have been available.",
+            "We apply BERT to multiple choice questions by treating the task as classification: Given a question $q$ with answer options $a_{i}$ and optional background knowledge $K_{i}$, we provide it to BERT as:",
+            "[CLS] $K_i$ [SEP] $q$ [SEP] $a_{i}$ [SEP]",
+            "The AristoBERT solver uses three methods to apply BERT more effectively. First, we retrieve and supply background knowledge along with the question when using BERT. This provides the potential for BERT to “read” that background knowledge and apply it to the question, although the exact nature of how it uses background knowledge is more complex and less interpretable. Second, we fine-tune BERT using a curriculum of several datasets, including some that are not science related. Finally, we ensemble different variants of BERT together."
+          ],
+          "gold_context_ids": [
+            "qasper:1909.01958:p:12",
+            "qasper:1909.01958:p:13",
+            "qasper:1909.01958:p:14",
+            "qasper:1909.01958:p:15",
+            "qasper:1909.01958:p:16",
+            "qasper:1909.01958:p:17",
+            "qasper:1909.01958:p:38",
+            "qasper:1909.01958:p:39",
+            "qasper:1909.01958:p:40",
+            "qasper:1909.01958:p:42"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": true,
+          "free_form_answer": "",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-4bd894c365d85e20753d9d2cb6edebb8d6f422e9",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How authors create adversarial test set to measure model robustness?",
+      "source_id": "1911.05153",
+      "context_count": 50,
+      "gold_context_ids": [
+        "qasper:1911.05153:p:9"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "To evaluate model robustness, we devise a test set consisting of ‘adversarial’ examples, i.e, perturbed examples that can potentially change the base model's prediction. These could stem from paraphrasing a sentence, e.g., lexical and syntactical changes. We use two approaches described in literature: back-translation and noisy sequence autoencoder. Note that these examples resemble black-box attacks but are not intentionally designed to fool the system and hence, we use the term 'adversarial' broadly. We use these techniques to produce many paraphrases and find a subset of utterances that though very similar to the original test set, result in wrong predictions. We will measure the model robustness against such changes."
+          ],
+          "gold_context_ids": [
+            "qasper:1911.05153:p:9"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "we devise a test set consisting of ‘adversarial’ examples, i.e, perturbed examples that can potentially change the base model's prediction. ",
+            "We use two approaches described in literature: back-translation and noisy sequence autoencoder."
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-57e783f00f594e08e43a31939aedb235c9d5a102",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What evaluation metrics were used?",
+      "source_id": "1912.03234",
+      "context_count": 30,
+      "gold_context_ids": [
+        "qasper:1912.03234:p:17"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "A two-step validation was conducted for English-speaking customers. An initial A/B testing for the LR model in a production setting was performed to compare the labelling strategies. A second offline comparison of the models was conducted on historical data and a selected labelling strategy. One month of data and a subset of the customers was used (approx. eighty thousand). The sampled dataset presents a fraction of positive labels of approximately 0.5 for reuse and 0.2 for one-day return. Importantly, since this evaluation is done on a subset of users, the dataset characteristic's do not necessarily represent real production traffic. The joke corpus in this dataset contains thousands of unique jokes of different categories (sci-fi, sports, etc) and types (puns, limerick, etc). The dataset was split timewise into training/validation/test sets, and hyperparameters were optimized to maximize the AUC-ROC on the validation set. As a benchmark, we also consider two additional methods: a non-personalized popularity model and one that follows BIBREF16, replacing the transformer joke encoder with a CNN network (the specialized loss and other characteristics of the DL model are kept)."
+          ],
+          "gold_context_ids": [
+            "qasper:1912.03234:p:17"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "AUC-ROC"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-65461516098ed63c45a567648e8e47c38ea7e58a",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How are typing hints suggested?",
+      "source_id": "1909.09986",
+      "context_count": 50,
+      "gold_context_ids": [
+        "qasper:1909.09986:p:11"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "We incorporate typing information by concatenating to the embedding vector of each input symbol one of three embedding vectors, S, E or R, where S is concatenated to structural elements (opening and closing brackets), E to entity symbols and R to relation symbols."
+          ],
+          "gold_context_ids": [
+            "qasper:1909.09986:p:11"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            " concatenating to the embedding vector"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-65e2f97f2fe8eb5c2fa41cb95c02b577e8d6e5ee",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How did they measure effectiveness?",
+      "source_id": "1911.06747",
+      "context_count": 35,
+      "gold_context_ids": [
+        "qasper:1911.06747:p:21"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "We trained the DQN agent using an $\\epsilon $-greedy policy with $\\epsilon $ decreasing linearly from 1 to $0.1$ over $100,000$ steps. Additionally, we tuned a window size to include previous dialog turns as input and set $\\gamma $ to $0.9$. We ran the method 30 times for $150,000$ steps, and in each run, after every 10,000 steps, we sampled $3,000$ dialog episodes with no exploration to evaluate the performance. The optimal parameters were found using Hyperopt BIBREF23 (see Appendix B). Figure FIGREF9 shows the simulation results during training. The Y-axis in the figure is the success rate of the agent (measured in terms of number of dialogs that resulted in launching a skill divided by total number of dialogs), and the X-axis is the number of learning steps. Given our choice of reward function, the increase in success rate is indicative of the agent learning to improve its policy over time. Furthermore, the RL agent outperformed the rule-based agent with average success rate of $68.00\\% (\\pm 2\\%$) in simulation."
+          ],
+          "gold_context_ids": [
+            "qasper:1911.06747:p:21"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "number of dialogs that resulted in launching a skill divided by total number of dialogs"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-7348e781b2c3755b33df33f4f0cab4b94fcbeb9b",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Do they use expert annotations, crowdsourcing, or only automatic methods to analyze the corpora?",
+      "source_id": "1604.05781",
+      "context_count": 50,
+      "gold_context_ids": [
+        "qasper:1604.05781:p:4"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The rest of this paper is organized as follows: In Sec. \"Materials and Methods\" we discuss our materials and methods, including the dataset we studied, how we preprocessed that data and extracted a `causal' corpus and a corresponding `control' corpus, and the details of the statistical and language analysis tools we studied these corpora with. In Sec. \"Results\" we present results using these tools to compare the causal statements to control statements. We conclude with a discussion in Sec. \"Discussion\" ."
+          ],
+          "gold_context_ids": [
+            "qasper:1604.05781:p:4"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "Only automatic methods",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-98515bd97e4fae6bfce2d164659cd75e87a9fc89",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What is the source of the user interaction data? ",
+      "source_id": "1902.06843",
+      "context_count": 82,
+      "gold_context_ids": [
+        "qasper:1902.06843:p:13"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The recent advancements in deep neural networks, specifically for image analysis task, can lead to determining demographic features such as age and gender BIBREF13 . We show that by determining and integrating heterogeneous set of features from different modalities – aesthetic features from posted images (colorfulness, hue variance, sharpness, brightness, blurriness, naturalness), choice of profile picture (for gender, age, and facial expression), the screen name, the language features from both textual content and profile's description (n-gram, emotion, sentiment), and finally sociability from ego-network, and user engagement – we can reliably detect likely depressed individuals in a data set of 8,770 human-annotated Twitter users."
+          ],
+          "gold_context_ids": [
+            "qasper:1902.06843:p:13"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "Sociability from ego-network on Twitter",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-9c4ed8ca59ba6d240f031393b01f634a9dc3615d",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "what baseline do they compare to?",
+      "source_id": "1906.10519",
+      "context_count": 210,
+      "gold_context_ids": [
+        "qasper:1906.10519:p:78"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "We compare Blse (Sections UID23 – UID30 ) to VecMap, Muse, and Barista (Section \"Previous Work\" ) as baselines, which have similar data requirements and to machine translation (MT) and monolingual (Mono) upper bounds which request more resources. For all models (Mono, MT, VecMap, Muse, Barista), we take the average of the word embeddings in the source-language training examples and train a linear SVM. We report this instead of using the same feed-forward network as in Blse as it is the stronger upper bound. We choose the parameter $c$ on the target language development set and evaluate on the target language test set."
+          ],
+          "gold_context_ids": [
+            "qasper:1906.10519:p:78"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "VecMap",
+            "Muse",
+            "Barista"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-ad16c8261c3a0b88c685907387e1a6904eb15066",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What are the research questions posed in the paper regarding EAC studies?",
+      "source_id": "1906.09774",
+      "context_count": 25,
+      "gold_context_ids": [
+        "qasper:1906.09774:p:20"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "In this work, a systematic review of emotionally-aware chatbots is proposed. We focus on three main issues, including, how to incorporate affective information into chatbots, what are resources that available and can be used to build EAC, and how to evaluate EAC performance. The rise of EAC was started by Parry, which uses a simple rule-based approach. Now, most of EAC are built by using a neural-based approach, by exploiting emotion classifier to detect emotion contained in the text. In the modern era, the development of EAC gains more attention since Emotion Generation Challenge shared task on NLPCC 2017. In this era, most EAC is developed by adopting encoder-decoder architecture with sequence-to-sequence learning. Some variant of the recurrent neural network is used in the learning process, including long-short-term memory (LSTM) and gated recurrent unit (GRU). There are also some datasets available for developing EAC now. However, the datasets are only available in English and Chinese. These datasets are gathered from various sources, including social media, online website and manual construction by crowdsourcing. Overall, the difference between these datasets and the common datasets for building chatbot is the presence of an emotion label. In addition, we also investigate the available affective resources which usually use in the emotion classification task. In this part, we only focus on English resources and found several resources from the old one such as LIWC and Emolex to the new one, including DepecheMood and EmoWordNet. In the final part, we gather information about how to evaluate the performance of EAC, and we can classify the approach into two techniques, including qualitative and quantitative assessment. For qualitative assessment, most studies used ISO 9241, which covers several aspects such as efficiency, effectiveness, and satisfaction. While in quantitative analysis, two techniques can be used, including automatic evaluation (by using perplexity) and manual evaluation (involving human judgement). Overall, we can see that effort to humanize chatbots by incorporation affective aspect is becoming the hot topic now. We also predict that this development will continue by going into multilingual perspective since up to now every chatbot only focusing on one language. Also, we think that in the future the studies of humanizing chatbot are not only utilized emotion information but will also focus on a contextual-aware chatbot."
+          ],
+          "gold_context_ids": [
+            "qasper:1906.09774:p:20"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "how to incorporate affective information into chatbots, what are resources that available and can be used to build EAC, and how to evaluate EAC performance"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-aecb485ea7d501094e50ad022ade4f0c93088d80",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "Can SCRF be used to pretrain the model?",
+      "source_id": "1702.06378",
+      "context_count": 42,
+      "gold_context_ids": [
+        "qasper:1702.06378:p:34"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "One of the major drawbacks of SCRF models is their high computational cost. In our experiments, the CTC model is around 3–4 times faster than the SRNN model that uses the same RNN encoder. The joint model by multitask learning is slightly more expensive than the stand-alone SRNN model. To cut down the computational cost, we investigated if CTC can be used to pretrain the RNN encoder to speed up the training of the joint model. This is analogous to sequence training of HMM acoustic models, where the network is usually pretrained by the frame-level CE criterion. Figure 2 shows the convergence curves of the joint model with and without CTC pretraining, and we see pretraining indeed improves the convergence speed of the joint model."
+          ],
+          "gold_context_ids": [
+            "qasper:1702.06378:p:34"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": false,
+          "free_form_answer": "",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-b236b9827253037b2fd7884d7bfec74619d96293",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How much better performance of proposed model compared to answer-selection models?",
+      "source_id": "1908.09137",
+      "context_count": 47,
+      "gold_context_ids": [
+        "qasper:1908.09137:p:35"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "As shown in Table , the proposed PS-rnn-elmo shows a significant MAP performance improvement compared to the previous best model, CompClip-LM (0.696 to 0.734 absolute)."
+          ],
+          "gold_context_ids": [
+            "qasper:1908.09137:p:35"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "significant MAP performance improvement compared to the previous best model, CompClip-LM (0.696 to 0.734 absolute)"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-b2fab9ffbcf1d6ec6d18a05aeb6e3ab9a4dbf2ae",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How do they train models in this setup?",
+      "source_id": "1908.10449",
+      "context_count": 97,
+      "gold_context_ids": [
+        "qasper:1908.10449:p:2"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "The key idea behind our proposed interactive MRC (iMRC) is to restrict the document context that a model observes at one time. Concretely, we split a supporting document into its component sentences and withhold these sentences from the model. Given a question, the model must issue commands to observe sentences in the withheld set; we equip models with actions such as Ctrl+F (search for token) and stop for searching through partially observed documents. A model searches iteratively, conditioning each command on the input question and the sentences it has observed previously. Thus, our task requires models to `feed themselves' rather than spoon-feeding them with information. This casts MRC as a sequential decision-making problem amenable to reinforcement learning (RL)."
+          ],
+          "gold_context_ids": [
+            "qasper:1908.10449:p:2"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "Thus, our task requires models to `feed themselves' rather than spoon-feeding them with information. This casts MRC as a sequential decision-making problem amenable to reinforcement learning (RL)."
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-b7708cbb50085eb41e306bd2248f1515a5ebada8",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "How do they get the formal languages?",
+      "source_id": "1811.01001",
+      "context_count": 47,
+      "gold_context_ids": [
+        "qasper:1811.01001:p:6",
+        "qasper:1811.01001:p:7"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "BIBREF7 investigated the learning capabilities of simple RNNs to process and formalize a context-free grammar containing hierarchical (recursively embedded) dependencies: He observed that distinct parts of the networks were able to learn some complex representations to encode certain grammatical structures and dependencies of the context-free grammar. Later, BIBREF8 introduced an RNN with an external stack memory to learn simple context-free languages, such as $a^n b^m$ , $a^nb^ncb^ma^m$ , and $a^{n+m} b^n c^m$ . Similar studies BIBREF15 , BIBREF16 , BIBREF17 , BIBREF10 , BIBREF11 have explored the existence of stable counting mechanisms in simple RNNs, which would enable them to learn various context-free and context-sensitive languages, but none of the RNN architectures proposed in the early days were able to generalize the training set to longer (or more complex) test samples with substantially high accuracy.",
+            "BIBREF9 , on the other hand, proposed a variant of Long Short-Term Memory (LSTM) networks to learn two context-free languages, $a^n b^n$ , $a^n b^m B^m A^n$ , and one strictly context-sensitive language, $a^n b^n c^n$ . Given only a small fraction of samples in a formal language, with values of $n$ (and $m$ ) ranging from 1 to a certain training threshold $N$ , they trained an LSTM model until its full convergence on the training set and then tested it on a more generalized set. They showed that their LSTM model outperformed the previous approaches in capturing and generalizing the aforementioned formal languages. By analyzing the cell states and the activations of the gates in their LSTM model, they further demonstrated that the network learns how to count up and down at certain places in the sample sequences to encode information about the underlying structure of each of these formal languages."
+          ],
+          "gold_context_ids": [
+            "qasper:1811.01001:p:6",
+            "qasper:1811.01001:p:7"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "These are well-known formal languages some of which was used in the literature to evaluate the learning capabilities of RNNs.",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-d216d715ec27ee2d4949f9e908895a18fb3238e2",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "What previously proposed rules for predicting binoial ordering are used?",
+      "source_id": "2003.03612",
+      "context_count": 98,
+      "gold_context_ids": [
+        "qasper:2003.03612:p:46"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "Basic Features. We first use predictors based on rules that have previously been proposed in the literature: word length, number of phonemes, number of syllables, alphabetical order, and frequency. We collect all binomials but make predictions only on binomials appearing at least 30 times total, stratified by subreddit. However, none of these features appear to be particularly predictive across the board (Table TABREF15). A simple linear regression model predicts close to random, which bolsters the evidence that these classical rules for frozen binomials are not predictive for general binomials."
+          ],
+          "gold_context_ids": [
+            "qasper:2003.03612:p:46"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "",
+          "extractive_spans": [
+            "word length, number of phonemes, number of syllables, alphabetical order, and frequency"
+          ]
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    },
+    {
+      "id": "qasper-d5256d684b5f1b1ec648d996c358e66fe51f4904",
+      "benchmark": "qasper",
+      "split": "dev",
+      "query": "what is the practical application for this paper?",
+      "source_id": "1808.04314",
+      "context_count": 50,
+      "gold_context_ids": [
+        "qasper:1808.04314:p:0",
+        "qasper:1808.04314:p:4"
+      ],
+      "unanswerable": false,
+      "answers": [
+        {
+          "evidence": [
+            "Morphology deals with the internal structure of words BIBREF0 , BIBREF1 . Languages of the world have different word production processes. Morphological richness vary from language to language, depending on their linguistic typology. In natural language processing (NLP), taking into account the morphological complexity inherent to each language could be important for improving or adapting the existing methods, since the amount of semantic and grammatical information encoded at the word level, may vary significantly from language to language.",
+            "Additionally, most of the previous works do not analyze how the complexity changes when different types of morphological normalization procedures are applied to a language, e.g., lemmatization, stemming, morphological segmentation. This information could be useful for linguistic analysis and for measuring the impact of different word form normalization tools depending of the language. In this work, we analyze how the type-token relationship changes using different types of morphological normalization techniques."
+          ],
+          "gold_context_ids": [
+            "qasper:1808.04314:p:0",
+            "qasper:1808.04314:p:4"
+          ],
+          "unmapped_evidence": [],
+          "unanswerable": false,
+          "yes_no": null,
+          "free_form_answer": "Improve existing NLP methods. Improve linguistic analysis. Measure impact of word normalization tools.",
+          "extractive_spans": []
+        }
+      ],
+      "mapping_complete": true,
+      "retrieval_eligible": true
+    }
+  ]
+}

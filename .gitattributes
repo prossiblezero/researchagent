@@ -1,0 +1,2 @@
+# Dataset hashes describe exact bytes, including line endings, on every platform.
+datasets/** -text

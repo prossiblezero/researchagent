@@ -1,0 +1,123 @@
+{
+  "schema": "auto-research-amem-continuation/v3",
+  "origin": "Project research goal with pinned official A-MEM robust implementation and frozen LoCoMo development subset",
+  "campaign": {
+    "id": "amem-locomo-development-continuation-v3",
+    "provenance": "Official LoCoMo complete conversations conv-26/conv-30; 40 original category 1-4 questions; development only; held-out conv-41/conv-42 excluded.",
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-tasks.json",
+        "destination": "data/locomo/tasks.json",
+        "sha256": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-corpus.json",
+        "destination": "data/locomo/corpus.json",
+        "sha256": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.json",
+        "destination": "results/baseline-state/conv-26.json",
+        "sha256": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.slot0.npy",
+        "destination": "results/baseline-state/conv-26.slot0.npy",
+        "sha256": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.json",
+        "destination": "results/baseline-state/conv-30.json",
+        "sha256": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.slot0.npy",
+        "destination": "results/baseline-state/conv-30.slot0.npy",
+        "sha256": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-condition.json",
+        "destination": "results/baseline-condition.json",
+        "sha256": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/candidate-state/conv-26.json",
+        "destination": "results/candidate-state/conv-26.json",
+        "sha256": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/candidate-state/conv-26.slot0.npy",
+        "destination": "results/candidate-state/conv-26.slot0.npy",
+        "sha256": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/candidate-state/conv-30.json",
+        "destination": "results/candidate-state/conv-30.json",
+        "sha256": "ec75ef15195e43ebbcb247e8e9e79e02109148568412c0acd5e97b4f1948675e"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/candidate-state/conv-30.slot0.npy",
+        "destination": "results/candidate-state/conv-30.slot0.npy",
+        "sha256": "49781290241bd05934308254c92fea89a5e7efdf3049f1810e8a4ee57f6784a9"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/candidate-condition.json",
+        "destination": "results/candidate-condition.json",
+        "sha256": "298dd9d87d5afc96c9d047c23b620dcf2a1e594fba31ff2f865f622f9a40589a"
+      }
+    ],
+    "labels_sha256": "11b837faff579a307ff1667febba4b3f4a081291ecc5ab7f0110fd24f777f7b0",
+    "assets_sha256": "e6bb7c433bb337983342c641f99d16500e739d5d7e860d8802f3e2fc4a0dfd26",
+    "goal": "旧r3因两次供应商overloaded结束为blocked。先读CONTINUATION.md；本次为人工准备后的独立开发续跑，保留旧失败。完整输入是788轮，不是369轮。已导入相同条件的完整baseline记忆和candidate的756轮部分记忆，不导入任何旧预测或成绩。先实际阅读原论文及固定源码，保存baseline方案，用现有run_baseline.py对全部40题重新进行宿主测量；之后检查现有run_retrieval_variants.py和相应条件，保存原候选假设并按需run_experiments恢复candidate剩余32轮再回答全部40题，避免无故重建已核对的记忆。不得改基线、标签、评分器或用旧JSON冒充新测量。取得完整实测后assess_results，依据实际失败和原文决定消融与方法修订，需要实现才调用Codex。若候选退化，针对真实错误修订一轮；保留未验证假设、负结果、所有失败和完整成本。当前开发只记录seed13；holdout尚未提供，不宣称创新、SOTA或终验。暂时供应商overload时预算充足可用新的execution-only委派续跑匹配的已存状态，不能修改ACL或抹去失败。完整baseline/candidate/ablation和研究模型反馈路径才是本轮交付。",
+    "requires_method_iteration": true,
+    "requires_result_assessment": true,
+    "requires_multi_seed": false,
+    "seeds": [
+      13
+    ],
+    "audit_dataset": "locomo",
+    "requires_independent_audit": true,
+    "budget": {
+      "decisions": 48,
+      "research_calls": 3,
+      "coding_calls": 5,
+      "coding_seconds": 6564,
+      "coding_tokens": 2997009,
+      "experiment_seconds": 154505,
+      "preparations": 4,
+      "download_mb": 512,
+      "experiment_model_calls": 21583,
+      "experiment_model_seconds": 132918
+    },
+    "wall_seconds": 152655,
+    "targets": [],
+    "protocol_sha256": "2a691d7b2e6c1d2300fb709f23b46e87bd57029be7eb08c941412c46cffc88f9",
+    "frozen_sources": {
+      "upstream": "directory:95b225660243a47f06c76cd8916c28f2edc6d235857c3b32eeb64a30d49f54a2",
+      "run_baseline.py": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+      "results/baseline-state/conv-26.json": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f",
+      "results/baseline-state/conv-26.slot0.npy": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39",
+      "results/baseline-state/conv-30.json": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff",
+      "results/baseline-state/conv-30.slot0.npy": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d",
+      "results/baseline-condition.json": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b",
+      "results/candidate-condition.json": "298dd9d87d5afc96c9d047c23b620dcf2a1e594fba31ff2f865f622f9a40589a",
+      "CONTINUATION.md": "fbed5aa58869d27066ffa244c04d4e663a53f18e19d1478da195802838fe664d"
+    },
+    "cache_migration": {
+      "manual_preparation": true,
+      "old_campaign": "96e83242420a476c9c8daa573afeb6ab",
+      "baseline_imported_turns": 788,
+      "candidate_imported_turns": 756,
+      "imported_predictions": 0,
+      "audit": "evals/reports/amem-continuation-preparation-20261002/cache-migration-audit.json"
+    },
+    "previous_phase": {
+      "job_id": "96e83242420a476c9c8daa573afeb6ab",
+      "status": "completed",
+      "outcome": "blocked",
+      "manual_intervention": true,
+      "imported_predictions": 0,
+      "budget_audit": "evals/reports/amem-continuation-preparation-20261002/budget-carryover.json"
+    }
+  }
+}

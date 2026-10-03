@@ -1,0 +1,532 @@
+[
+  {
+    "id": "conv-41/qa-026",
+    "answer": "Join a local church, buy a cross necklace",
+    "official_evidence": [
+      "D14:10",
+      "D11:10"
+    ],
+    "gold_evidence": [
+      "D14:10",
+      "D11:10"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-059",
+    "answer": "The summer of 2022",
+    "official_evidence": [
+      "D30:6"
+    ],
+    "gold_evidence": [
+      "D30:6"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-050",
+    "answer": "Selfless, family-oriented, passionate, rational",
+    "official_evidence": [
+      "D26:6",
+      "D2:14",
+      "D3:5",
+      "D4:6"
+    ],
+    "gold_evidence": [
+      "D26:6",
+      "D2:14",
+      "D3:5",
+      "D4:6"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-088",
+    "answer": "politics and the government",
+    "official_evidence": [
+      "D12:1"
+    ],
+    "gold_evidence": [
+      "D12:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-025",
+    "answer": "Spain, England",
+    "official_evidence": [
+      "D13:24",
+      "D8:15"
+    ],
+    "gold_evidence": [
+      "D13:24",
+      "D8:15"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-016",
+    "answer": "The week before 2 April 2023",
+    "official_evidence": [
+      "D9:2"
+    ],
+    "gold_evidence": [
+      "D9:2"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-041",
+    "answer": "beach",
+    "official_evidence": [
+      "D22:15"
+    ],
+    "gold_evidence": [
+      "D22:15"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-102",
+    "answer": "chili cook-off",
+    "official_evidence": [
+      "D16:4"
+    ],
+    "gold_evidence": [
+      "D16:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-037",
+    "answer": "Petition, march, party, visiting veterans hospital, 5K charity run",
+    "official_evidence": [
+      "D15:1",
+      "D15:11",
+      "D21:22",
+      "D24:1",
+      "D29:4"
+    ],
+    "gold_evidence": [
+      "D15:1",
+      "D15:11",
+      "D21:22",
+      "D24:1",
+      "D29:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-027",
+    "answer": "The Friday before 20 May 2023",
+    "official_evidence": [
+      "D15:11"
+    ],
+    "gold_evidence": [
+      "D15:11"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-039",
+    "answer": "Independence Day",
+    "official_evidence": [
+      "D21:3"
+    ],
+    "gold_evidence": [
+      "D21:3"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-097",
+    "answer": "to feel closer to a community and her faith",
+    "official_evidence": [
+      "D14:10"
+    ],
+    "gold_evidence": [
+      "D14:10"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-052",
+    "answer": "Cindy, Laura",
+    "official_evidence": [
+      "D27:8",
+      "D21:19"
+    ],
+    "gold_evidence": [
+      "D27:8",
+      "D21:19"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-013",
+    "answer": "The week before 6 March 2023",
+    "official_evidence": [
+      "D8:1"
+    ],
+    "gold_evidence": [
+      "D8:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-064",
+    "answer": "Shelter coordinator, Counselor",
+    "official_evidence": [
+      "D32:14",
+      "D5:8",
+      "D11:10",
+      "D27:4"
+    ],
+    "gold_evidence": [
+      "D32:14",
+      "D5:8",
+      "D11:10",
+      "D27:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-150",
+    "answer": "going for hikes, hanging out at the park, having picnics, playing board games, having movie nights",
+    "official_evidence": [
+      "D31:19"
+    ],
+    "gold_evidence": [
+      "D31:19"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-049",
+    "answer": "Cakes",
+    "official_evidence": [
+      "D26:1",
+      "D25:19"
+    ],
+    "gold_evidence": [
+      "D26:1",
+      "D25:19"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-004",
+    "answer": "The week before 1 January 2023",
+    "official_evidence": [
+      "D3:1"
+    ],
+    "gold_evidence": [
+      "D3:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-008",
+    "answer": "Middle-class or wealthy",
+    "official_evidence": [
+      "D5:5"
+    ],
+    "gold_evidence": [
+      "D5:5"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-41/qa-147",
+    "answer": "Shadow",
+    "official_evidence": [
+      "D31:4"
+    ],
+    "gold_evidence": [
+      "D31:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-052",
+    "answer": "two",
+    "official_evidence": [
+      "D15:1",
+      "D25:2"
+    ],
+    "gold_evidence": [
+      "D15:1",
+      "D25:2"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-013",
+    "answer": "23 March, 2022.",
+    "official_evidence": [
+      "D6:2"
+    ],
+    "gold_evidence": [
+      "D6:2"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-066",
+    "answer": "an animalkeeper at a localzoo and workingwith turtles; as heknows a great dealabout turtles andhow to care for them,and he enjoys it.",
+    "official_evidence": [
+      "D5:8",
+      "D19:3",
+      "D25:19",
+      "D28:25"
+    ],
+    "gold_evidence": [
+      "D5:8",
+      "D19:3",
+      "D25:19",
+      "D28:25"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-112",
+    "answer": "\"Finding Home\"",
+    "official_evidence": [
+      "D9:3"
+    ],
+    "gold_evidence": [
+      "D9:3"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-047",
+    "answer": "A tournament and agaming convention.",
+    "official_evidence": [
+      "D14:8",
+      "D23:1"
+    ],
+    "gold_evidence": [
+      "D14:8",
+      "D23:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-031",
+    "answer": "The Friday before 10July, 2022.",
+    "official_evidence": [
+      "D17:1"
+    ],
+    "gold_evidence": [
+      "D17:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-012",
+    "answer": "asthma",
+    "official_evidence": [
+      "D5:11",
+      "D2:23"
+    ],
+    "gold_evidence": [
+      "D5:11",
+      "D2:23"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-129",
+    "answer": "Iron Man",
+    "official_evidence": [
+      "D15:4"
+    ],
+    "gold_evidence": [
+      "D15:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-010",
+    "answer": "Relief, excitement,worry, hope,anxiety.",
+    "official_evidence": [
+      "D2:7",
+      "D3:1"
+    ],
+    "gold_evidence": [
+      "D2:7",
+      "D3:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-043",
+    "answer": "four months",
+    "official_evidence": [
+      "D17:14",
+      "D22:9"
+    ],
+    "gold_evidence": [
+      "D17:14",
+      "D22:9"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-073",
+    "answer": "Indiana",
+    "official_evidence": [
+      "D28:22"
+    ],
+    "gold_evidence": [
+      "D28:22"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-143",
+    "answer": "Touched",
+    "official_evidence": [
+      "D18:5"
+    ],
+    "gold_evidence": [
+      "D18:5"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-027",
+    "answer": "film contest, film festival.",
+    "official_evidence": [
+      "D2:7",
+      "D16:1"
+    ],
+    "gold_evidence": [
+      "D2:7",
+      "D16:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-018",
+    "answer": "Whispering Falls waterfall",
+    "official_evidence": [
+      "D11:7"
+    ],
+    "gold_evidence": [
+      "D11:7"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-004",
+    "answer": "Hairless cats or pigs,since they don't have fur, which is one of the main causes of Joanna's allergy.",
+    "official_evidence": [
+      "D2:23"
+    ],
+    "gold_evidence": [
+      "D2:23"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-124",
+    "answer": "A gaming party",
+    "official_evidence": [
+      "D14:20"
+    ],
+    "gold_evidence": [
+      "D14:20"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-069",
+    "answer": "Three",
+    "official_evidence": [
+      "D8:3",
+      "D28:23"
+    ],
+    "gold_evidence": [
+      "D8:3",
+      "D28:23"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-077",
+    "answer": "The week before 2 May, 2022.",
+    "official_evidence": [
+      "D10:4"
+    ],
+    "gold_evidence": [
+      "D10:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-084",
+    "answer": "No; because both of them faced setbacks in their career",
+    "official_evidence": [
+      "D20:1",
+      "D21:1"
+    ],
+    "gold_evidence": [
+      "D20:1",
+      "D21:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-42/qa-165",
+    "answer": "a bookcase filled with dvds and movies",
+    "official_evidence": [
+      "D23:15"
+    ],
+    "gold_evidence": [
+      "D23:15"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  }
+]

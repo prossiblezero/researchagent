@@ -1,0 +1,22 @@
+{
+  "schema": "auto-research-iteration/v1",
+  "origin": "project-authored",
+  "purpose": "Functional acceptance of scientific-result-driven plan revision and rerun, using original public SciFact data; not official leaderboard or agent causal-effect scoring",
+  "campaign": {
+    "id": "scifact-measured-method-iteration",
+    "provenance": "Project research scenario derived from real r4 weakness (CONTRADICT F1 about .0612), with a fresh isolated campaign and unchanged official train/dev/corpus files. No generated reference answers.",
+    "requires_method_iteration": true,
+    "goal": "围绕科学论断证据验证完成一次根据实测结果修订方法的小型研究。已提供未经改写的官方SciFact data/scifact/claims_train.jsonl、claims_dev.jsonl及corpus.jsonl。本次固定为给定cited_doc_ids的claim级三分类子任务，不冒充完整检索或官方榜单；全部300条dev用于开发比较，训练只用train。先定向阅读SciFact原论文和至少一个方法原文，确认标签、输入输出和评价边界。自主选择轻量CPU baseline和有原文依据的候选方法，保存方案后委派Codex实现，运行baseline/candidate/ablation。首轮必须报告accuracy、macro_f1、各类F1（含f1_contradict）、混淆矩阵及包含特征处理的推理时间，保存逐样本预测、样本ID、真实标签与可独立重算的评分结果。\n收到宿主真实首轮结果后，分析最弱类别或错误类型，结合已有原文或定向补调研提出一个方法修订，另存方案版本并再委派实现/运行；至少完成这一次有依据的方法修订，不以重跑同一代码或修复语法报错代替研究迭代。修订方法由你选择，不要求结果必须提高，负结果如实报告。不能用dev标签训练、选证据或调阈值；可用train内划分选参数。两个方法版本保持相同dev样本、标签、种子和评分定义。\n为便于复核，首次将公共数据加载、预测输出校验及评分写在固定evaluate.py，算法与训练逻辑放独立模块；每组commands均调用同一个evaluate.py并用参数选择变体、独立result_path。首轮之后将evaluate.py及data/scifact设为protected_files，后续方法改动保留该评分入口字节不变，各轮重新运行相同baseline与相应ablation。JSON config记录dataset、dataset_version、split、seeds和方法参数，metrics记录实际数字。使用固定版本依赖，由prepare_project准备；不调用外部付费模型预测数据。\n最后交付两版方案、首轮问题证据、修改理由、实际对比/消融表格、代码/配置/数据版本、来源、失败与局限。目标是验证研究反馈循环，不宣称SOTA或新颖性已经成立；预算不足明确未完成。",
+    "budget": {
+      "decisions": 45,
+      "research_calls": 3,
+      "coding_calls": 4,
+      "coding_seconds": 1200,
+      "coding_tokens": 1600000,
+      "experiment_seconds": 1800,
+      "preparations": 3,
+      "download_mb": 512
+    },
+    "wall_seconds": 3600
+  }
+}

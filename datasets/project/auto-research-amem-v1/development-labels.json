@@ -1,0 +1,538 @@
+[
+  {
+    "id": "conv-26/qa-052",
+    "answer": "Oliver, Luna, Bailey",
+    "official_evidence": [
+      "D13:4",
+      "D7:18"
+    ],
+    "gold_evidence": [
+      "D13:4",
+      "D7:18"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-079",
+    "answer": "The Friday before 22 October 2023",
+    "official_evidence": [
+      "D19:1"
+    ],
+    "gold_evidence": [
+      "D19:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-069",
+    "answer": "Thoughtful, authentic, driven",
+    "official_evidence": [
+      "D16:18",
+      "D13:16",
+      "D7:4"
+    ],
+    "gold_evidence": [
+      "D16:18",
+      "D13:16",
+      "D7:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-122",
+    "answer": "She wanted to catch the eye and make people smile.",
+    "official_evidence": [
+      "D12:6"
+    ],
+    "gold_evidence": [
+      "D12:6"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-015",
+    "answer": "pottery, camping, painting, swimming",
+    "official_evidence": [
+      "D5:4",
+      "D9:1",
+      "D1:12",
+      "D1:18"
+    ],
+    "gold_evidence": [
+      "D5:4",
+      "D9:1",
+      "D1:12",
+      "D1:18"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-021",
+    "answer": "The week before 6 July 2023",
+    "official_evidence": [
+      "D6:11"
+    ],
+    "gold_evidence": [
+      "D6:11"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-064",
+    "answer": "Yes; it's classical music",
+    "official_evidence": [
+      "D15:28"
+    ],
+    "gold_evidence": [
+      "D15:28"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-119",
+    "answer": "in awe of the universe",
+    "official_evidence": [
+      "D10:18"
+    ],
+    "gold_evidence": [
+      "D10:18"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-076",
+    "answer": "19 October 2023",
+    "official_evidence": [
+      "D18:17"
+    ],
+    "gold_evidence": [
+      "D18:17"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-063",
+    "answer": "September 2023",
+    "official_evidence": [
+      "D15:11"
+    ],
+    "gold_evidence": [
+      "D15:11"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-046",
+    "answer": "Yes, she is supportive",
+    "official_evidence": [],
+    "gold_evidence": [],
+    "unmapped_evidence": [],
+    "retrieval_scorable": false
+  },
+  {
+    "id": "conv-26/qa-113",
+    "answer": "many people wanting to create loving homes for children in need",
+    "official_evidence": [
+      "D8:9"
+    ],
+    "gold_evidence": [
+      "D8:9"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-060",
+    "answer": "clarinet and violin",
+    "official_evidence": [
+      "D15:26",
+      "D2:5"
+    ],
+    "gold_evidence": [
+      "D15:26",
+      "D2:5"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-033",
+    "answer": "The week before 3 July 2023",
+    "official_evidence": [
+      "D5:1"
+    ],
+    "gold_evidence": [
+      "D5:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-002",
+    "answer": "Psychology, counseling certification",
+    "official_evidence": [
+      "D1:9",
+      "D1:11"
+    ],
+    "gold_evidence": [
+      "D1:9",
+      "D1:11"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-124",
+    "answer": "Two cats and a dog",
+    "official_evidence": [
+      "D13:4"
+    ],
+    "gold_evidence": [
+      "D13:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-038",
+    "answer": "Pottery, painting, camping, museum, swimming, hiking",
+    "official_evidence": [
+      "D8:4",
+      "D8:6",
+      "D9:1",
+      "D6:4",
+      "D1:18",
+      "D3:14"
+    ],
+    "gold_evidence": [
+      "D8:4",
+      "D8:6",
+      "D9:1",
+      "D6:4",
+      "D1:18",
+      "D3:14"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-009",
+    "answer": "The week before 9 June 2023",
+    "official_evidence": [
+      "D3:11"
+    ],
+    "gold_evidence": [
+      "D3:11"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-081",
+    "answer": "No; she's in the process of adopting children.",
+    "official_evidence": [
+      "D19:1",
+      "D19:3"
+    ],
+    "gold_evidence": [
+      "D19:1",
+      "D19:3"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-26/qa-133",
+    "answer": "A sign stating that someone is not being able to leave",
+    "official_evidence": [
+      "D16:16"
+    ],
+    "gold_evidence": [
+      "D16:16"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-024",
+    "answer": "fair, networking events, dance competition",
+    "official_evidence": [
+      "D10:1",
+      "D16:6",
+      "D8:4"
+    ],
+    "gold_evidence": [
+      "D10:1",
+      "D16:6",
+      "D8:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-022",
+    "answer": "June, 2023",
+    "official_evidence": [
+      "D13:4"
+    ],
+    "gold_evidence": [
+      "D13:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-039",
+    "answer": "Contemporary",
+    "official_evidence": [
+      "D1:9"
+    ],
+    "gold_evidence": [
+      "D1:9"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-017",
+    "answer": "She always loved fashion trends and finding unique pieces and she lost her job so decided it was time to start her own business.",
+    "official_evidence": [
+      "D6:8",
+      "D1:3"
+    ],
+    "gold_evidence": [
+      "D6:8",
+      "D1:3"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-020",
+    "answer": "27 May, 2023",
+    "official_evidence": [
+      "D12:1"
+    ],
+    "gold_evidence": [
+      "D12:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-073",
+    "answer": "magical",
+    "official_evidence": [
+      "D15:8"
+    ],
+    "gold_evidence": [
+      "D15:8"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-005",
+    "answer": "By the water, with natural light and Marley flooring",
+    "official_evidence": [
+      "D1:20",
+      "D2:4",
+      "D2:8"
+    ],
+    "gold_evidence": [
+      "D1:20",
+      "D2:4",
+      "D2:8"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-032",
+    "answer": "June 2023",
+    "official_evidence": [
+      "D16:3"
+    ],
+    "gold_evidence": [
+      "D16:3"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-076",
+    "answer": "excitement",
+    "official_evidence": [
+      "D15:18",
+      "D15:19"
+    ],
+    "gold_evidence": [
+      "D15:18",
+      "D15:19"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-027",
+    "answer": "Yes",
+    "official_evidence": [
+      "D1:14",
+      "D14:14",
+      "D1:16",
+      "D1:17",
+      "D9:10"
+    ],
+    "gold_evidence": [
+      "D1:14",
+      "D14:14",
+      "D1:16",
+      "D1:17",
+      "D9:10"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-016",
+    "answer": "24 April, 2023",
+    "official_evidence": [
+      "D10:1"
+    ],
+    "gold_evidence": [
+      "D10:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-002",
+    "answer": "by dancing",
+    "official_evidence": [
+      "D1:7",
+      "D1:6"
+    ],
+    "gold_evidence": [
+      "D1:7",
+      "D1:6"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-018",
+    "answer": "Yes",
+    "official_evidence": [
+      "D1:4",
+      "D6:8"
+    ],
+    "gold_evidence": [
+      "D1:4",
+      "D6:8"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-037",
+    "answer": " 23 July, 2023",
+    "official_evidence": [
+      "D19:4"
+    ],
+    "gold_evidence": [
+      "D19:4"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-069",
+    "answer": "To clear his mind",
+    "official_evidence": [
+      "D15:1"
+    ],
+    "gold_evidence": [
+      "D15:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-003",
+    "answer": "They lost their jobs and decided to start their own businesses.",
+    "official_evidence": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D2:1"
+    ],
+    "gold_evidence": [
+      "D1:2",
+      "D1:3",
+      "D1:4",
+      "D2:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-030",
+    "answer": "20 June, 2023",
+    "official_evidence": [
+      "D15:5"
+    ],
+    "gold_evidence": [
+      "D15:5"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-065",
+    "answer": "The Lean Startup",
+    "official_evidence": [
+      "D12:6"
+    ],
+    "gold_evidence": [
+      "D12:6"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-031",
+    "answer": "six months",
+    "official_evidence": [
+      "D1:2",
+      "D15:13"
+    ],
+    "gold_evidence": [
+      "D1:2",
+      "D15:13"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  },
+  {
+    "id": "conv-30/qa-026",
+    "answer": "15 June, 2023",
+    "official_evidence": [
+      "D14:1"
+    ],
+    "gold_evidence": [
+      "D14:1"
+    ],
+    "unmapped_evidence": [],
+    "retrieval_scorable": true
+  }
+]

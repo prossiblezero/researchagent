@@ -1,0 +1,62 @@
+{
+  "source": "experiments/auto/f7322cec87fb402c8b1838997d5cd7fc/run_fixed_retrieval.py",
+  "source_sha256": "ce733ed708d7bbdae0da7ed3cc46b513e8fb1f1da399d7bb49fd1669b2d6329f",
+  "line": 135,
+  "actual_statement": "redundancy = float(cosine(retriever.embeddings[index], retriever.embeddings[selected])[0])",
+  "plan": "plan 2: lambda*query_score - (1-lambda)*max cosine similarity to already selected notes",
+  "finding": "The implementation indexes the first similarity instead of taking the maximum over selected notes. It is first-anchor diversification, not the saved MMR method.",
+  "hand_example": {
+    "query": [
+      1,
+      0
+    ],
+    "pool_angles_degrees": [
+      0,
+      30,
+      31,
+      -40
+    ],
+    "lambda": 0.7,
+    "already_selected": [
+      0,
+      1
+    ],
+    "third_step": [
+      {
+        "candidate_index": 2,
+        "query_similarity": 0.8571673007021123,
+        "similarities_to_selected": [
+          0.8571673007021123,
+          0.9998476951563913
+        ],
+        "implemented_first_only_score": 0.34286692028084487,
+        "planned_max_score": 0.3000628019445612
+      },
+      {
+        "candidate_index": 3,
+        "query_similarity": 0.766044443118978,
+        "similarities_to_selected": [
+          0.766044443118978,
+          0.3420201433256688
+        ],
+        "implemented_first_only_score": 0.3064177772475912,
+        "planned_max_score": 0.3064177772475912
+      }
+    ],
+    "implemented_selection": [
+      0,
+      1,
+      2
+    ],
+    "planned_selection": [
+      0,
+      1,
+      3
+    ]
+  },
+  "generated_code_executed": false,
+  "method_source_modified": false,
+  "active_campaign_modified": false,
+  "model_calls": 0,
+  "classification": "method implementation mismatch; preserve current raw results and do not interpret as MMR"
+}

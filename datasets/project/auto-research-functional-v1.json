@@ -1,0 +1,22 @@
+{
+  "schema": "auto-research-functional/v1",
+  "origin": "project-authored",
+  "purpose": "Functional acceptance of project preparation and mode boundaries; not a scientific benchmark or Codex capability score",
+  "native_environment": {"id": "native-wheel-environment", "packages": ["packaging==25.0"]},
+  "campaign": {
+    "id": "scifact-method-research",
+    "provenance": "project-authored research goal using original public SciFact data; functional acceptance, not official leaderboard scoring",
+    "goal": "围绕科学论断证据验证做一次可复现的小型方法研究。已提供公开SciFact的data/scifact/claims_train.jsonl、claims_dev.jsonl和corpus.jsonl，均为未经改写的官方公开数据。请调研SciFact原论文及可复现方法的原文，理解输入输出、数据与评价设置，自主选择本机CPU和有限时间能承担的baseline，提出带原文依据的待验证方法变化，并把方案交给Codex实现，实际运行baseline、候选及至少一项对应消融。至少记录accuracy、macro-F1和推理耗时；由你选择合理的具体任务设置，但必须说明是否使用给定的候选文档、只做子任务或数据子集，不能冒充官方完整任务。训练只能使用官方train；官方dev仅用于开发比较，不能称未见测试集。各方法固定相同样本、标签定义、种子与评分入口，记录配置及代码。数据较小，优先轻量方法；所需固定版本依赖由prepare_project准备。若实测不支持假设，自主分析、定向补查或修改方法，再决定是否继续委派；无须为凑次数而重复。最后给出有来源、实测表格、局限和未完成项的研究报告，不能宣称SOTA、论文创新已成立或达到投稿质量。不要调用外部付费模型做实验预测。本次是研究闭环功能验收，不要求候选必须胜过baseline。",
+    "budget": {"decisions": 26, "research_calls": 3, "coding_calls": 2, "coding_seconds": 600, "coding_tokens": 600000, "experiment_seconds": 1200, "preparations": 3, "download_mb": 512},
+    "wall_seconds": 2400
+  },
+  "routing": [
+    {"id": "chat", "question": "你好，今天聊聊。", "allowed": ["CHAT"]},
+    {"id": "survey-only", "question": "请调研最近Agent长期记忆方向的论文，只要综述，暂时不要写代码或跑实验。", "allowed": ["RESEARCH"]},
+    {"id": "local-only", "question": "只依据研究区已经导入的论文，解释它们的实验差异，不要联网或执行代码。", "allowed": ["LOCAL_QA"]},
+    {"id": "ideas-only", "question": "根据已保存论文提出三个创新候选，我目前只想讨论idea，不要实现或运行。", "allowed": ["BRAINSTORM"]},
+    {"id": "venue-wish", "question": "我以后想发CVPR，先帮我调研Agent方向哪些问题值得研究，暂不实现。", "allowed": ["RESEARCH"]},
+    {"id": "explicit-auto", "question": "围绕降低Agent工具调用失败率的目标，自动调研相关方法，选择baseline，设计方案并交给Codex实现和跑对比实验，依据真实结果继续调研与迭代，最后交付报告。", "allowed": ["AUTO_RESEARCH"]},
+    {"id": "status-only", "question": "现在这项自动研究进展到哪里了？这里只问状态，不要启动新任务。", "allowed": ["CHAT", "LOCAL_QA"]}
+  ]
+}

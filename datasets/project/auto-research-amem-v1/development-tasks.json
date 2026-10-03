@@ -1,0 +1,322 @@
+[
+  {
+    "id": "conv-26/qa-052",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 52,
+    "category": 1,
+    "question": "What are Melanie's pets' names?"
+  },
+  {
+    "id": "conv-26/qa-079",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 79,
+    "category": 2,
+    "question": "When did Caroline pass the adoption interview?"
+  },
+  {
+    "id": "conv-26/qa-069",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 69,
+    "category": 3,
+    "question": "What personality traits might Melanie say Caroline has?"
+  },
+  {
+    "id": "conv-26/qa-122",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 122,
+    "category": 4,
+    "question": "Why did Melanie choose to use colors and patterns in her pottery project?"
+  },
+  {
+    "id": "conv-26/qa-015",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 15,
+    "category": 1,
+    "question": "What activities does Melanie partake in?"
+  },
+  {
+    "id": "conv-26/qa-021",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 21,
+    "category": 2,
+    "question": "When did Caroline have a picnic?"
+  },
+  {
+    "id": "conv-26/qa-064",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 64,
+    "category": 3,
+    "question": "Would Melanie likely enjoy the song \"The Four Seasons\" by Vivaldi?"
+  },
+  {
+    "id": "conv-26/qa-119",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 119,
+    "category": 4,
+    "question": "How did Melanie feel while watching the meteor shower?"
+  },
+  {
+    "id": "conv-26/qa-076",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 76,
+    "category": 1,
+    "question": "When did Melanie go on a hike after the roadtrip?"
+  },
+  {
+    "id": "conv-26/qa-063",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 63,
+    "category": 2,
+    "question": "When is Caroline's youth center putting on a talent show?"
+  },
+  {
+    "id": "conv-26/qa-046",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 46,
+    "category": 3,
+    "question": "Would Melanie be considered an ally to the transgender community?"
+  },
+  {
+    "id": "conv-26/qa-113",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 113,
+    "category": 4,
+    "question": "What did Caroline see at the council meeting for adoption?"
+  },
+  {
+    "id": "conv-26/qa-060",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 60,
+    "category": 1,
+    "question": "What instruments does Melanie play?"
+  },
+  {
+    "id": "conv-26/qa-033",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 33,
+    "category": 2,
+    "question": "When did Caroline go to a pride parade during the summer?"
+  },
+  {
+    "id": "conv-26/qa-002",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 2,
+    "category": 3,
+    "question": "What fields would Caroline be likely to pursue in her educaton?"
+  },
+  {
+    "id": "conv-26/qa-124",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 124,
+    "category": 4,
+    "question": "What pets does Melanie have?"
+  },
+  {
+    "id": "conv-26/qa-038",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 38,
+    "category": 1,
+    "question": "What activities has Melanie done with her family?"
+  },
+  {
+    "id": "conv-26/qa-009",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 9,
+    "category": 2,
+    "question": "When did Caroline meet up with her friends, family, and mentors?"
+  },
+  {
+    "id": "conv-26/qa-081",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 81,
+    "category": 3,
+    "question": "Would Caroline want to move back to her home country soon?"
+  },
+  {
+    "id": "conv-26/qa-133",
+    "conversation_id": "conv-26",
+    "split": "development",
+    "official_qa_index": 133,
+    "category": 4,
+    "question": "What precautionary sign did Melanie see at the café?"
+  },
+  {
+    "id": "conv-30/qa-024",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 24,
+    "category": 1,
+    "question": "Which events has Jon participated in to promote his business venture?"
+  },
+  {
+    "id": "conv-30/qa-022",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 22,
+    "category": 2,
+    "question": "When did Gina develop a video presentation to teach how to style her fashion pieces? "
+  },
+  {
+    "id": "conv-30/qa-039",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 39,
+    "category": 4,
+    "question": "What is Gina's favorite style of dance?"
+  },
+  {
+    "id": "conv-30/qa-017",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 17,
+    "category": 1,
+    "question": "Why did Gina decide to start her own clothing store?"
+  },
+  {
+    "id": "conv-30/qa-020",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 20,
+    "category": 2,
+    "question": "When did Gina get accepted for the design internship?"
+  },
+  {
+    "id": "conv-30/qa-073",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 73,
+    "category": 4,
+    "question": "How does Gina describe the feeling that dance brings?"
+  },
+  {
+    "id": "conv-30/qa-005",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 5,
+    "category": 1,
+    "question": "What Jon thinks the ideal dance studio should look like?"
+  },
+  {
+    "id": "conv-30/qa-032",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 32,
+    "category": 2,
+    "question": "When did Gina design a limited collection of hoodies?"
+  },
+  {
+    "id": "conv-30/qa-076",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 76,
+    "category": 4,
+    "question": "What is the general sentiment about the upcoming grand opening?"
+  },
+  {
+    "id": "conv-30/qa-027",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 27,
+    "category": 1,
+    "question": "Did Jon and Gina both participate in dance competitions?"
+  },
+  {
+    "id": "conv-30/qa-016",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 16,
+    "category": 2,
+    "question": "When did Jon go to a fair to get more exposure for his dance studio?"
+  },
+  {
+    "id": "conv-30/qa-002",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 2,
+    "category": 4,
+    "question": "How do Jon and Gina both like to destress?"
+  },
+  {
+    "id": "conv-30/qa-018",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 18,
+    "category": 1,
+    "question": "Do Jon and Gina start businesses out of what they love?"
+  },
+  {
+    "id": "conv-30/qa-037",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 37,
+    "category": 2,
+    "question": "When did Gina mention Shia Labeouf?"
+  },
+  {
+    "id": "conv-30/qa-069",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 69,
+    "category": 4,
+    "question": "What did Jon take a trip to Rome for?"
+  },
+  {
+    "id": "conv-30/qa-003",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 3,
+    "category": 1,
+    "question": "What do Jon and Gina both have in common?"
+  },
+  {
+    "id": "conv-30/qa-030",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 30,
+    "category": 2,
+    "question": "When Jon is planning to open his dance studio?"
+  },
+  {
+    "id": "conv-30/qa-065",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 65,
+    "category": 4,
+    "question": "What book is Jon currently reading?"
+  },
+  {
+    "id": "conv-30/qa-031",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 31,
+    "category": 1,
+    "question": "How long did it take for Jon to open his studio?"
+  },
+  {
+    "id": "conv-30/qa-026",
+    "conversation_id": "conv-30",
+    "split": "development",
+    "official_qa_index": 26,
+    "category": 2,
+    "question": "When did Jon receive mentorship to promote his venture?"
+  }
+]

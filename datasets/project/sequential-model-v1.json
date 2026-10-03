@@ -1,0 +1,11 @@
+{
+  "id": "locomo-sequential-interface-v1",
+  "kind": "project_interface_acceptance",
+  "corpus": "datasets/open/locomo/corpus.json",
+  "conversation_id": "conv-26",
+  "split": "development",
+  "session": "session_1",
+  "turn_count": 8,
+  "question": "Which type of support group did Caroline attend? Cite the dialogue ID from your notes.",
+  "scope": "Two dependent host model calls through the native experiment sandbox. No A-MEM reproduction or answer-quality score is claimed. Official QA labels are not loaded."
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "auto-research-reading-recovery/v1",
+  "origin": "Real failed A-MEM original-paper research in development campaign; public paper, no QA labels",
+  "reading": {
+    "source_job": "ede01e570dcb46a8aaf8ef50201cb935",
+    "question": "Read the imported A-MEM original paper in the research library and extract citable evidence for the complete method: memory note construction/analysis, indexing and retrieval, linking, memory evolution, neighbor updates, consolidation, query generation, answer generation, prompts and any algorithm/settings relevant to reproducing the official robust version. Also identify exact paper/source locations and distinguish paper facts from implementation details to verify in upstream."
+  },
+  "scope": "Checkpoint verification and repair; not baseline quality or full auto-research success",
+  "source_run_id": "20261001T035900-12108c9e",
+  "source_report_sha256": "3a8bc8a25d6441dd26676d1596a233a7ded3a10d350a42f15980beb6a98b46e0"
+}

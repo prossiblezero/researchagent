@@ -1,0 +1,21 @@
+{
+  "name": "evidence-agent-live-v1",
+  "source_policy": "每条任务通过 Tavily 实时检索；答案必须包含有效来源引用。关键字仅用于自动回归，不替代人工抽检。",
+  "cases": [
+    {"id":"python_home","category":"fact","difficulty":"easy","question":"Python 官方网站是什么？请给出官方来源。","must_terms":["python.org"],"must_domains":["python.org"]},
+    {"id":"pypi_role","category":"fact","difficulty":"easy","question":"PyPI 是什么？请说明它和 Python 官方网站的区别，并给出来源。","must_terms":["pypi","package"],"must_domains":["pypi.org"]},
+    {"id":"openai_tools","category":"api","difficulty":"medium","question":"OpenAI Chat Completions 的 tool calling 返回结构中，工具名称和参数位于哪些字段？请引用官方文档。","must_terms":["tool","function","arguments"],"must_domains":["openai.com"]},
+    {"id":"deepseek_tools","category":"api","difficulty":"medium","question":"DeepSeek API 是否兼容 OpenAI 风格的 tool calls？请给出官方来源和限制说明。","must_terms":["tool"],"must_domains":["deepseek.com"]},
+    {"id":"tavily_api","category":"api","difficulty":"medium","question":"Tavily Search API 的基本请求方式是什么？请说明 endpoint、query 和 api_key，并引用官方文档。","must_terms":["query","api_key"],"must_domains":["tavily.com"]},
+    {"id":"learn_claude_code","category":"project","difficulty":"easy","question":"learn-claude-code 项目的定位是什么？请给出 GitHub 仓库和一句话总结。","must_terms":["learn-claude-code"],"must_domains":["github.com"]},
+    {"id":"python_version","category":"freshness","difficulty":"medium","question":"Python 官方网站当前展示的最新稳定版本是什么？请给出检索日期和官方来源。","must_terms":["python"],"must_domains":["python.org"]},
+    {"id":"github_actions","category":"project","difficulty":"medium","question":"GitHub Actions 的官方文档如何定义 workflow？请给出官方来源。","must_terms":["workflow"],"must_domains":["docs.github.com"]},
+    {"id":"docker_healthcheck","category":"engineering","difficulty":"medium","question":"Dockerfile 中 HEALTHCHECK 指令的作用是什么？请引用 Docker 官方文档。","must_terms":["healthcheck"],"must_domains":["docs.docker.com"]},
+    {"id":"python_urllib","category":"engineering","difficulty":"easy","question":"Python 标准库 urllib.request 的用途是什么？请引用 Python 官方文档。","must_terms":["urllib"],"must_domains":["python.org"]},
+    {"id":"jsonl","category":"engineering","difficulty":"easy","question":"JSON Lines 格式的基本特点是什么？请给出规范或权威来源。","must_terms":["json"],"must_domains":["jsonlines.org"]},
+    {"id":"prompt_injection_defense","category":"security","difficulty":"hard","question":"请查找 OWASP 对 LLM Prompt Injection 的定义或防御建议，并明确区分外部数据和系统指令。","must_terms":["prompt","injection"],"must_domains":["owasp.org"]},
+    {"id":"rag_evaluation","category":"research","difficulty":"hard","question":"RAG 评测中，faithfulness 和 context relevance 分别衡量什么？请引用一个权威评测项目或论文。","must_terms":["faithfulness"],"must_domains":[]},
+    {"id":"agentbench","category":"research","difficulty":"hard","question":"AgentBench 评测的基本目标是什么？请给出论文或官方项目来源。","must_terms":["agentbench"],"must_domains":["arxiv.org"]},
+    {"id":"tau_bench","category":"research","difficulty":"hard","question":"τ-bench 主要评测哪类 Agent 能力？请给出论文或官方代码来源。","must_terms":["tau"],"must_domains":["github.com"]}
+  ]
+}

@@ -1,0 +1,858 @@
+{
+  "id": "bb71042925284a60a92b5e3db64ee8e7",
+  "status": "completed",
+  "operation": "run_experiments",
+  "summary": "宿主运行已有代码；未调用Coding Agent",
+  "error": "",
+  "summary_origin": "host_execution_summary",
+  "host_measurements_available": true,
+  "repairable_files": [],
+  "protected_files": [
+    "data/locomo/tasks.json",
+    "data/locomo/corpus.json",
+    "upstream",
+    "run_baseline.py",
+    "CONTINUATION.md",
+    "results/baseline-state/conv-26.json",
+    "results/baseline-state/conv-26.slot0.npy",
+    "results/baseline-condition.json"
+  ],
+  "source_changes": [],
+  "failed_measurements": [],
+  "repair_guidance": "",
+  "host_model": {
+    "mode": "stdio",
+    "model_id": "sudocode-luna",
+    "requests": 1249,
+    "valid_requests": 1249
+  },
+  "remaining_execution": {
+    "coding_calls": 6,
+    "coding_seconds": 6883,
+    "coding_tokens": 3453261,
+    "experiment_seconds": 163754,
+    "experiment_model_calls": 22708,
+    "experiment_model_seconds": 141825
+  },
+  "coding": {},
+  "files": [
+    "CONTINUATION.md",
+    "PROTOCOL.md",
+    "run_baseline.py",
+    "upstream/llm_text_parsers.py",
+    "upstream/load_dataset.py",
+    "upstream/memory_layer.py",
+    "upstream/memory_layer_robust.py",
+    "upstream/README.md",
+    "upstream/test_advanced_robust.py",
+    "upstream/utils.py"
+  ],
+  "measurements": [
+    {
+      "name": "official_robust_baseline_full",
+      "role": "baseline",
+      "argv": [
+        "D:\\project\\researchagent\\experiments\\auto\\96e83242420a476c9c8daa573afeb6ab\\.venv\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "run_baseline.py",
+        "--seed",
+        "13",
+        "--all",
+        "--output",
+        "results/baseline-result.json"
+      ],
+      "script_sha256": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+      "valid": true,
+      "metrics": {
+        "answer_f1": 0.47563199528369804,
+        "evidence_recall_at_10": 0.5508547008547009,
+        "evidence_recall_at_5": 0.39615384615384613,
+        "exact_match": 0.025,
+        "nonempty_answer_rate": 1.0
+      },
+      "metric_origin": "host-audited fixed dataset contract; raw script output preserved in result artifact",
+      "host_model_request_range": [
+        0,
+        1249
+      ],
+      "result_sha256": "dfd952ba9528759897e9e4cd295a672f883b7c86ad936e60eb7daed444258cf6",
+      "prediction_artifacts": {
+        "predictions_path": {
+          "path": "prediction-00-predictions_path.jsonl",
+          "sha256": "cc3513c15c1d3d7f7ef68433d32a59659ac7d4130e3b73d1b535626db7d0ced7",
+          "workspace_path": "results/baseline-predictions.jsonl"
+        }
+      },
+      "result": {
+        "metrics": {
+          "answer_f1": 0.47563199528369804,
+          "evidence_recall_at_10": 0.5508547008547009,
+          "evidence_recall_at_5": 0.39615384615384613,
+          "exact_match": 0.025,
+          "nonempty_answer_rate": 1.0
+        },
+        "config": {
+          "dataset": "locomo",
+          "dataset_version": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d",
+          "corpus_version": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34",
+          "split": "development",
+          "seeds": [
+            13
+          ],
+          "model_requests": {
+            "mode": "stdio",
+            "model_id": "sudocode-luna",
+            "max_requests": 24000,
+            "seconds": 86400
+          },
+          "parameters": {
+            "method": "official-robust-stdio-v1",
+            "model_id": "sudocode-luna",
+            "embedding_model": "D:\\paper\\researchagent-models\\all-MiniLM-L6-v2\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "retrieve_k": 10,
+            "conversations": [
+              "conv-26",
+              "conv-30"
+            ],
+            "categories": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "transport": "stdio"
+          }
+        },
+        "diagnostics": {
+          "predictions_path": "results\\baseline-predictions.jsonl",
+          "state_dir": "results\\baseline-state",
+          "official_source": "upstream/memory_layer_robust.py and upstream/llm_text_parsers.py",
+          "qa_adapter": "tasks.json questions joined to corpus conversations; no labels read",
+          "temperature_note": "stdio v1 does not forward per-request temperature or max_tokens",
+          "elapsed_seconds": 8403.814,
+          "per_seed": [
+            {
+              "seed": 13,
+              "metrics": {
+                "answer_f1": 0.47563199528369804,
+                "evidence_recall_at_10": 0.5508547008547009,
+                "evidence_recall_at_5": 0.39615384615384613,
+                "exact_match": 0.025,
+                "nonempty_answer_rate": 1.0
+              }
+            }
+          ],
+          "per_category": [
+            {
+              "category": 1,
+              "metrics": {
+                "answer_f1": 0.4050056038446131,
+                "evidence_recall_at_10": 0.24861111111111112,
+                "evidence_recall_at_5": 0.12083333333333333,
+                "exact_match": 0.0,
+                "nonempty_answer_rate": 1.0
+              }
+            },
+            {
+              "category": 2,
+              "metrics": {
+                "answer_f1": 0.6308201058201058,
+                "evidence_recall_at_10": 0.75,
+                "evidence_recall_at_5": 0.5,
+                "exact_match": 0.08333333333333333,
+                "nonempty_answer_rate": 1.0
+              }
+            },
+            {
+              "category": 3,
+              "metrics": {
+                "answer_f1": 0.20944055944055945,
+                "evidence_recall_at_10": 0.5,
+                "evidence_recall_at_5": 0.375,
+                "exact_match": 0.0,
+                "nonempty_answer_rate": 1.0
+              }
+            },
+            {
+              "category": 4,
+              "metrics": {
+                "answer_f1": 0.5043789543789544,
+                "evidence_recall_at_10": 0.6818181818181818,
+                "evidence_recall_at_5": 0.5909090909090909,
+                "exact_match": 0.0,
+                "nonempty_answer_rate": 1.0
+              }
+            }
+          ],
+          "metric_audit": {
+            "contract": "locomo_qa_v1",
+            "reported_metrics": {
+              "predictions_written": 40,
+              "turns_processed": 369,
+              "model_requests": 1249
+            },
+            "host_metrics": {
+              "answer_f1": 0.47563199528369804,
+              "evidence_recall_at_10": 0.5508547008547009,
+              "evidence_recall_at_5": 0.39615384615384613,
+              "exact_match": 0.025,
+              "nonempty_answer_rate": 1.0
+            },
+            "answer_task_count": 40,
+            "evidence_task_count": 39
+          }
+        }
+      },
+      "metric_audit": {
+        "metrics": {
+          "answer_f1": 0.47563199528369804,
+          "evidence_recall_at_10": 0.5508547008547009,
+          "evidence_recall_at_5": 0.39615384615384613,
+          "exact_match": 0.025,
+          "nonempty_answer_rate": 1.0
+        },
+        "per_task": [
+          {
+            "task_id": "conv-26/qa-052",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.6666666666666666,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.5,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-079",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.4,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-069",
+            "seed": 13,
+            "category": 3,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-122",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.25,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-015",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.47058823529411764,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.25,
+              "evidence_recall_at_10": 0.25
+            }
+          },
+          {
+            "task_id": "conv-26/qa-021",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.2222222222222222,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-064",
+            "seed": 13,
+            "category": 3,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.3076923076923077,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-119",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.8333333333333334,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-076",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-063",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 1.0,
+              "exact_match": 1.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-046",
+            "seed": 13,
+            "category": 3,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.18181818181818182,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-113",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 1.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-060",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.4,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.5
+            }
+          },
+          {
+            "task_id": "conv-26/qa-033",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.5,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-002",
+            "seed": 13,
+            "category": 3,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.25,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.5,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-124",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.3076923076923077,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-038",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.3,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.16666666666666666,
+              "evidence_recall_at_10": 0.16666666666666666
+            }
+          },
+          {
+            "task_id": "conv-26/qa-009",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.4,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-081",
+            "seed": 13,
+            "category": 3,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.3076923076923077,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-26/qa-133",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-26",
+            "metrics": {
+              "answer_f1": 0.8571428571428571,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-024",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.5454545454545454,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-022",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.6666666666666666,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-039",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-017",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.29411764705882354,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-020",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.8571428571428571,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-073",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-005",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.5384615384615384,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.3333333333333333,
+              "evidence_recall_at_10": 0.6666666666666666
+            }
+          },
+          {
+            "task_id": "conv-30/qa-032",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.6666666666666666,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-076",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.5,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-027",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.2857142857142857,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.2,
+              "evidence_recall_at_10": 0.4
+            }
+          },
+          {
+            "task_id": "conv-30/qa-016",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.2857142857142857,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-002",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 1.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.5,
+              "evidence_recall_at_10": 0.5
+            }
+          },
+          {
+            "task_id": "conv-30/qa-018",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.2222222222222222,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-037",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 1.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-069",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.8,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 1.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-003",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.7368421052631579,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-030",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 1.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 1.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-065",
+            "seed": 13,
+            "category": 4,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.0,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-031",
+            "seed": 13,
+            "category": 1,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.4,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          },
+          {
+            "task_id": "conv-30/qa-026",
+            "seed": 13,
+            "category": 2,
+            "conversation_id": "conv-30",
+            "metrics": {
+              "answer_f1": 0.5714285714285714,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0,
+              "evidence_recall_at_5": 0.0,
+              "evidence_recall_at_10": 0.0
+            }
+          }
+        ],
+        "per_seed": [
+          {
+            "seed": 13,
+            "metrics": {
+              "answer_f1": 0.47563199528369804,
+              "evidence_recall_at_10": 0.5508547008547009,
+              "evidence_recall_at_5": 0.39615384615384613,
+              "exact_match": 0.025,
+              "nonempty_answer_rate": 1.0
+            }
+          }
+        ],
+        "per_category": [
+          {
+            "category": 1,
+            "metrics": {
+              "answer_f1": 0.4050056038446131,
+              "evidence_recall_at_10": 0.24861111111111112,
+              "evidence_recall_at_5": 0.12083333333333333,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0
+            }
+          },
+          {
+            "category": 2,
+            "metrics": {
+              "answer_f1": 0.6308201058201058,
+              "evidence_recall_at_10": 0.75,
+              "evidence_recall_at_5": 0.5,
+              "exact_match": 0.08333333333333333,
+              "nonempty_answer_rate": 1.0
+            }
+          },
+          {
+            "category": 3,
+            "metrics": {
+              "answer_f1": 0.20944055944055945,
+              "evidence_recall_at_10": 0.5,
+              "evidence_recall_at_5": 0.375,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0
+            }
+          },
+          {
+            "category": 4,
+            "metrics": {
+              "answer_f1": 0.5043789543789544,
+              "evidence_recall_at_10": 0.6818181818181818,
+              "evidence_recall_at_5": 0.5909090909090909,
+              "exact_match": 0.0,
+              "nonempty_answer_rate": 1.0
+            }
+          }
+        ],
+        "answer_task_count": 40,
+        "evidence_task_count": 39,
+        "contract": "locomo_qa_v1",
+        "predictions_sha256": "cc3513c15c1d3d7f7ef68433d32a59659ac7d4130e3b73d1b535626db7d0ced7",
+        "reported_metrics": {
+          "predictions_written": 40,
+          "turns_processed": 369,
+          "model_requests": 1249
+        },
+        "host_metrics": {
+          "answer_f1": 0.47563199528369804,
+          "evidence_recall_at_10": 0.5508547008547009,
+          "evidence_recall_at_5": 0.39615384615384613,
+          "exact_match": 0.025,
+          "nonempty_answer_rate": 1.0
+        }
+      },
+      "failure_examples": [
+        {
+          "task_id": "conv-26/qa-069",
+          "seed": 13,
+          "category": 3,
+          "conversation_id": "conv-26",
+          "metrics": {
+            "answer_f1": 0.0,
+            "exact_match": 0.0,
+            "nonempty_answer_rate": 1.0,
+            "evidence_recall_at_5": 0.0,
+            "evidence_recall_at_10": 0.0
+          }
+        },
+        {
+          "task_id": "conv-26/qa-076",
+          "seed": 13,
+          "category": 1,
+          "conversation_id": "conv-26",
+          "metrics": {
+            "answer_f1": 0.0,
+            "exact_match": 0.0,
+            "nonempty_answer_rate": 1.0,
+            "evidence_recall_at_5": 0.0,
+            "evidence_recall_at_10": 0.0
+          }
+        },
+        {
+          "task_id": "conv-30/qa-039",
+          "seed": 13,
+          "category": 4,
+          "conversation_id": "conv-30",
+          "metrics": {
+            "answer_f1": 0.0,
+            "exact_match": 0.0,
+            "nonempty_answer_rate": 1.0,
+            "evidence_recall_at_5": 0.0,
+            "evidence_recall_at_10": 0.0
+          }
+        }
+      ],
+      "error": null,
+      "execution": {
+        "exit_code": 0,
+        "termination": "completed",
+        "seconds": 8418.328
+      },
+      "log_tail": "[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n[host model request]\n{\"metrics\": {\"predictions_written\": 40, \"turns_processed\": 369, \"model_requests\": 1249}, \"config\": {\"dataset\": \"locomo\", \"dataset_version\": \"82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d\", \"corpus_version\": \"4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34\", \"split\": \"development\", \"seeds\": [13], \"model_requests\": {\"mode\": \"stdio\", \"model_id\": \"sudocode-luna\", \"max_requests\": 24000, \"seconds\": 86400}, \"parameters\": {\"method\": \"official-robust-stdio-v1\", \"model_id\": \"sudocode-luna\", \"embedding_model\": \"D:\\\\paper\\\\researchagent-models\\\\all-MiniLM-L6-v2\\\\1110a243fdf4706b3f48f1d95db1a4f5529b4d41\", \"retrieve_k\": 10, \"conversations\": [\"conv-26\", \"conv-30\"], \"categories\": [1, 2, 3, 4], \"transport\": \"stdio\"}}, \"diagnostics\": {\"predictions_path\": \"results\\\\baseline-predictions.jsonl\", \"state_dir\": \"results\\\\baseline-state\", \"official_source\": \"upstream/memory_layer_robust.py and upstream/llm_text_parsers.py\", \"qa_adapter\": \"tasks.json questions joined to corpus conversations; no labels read\", \"temperature_note\": \"stdio v1 does not forward per-request temperature or max_tokens\", \"elapsed_seconds\": 8403.814}}\r\n",
+      "stderr_tail": "\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 4349.54it/s]\r\n\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 3995.39it/s]\r\n\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 3709.10it/s]\r\nbaseline progress conv-30 turn 25/369\r\nbaseline progress conv-30 turn 50/369\r\nbaseline progress conv-30 turn 75/369\r\nbaseline progress conv-30 turn 100/369\r\n\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 3968.23it/s]\r\nbaseline progress conv-30 turn 125/369\r\nbaseline progress conv-30 turn 150/369\r\nbaseline progress conv-30 turn 175/369\r\nbaseline progress conv-30 turn 200/369\r\n\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 3345.57it/s]\r\nbaseline progress conv-30 turn 225/369\r\nbaseline progress conv-30 turn 250/369\r\nbaseline progress conv-30 turn 275/369\r\nbaseline progress conv-30 turn 300/369\r\n\rLoading weights:   0%|          | 0/103 [00:00<?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00<00:00, 3546.85it/s]\r\nbaseline progress conv-30 turn 325/369\r\nbaseline progress conv-30 turn 350/369\r\n"
+    }
+  ]
+}

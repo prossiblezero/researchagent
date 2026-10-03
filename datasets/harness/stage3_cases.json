@@ -1,0 +1,4 @@
+[
+  {"id":"duplicate_stop","question":"请查明重复动作", "expect":"duplicate_action"},
+  {"id":"budget_stop","question":"请持续研究", "expect":"budget_exhausted"}
+]

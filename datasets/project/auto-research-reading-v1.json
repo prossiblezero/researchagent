@@ -1,0 +1,11 @@
+{
+  "schema": "auto-research-reading/v1",
+  "reading": {
+    "id": "scifact-original-methods-reading",
+    "origin": "actual research LLM subtask from SciFact r4",
+    "source_job": "990100def231420f9d6e5a544747701a",
+    "question": "Read and verify original SciFact paper and at least one reproducible/lightweight method source. Focus on exact task definition, labels, evidence/candidate document setting, official train/dev/test or splits, input/output and evaluation metrics (accuracy, macro-F1), and methodological ideas suitable for CPU such as TF-IDF lexical retrieval plus entailment classification. Return precise source citations and evidence IDs with claims supported by original text; do not rely on abstracts alone.",
+    "effort": "deep",
+    "scope": "Real production child research with live web search and verification; repeat of a failed question, not a paired causal benchmark"
+  }
+}

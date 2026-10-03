@@ -1,0 +1,671 @@
+{
+  "schema": "evidence-qa-panel/v1",
+  "version": "20260927-r1",
+  "authored_before_model_answers": true,
+  "source_corpus": "datasets/retrieval/retrieval_corpus_v3.json",
+  "source_corpus_sha256": "d1f877d6536ecb0f51a3ae05d77b94f4e59674e7fb1f7bce82aa65299f8a956e",
+  "evaluation_scope": "Six previously used public source snapshots; new QA fact combinations. This is not unseen-source generalization or an independent benchmark.",
+  "counts": {
+    "ordinary": 4,
+    "cross_document": 4,
+    "false_premise": 4,
+    "unanswerable": 4
+  },
+  "cases": [
+    {
+      "id": "normal-01",
+      "category": "ordinary",
+      "query": "Docling 技术报告中的 OCR 使用哪个第三方库？默认送入 OCR 引擎的图像分辨率是多少？不要混淆版面模型的输入分辨率。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "ocr-library",
+          "expected": "初始版本 OCR 使用 EasyOCR。",
+          "prefilter_patterns": [
+            "EasyOCR"
+          ],
+          "evidence": [
+            {
+              "document": "docling",
+              "ordinal": 7,
+              "title": "Docling Technical Report",
+              "url": "https://arxiv.org/abs/2408.09869",
+              "page": 4,
+              "sha256": "750dc50275e989831cc0c992de016e7c735c5902fce2852eaa562234bbeb0595",
+              "quote": "The Docling pipeline feeds all table objects detected in the layout analysis to the TableFormer model,\nby providing an image-crop of the table and the included text cells. TableFormer structure predic-\ntions are matched back to the PDF cells in post-processing to avoid expensive re-transcription text\nin the table image. Typical tables require between 2 and 6 seconds to be processed on a standard\nCPU, strongly depending on the amount of included table cells.\nOCR\nDocling provides optional support for OCR, for example to cover scanned PDFs or content in\nbitmaps images embedded on a page. In our initial release, we rely onEasyOCR [1], a popular third-\nparty OCR library with support for many languages. Docling, by default, feeds a high-resolution\npage image (216 dpi) to the OCR engine, to allow capturing small print detail in decent quality.\nWhile EasyOCR delivers reasonable transcription quality, we observe that it runs fairly slow on\nCPU (upwards of 30 seconds per page).\nWe are actively seeking collaboration from the open-source community to extend Docling with\nadditional OCR backends and speed improvements.\n3.3 Assembly\nIn the final pipeline stage, Docling assembles all prediction results produced on each page into a\nwell-defined datatype that encapsulates a converted document, as defined in the auxiliary package\ndocling-core. The generated document object is passed through a post-processing model which\nleverages several algorithms to augment features, such as detection of the document language, cor-\nrecting the reading order, matching figures with captions and labelling metadata such as title, authors\nand references. The final output can then be serialized to JSON or transformed into a Markdown\nrepresentation at the users request.\n3.4 Extensibility"
+            }
+          ]
+        },
+        {
+          "id": "ocr-resolution",
+          "expected": "默认 OCR 页面图像为 216 dpi。",
+          "prefilter_patterns": [
+            "216"
+          ],
+          "evidence": [
+            {
+              "document": "docling",
+              "ordinal": 7,
+              "title": "Docling Technical Report",
+              "url": "https://arxiv.org/abs/2408.09869",
+              "page": 4,
+              "sha256": "750dc50275e989831cc0c992de016e7c735c5902fce2852eaa562234bbeb0595",
+              "quote": "The Docling pipeline feeds all table objects detected in the layout analysis to the TableFormer model,\nby providing an image-crop of the table and the included text cells. TableFormer structure predic-\ntions are matched back to the PDF cells in post-processing to avoid expensive re-transcription text\nin the table image. Typical tables require between 2 and 6 seconds to be processed on a standard\nCPU, strongly depending on the amount of included table cells.\nOCR\nDocling provides optional support for OCR, for example to cover scanned PDFs or content in\nbitmaps images embedded on a page. In our initial release, we rely onEasyOCR [1], a popular third-\nparty OCR library with support for many languages. Docling, by default, feeds a high-resolution\npage image (216 dpi) to the OCR engine, to allow capturing small print detail in decent quality.\nWhile EasyOCR delivers reasonable transcription quality, we observe that it runs fairly slow on\nCPU (upwards of 30 seconds per page).\nWe are actively seeking collaboration from the open-source community to extend Docling with\nadditional OCR backends and speed improvements.\n3.3 Assembly\nIn the final pipeline stage, Docling assembles all prediction results produced on each page into a\nwell-defined datatype that encapsulates a converted document, as defined in the auxiliary package\ndocling-core. The generated document object is passed through a post-processing model which\nleverages several algorithms to augment features, such as detection of the document language, cor-\nrecting the reading order, matching figures with captions and labelling metadata such as title, authors\nand references. The final output can then be serialized to JSON or transformed into a Markdown\nrepresentation at the users request.\n3.4 Extensibility"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "normal-02",
+      "category": "ordinary",
+      "query": "ReAct 的 Wikipedia API 中，search 在实体存在和不存在时分别返回什么？lookup 返回什么？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "search-exists",
+          "expected": "实体存在时返回对应页面的前 5 句。",
+          "prefilter_patterns": [
+            "5|五",
+            "句|sentence"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 11,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 4,
+              "sha256": "085f38b6c4e5b0f36102d1dfd85e89b262603c02dc6157ea319caedd3f47f7dc",
+              "quote": "veriﬁcation. As shown in Figure 1(1d), by interacting with a Wikipedia API, ReAct is able to\nretrieve information to support reasoning, while also use reasoning to target what to retrieve next,\ndemonstrating a synergy of reasoning and acting.\n3.1 S ETUP\nDomains We consider two datasets challenging knowledge retrieval and reasoning: (1) Hot-\nPotQA (Yang et al., 2018), a multi-hop question answering benchmark that requires reasoning\nover two or more Wikipedia passages, and (2) FEVER (Thorne et al., 2018), a fact veriﬁcation\nbenchmark where each claim is annotated SUPPORTS, REFUTES, or NOT ENOUGH INFO, based\non if there exists a Wikipedia passage to verify the claim. In this work, we operate in a question-only\nsetup for both tasks, where models only receive the question/claim as input without access to support\nparagraphs, and have to rely on their internal knowledge or retrieve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page\ncontaining string, simulating Ctrl+F functionality on the browser. (3) finish[answer], which\nwould ﬁnish the current task with answer. We note that this action space mostly can only retrieve a\nsmall part of a passage based on exact passage name, which is signiﬁcantly weaker than state-of-the-\nart lexical or neural retrievers. The purpose is to simulate how humans would interact with Wikipedia,\nand force models to retrieve via explicit reasoning in language.\n3.2 M ETHODS"
+            }
+          ]
+        },
+        {
+          "id": "search-missing",
+          "expected": "实体不存在时建议搜索引擎给出的前 5 个相似实体。",
+          "prefilter_patterns": [
+            "5|五",
+            "相似|similar"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 11,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 4,
+              "sha256": "085f38b6c4e5b0f36102d1dfd85e89b262603c02dc6157ea319caedd3f47f7dc",
+              "quote": "veriﬁcation. As shown in Figure 1(1d), by interacting with a Wikipedia API, ReAct is able to\nretrieve information to support reasoning, while also use reasoning to target what to retrieve next,\ndemonstrating a synergy of reasoning and acting.\n3.1 S ETUP\nDomains We consider two datasets challenging knowledge retrieval and reasoning: (1) Hot-\nPotQA (Yang et al., 2018), a multi-hop question answering benchmark that requires reasoning\nover two or more Wikipedia passages, and (2) FEVER (Thorne et al., 2018), a fact veriﬁcation\nbenchmark where each claim is annotated SUPPORTS, REFUTES, or NOT ENOUGH INFO, based\non if there exists a Wikipedia passage to verify the claim. In this work, we operate in a question-only\nsetup for both tasks, where models only receive the question/claim as input without access to support\nparagraphs, and have to rely on their internal knowledge or retrieve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page\ncontaining string, simulating Ctrl+F functionality on the browser. (3) finish[answer], which\nwould ﬁnish the current task with answer. We note that this action space mostly can only retrieve a\nsmall part of a passage based on exact passage name, which is signiﬁcantly weaker than state-of-the-\nart lexical or neural retrievers. The purpose is to simulate how humans would interact with Wikipedia,\nand force models to retrieve via explicit reasoning in language.\n3.2 M ETHODS"
+            }
+          ]
+        },
+        {
+          "id": "lookup",
+          "expected": "返回当前页面内包含给定字符串的下一个句子。",
+          "prefilter_patterns": [
+            "下一|next",
+            "字符串|关键词|string"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 11,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 4,
+              "sha256": "085f38b6c4e5b0f36102d1dfd85e89b262603c02dc6157ea319caedd3f47f7dc",
+              "quote": "veriﬁcation. As shown in Figure 1(1d), by interacting with a Wikipedia API, ReAct is able to\nretrieve information to support reasoning, while also use reasoning to target what to retrieve next,\ndemonstrating a synergy of reasoning and acting.\n3.1 S ETUP\nDomains We consider two datasets challenging knowledge retrieval and reasoning: (1) Hot-\nPotQA (Yang et al., 2018), a multi-hop question answering benchmark that requires reasoning\nover two or more Wikipedia passages, and (2) FEVER (Thorne et al., 2018), a fact veriﬁcation\nbenchmark where each claim is annotated SUPPORTS, REFUTES, or NOT ENOUGH INFO, based\non if there exists a Wikipedia passage to verify the claim. In this work, we operate in a question-only\nsetup for both tasks, where models only receive the question/claim as input without access to support\nparagraphs, and have to rely on their internal knowledge or retrieve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page\ncontaining string, simulating Ctrl+F functionality on the browser. (3) finish[answer], which\nwould ﬁnish the current task with answer. We note that this action space mostly can only retrieve a\nsmall part of a passage based on exact passage name, which is signiﬁcantly weaker than state-of-the-\nart lexical or neural retrievers. The purpose is to simulate how humans would interact with Wikipedia,\nand force models to retrieve via explicit reasoning in language.\n3.2 M ETHODS"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "normal-03",
+      "category": "ordinary",
+      "query": "Pi 为压缩摘要序列化工具返回时，每条工具结果保留多少字符？超出部分如何表示，为什么这样处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "tool-limit",
+          "expected": "工具结果截断到 2000 个字符。",
+          "prefilter_patterns": [
+            "2000|2,000"
+          ],
+          "evidence": [
+            {
+              "document": "pi",
+              "ordinal": 7,
+              "title": "pi / compaction.md",
+              "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+              "page": null,
+              "sha256": "f211f479f570fe81f90e1ed0548e5deb2d040bc34ff70e41f4d760c31593360a",
+              "quote": "Tool results are truncated to 2000 characters during serialization. Content beyond that limit is replaced with a marker indicating how many characters were truncated. This keeps summarization requests within reasonable token budgets, since tool results (especially from `read` and `bash`) are typically the largest contributors to context size.\n\n## Custom Summarization via Extensions\n\nExtensions can intercept and customize both compaction and branch summarization. See [`extensions/types.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/extensions/types.ts) for event type definitions.\n\n### session_before_compact\n\nFired before auto-compaction or `/compact`. Can cancel or provide custom summary. See `SessionBeforeCompactEvent` and `CompactionPreparation` in the types file.\n\n```typescript\npi.on(\"session_before_compact\", async (event, ctx) => {\n  const { preparation, branchEntries, customInstructions, reason, willRetry, signal } = event;\n\n  // preparation.messagesToSummarize - messages to summarize\n  // preparation.turnPrefixMessages - split turn prefix (if isSplitTurn)\n  // preparation.previousSummary - previous compaction summary\n  // preparation.fileOps - extracted file operations\n  // preparation.tokensBefore - context tokens before compaction\n  // preparation.firstKeptEntryId - where kept messages start\n  // preparation.settings - effective settings after applying model overrides\n\n  // branchEntries - all entries on current branch (for custom state)\n  // reason - \"manual\" (/compact), \"threshold\", or \"overflow\"\n  // willRetry - whether the aborted turn is retried after compaction (overflow recovery)\n  // signal - AbortSignal (pass to LLM calls)\n\n  // Cancel:\n  return { cancel: true };\n\n  // Custom summary:\n  return {\n    compaction: {\n      summary: \"Your summary...\","
+            }
+          ]
+        },
+        {
+          "id": "tool-marker",
+          "expected": "超出部分替换为标记，标记说明截断字符数，用于控制摘要请求 token 预算。",
+          "prefilter_patterns": [
+            "标记|marker",
+            "字符|character",
+            "预算|token"
+          ],
+          "evidence": [
+            {
+              "document": "pi",
+              "ordinal": 7,
+              "title": "pi / compaction.md",
+              "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+              "page": null,
+              "sha256": "f211f479f570fe81f90e1ed0548e5deb2d040bc34ff70e41f4d760c31593360a",
+              "quote": "Tool results are truncated to 2000 characters during serialization. Content beyond that limit is replaced with a marker indicating how many characters were truncated. This keeps summarization requests within reasonable token budgets, since tool results (especially from `read` and `bash`) are typically the largest contributors to context size.\n\n## Custom Summarization via Extensions\n\nExtensions can intercept and customize both compaction and branch summarization. See [`extensions/types.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/extensions/types.ts) for event type definitions.\n\n### session_before_compact\n\nFired before auto-compaction or `/compact`. Can cancel or provide custom summary. See `SessionBeforeCompactEvent` and `CompactionPreparation` in the types file.\n\n```typescript\npi.on(\"session_before_compact\", async (event, ctx) => {\n  const { preparation, branchEntries, customInstructions, reason, willRetry, signal } = event;\n\n  // preparation.messagesToSummarize - messages to summarize\n  // preparation.turnPrefixMessages - split turn prefix (if isSplitTurn)\n  // preparation.previousSummary - previous compaction summary\n  // preparation.fileOps - extracted file operations\n  // preparation.tokensBefore - context tokens before compaction\n  // preparation.firstKeptEntryId - where kept messages start\n  // preparation.settings - effective settings after applying model overrides\n\n  // branchEntries - all entries on current branch (for custom state)\n  // reason - \"manual\" (/compact), \"threshold\", or \"overflow\"\n  // willRetry - whether the aborted turn is retried after compaction (overflow recovery)\n  // signal - AbortSignal (pass to LLM calls)\n\n  // Cancel:\n  return { cancel: true };\n\n  // Custom summary:\n  return {\n    compaction: {\n      summary: \"Your summary...\","
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "normal-04",
+      "category": "ordinary",
+      "query": "Codex 记忆流水线的 Phase 1 期望模型返回哪些结构化字段？哪些字段可选，输出入库前还有什么秘密信息处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "memory-fields",
+          "expected": "必有详细 raw_memory 与简要 rollout_summary，rollout_slug 可选。",
+          "prefilter_patterns": [
+            "raw_memory",
+            "rollout_summary",
+            "rollout_slug",
+            "可选|optional"
+          ],
+          "evidence": [
+            {
+              "document": "codex",
+              "ordinal": 1,
+              "title": "codex / README.md",
+              "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+              "page": null,
+              "sha256": "11fd35ef176862f19b6fd2ded7d9e5664b117c9ffb030dd1a589ec7ce3f1bed2",
+              "quote": "- idle long enough (to avoid summarizing still-active/fresh rollouts)\n- not already owned by another in-flight phase-1 worker\n- within startup scan/claim limits (bounded work per startup)\n\nWhat it does:\n\n- claims a bounded set of rollout jobs from the state DB (startup claim)\n- filters rollout content down to memory-relevant response items\n- sends each rollout to a model (in parallel, with a concurrency cap)\n- expects structured output containing:\n  - a detailed `raw_memory`\n  - a compact `rollout_summary`\n  - an optional `rollout_slug`\n- redacts secrets from the generated memory fields\n- stores successful outputs back into the state DB as stage-1 outputs\n\nConcurrency / coordination:\n\n- Phase 1 runs multiple extraction jobs in parallel (with a fixed concurrency cap) so startup memory generation can process several rollouts at once.\n- Each job is leased/claimed in the state DB before processing, which prevents duplicate work across concurrent workers/startups.\n- Failed jobs are marked with retry backoff, so they are retried later instead of hot-looping.\n\nJob outcomes:\n\n- `succeeded` (memory produced)\n- `succeeded_no_output` (valid run but nothing useful generated)\n- `failed` (with retry backoff/lease handling in DB)\n\nPhase 1 is the stage that turns individual rollouts into DB-backed memory records.\n\n## Phase 2: Global Consolidation\n\nPhase 2 consolidates the latest stage-1 outputs into the filesystem memory artifacts and then runs a dedicated consolidation agent.\n\nWhat it does:\n\n- claims a single global phase-2 lock before touching the memories root (so only one consolidation\n  inspects or mutates the workspace at a time)\n- loads a bounded set of stage-1 outputs from the state DB using phase-2\n  selection rules:\n  - ignores memories whose `last_usage` falls outside the configured\n    `max_unused_days` window"
+            }
+          ]
+        },
+        {
+          "id": "redaction",
+          "expected": "生成记忆字段中的秘密信息会被脱敏。",
+          "prefilter_patterns": [
+            "脱敏|遮盖|隐去|redact|清除.*秘密"
+          ],
+          "evidence": [
+            {
+              "document": "codex",
+              "ordinal": 1,
+              "title": "codex / README.md",
+              "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+              "page": null,
+              "sha256": "11fd35ef176862f19b6fd2ded7d9e5664b117c9ffb030dd1a589ec7ce3f1bed2",
+              "quote": "- idle long enough (to avoid summarizing still-active/fresh rollouts)\n- not already owned by another in-flight phase-1 worker\n- within startup scan/claim limits (bounded work per startup)\n\nWhat it does:\n\n- claims a bounded set of rollout jobs from the state DB (startup claim)\n- filters rollout content down to memory-relevant response items\n- sends each rollout to a model (in parallel, with a concurrency cap)\n- expects structured output containing:\n  - a detailed `raw_memory`\n  - a compact `rollout_summary`\n  - an optional `rollout_slug`\n- redacts secrets from the generated memory fields\n- stores successful outputs back into the state DB as stage-1 outputs\n\nConcurrency / coordination:\n\n- Phase 1 runs multiple extraction jobs in parallel (with a fixed concurrency cap) so startup memory generation can process several rollouts at once.\n- Each job is leased/claimed in the state DB before processing, which prevents duplicate work across concurrent workers/startups.\n- Failed jobs are marked with retry backoff, so they are retried later instead of hot-looping.\n\nJob outcomes:\n\n- `succeeded` (memory produced)\n- `succeeded_no_output` (valid run but nothing useful generated)\n- `failed` (with retry backoff/lease handling in DB)\n\nPhase 1 is the stage that turns individual rollouts into DB-backed memory records.\n\n## Phase 2: Global Consolidation\n\nPhase 2 consolidates the latest stage-1 outputs into the filesystem memory artifacts and then runs a dedicated consolidation agent.\n\nWhat it does:\n\n- claims a single global phase-2 lock before touching the memories root (so only one consolidation\n  inspects or mutates the workspace at a time)\n- loads a bounded set of stage-1 outputs from the state DB using phase-2\n  selection rules:\n  - ignores memories whose `last_usage` falls outside the configured\n    `max_unused_days` window"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "cross-01",
+      "category": "cross_document",
+      "query": "对比 Pi 分支摘要和 Codex Phase 2 的持久化：Pi 的文件操作跟踪来自哪两处？Codex 会生成哪些记忆文件，淘汰的 rollout 摘要如何处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "pi-files",
+          "expected": "来自被摘要消息中的工具调用，以及此前压缩/分支摘要 details，因而跨压缩累计。",
+          "prefilter_patterns": [
+            "工具调用|tool call",
+            "details|此前|之前"
+          ],
+          "evidence": [
+            {
+              "document": "pi",
+              "ordinal": 5,
+              "title": "pi / compaction.md",
+              "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+              "page": null,
+              "sha256": "8d59019a339f1d75755191523e696be5f6c43d0e72855200b5d9386f1e0034bd",
+              "quote": "When you use `/tree` to navigate to a different branch, Pi offers to summarize the work you're leaving. This injects context from the left branch into the new branch.\n\n### How It Works\n\n1. **Find common ancestor**: Deepest node shared by old and new positions\n2. **Collect entries**: Walk from old leaf back to common ancestor\n3. **Prepare with budget**: Include messages up to token budget (newest first)\n4. **Generate summary**: Call LLM with structured format\n5. **Append entry**: Save `BranchSummaryEntry` at navigation point\n\n```\nTree before navigation:\n\n         ┌─ B ─ C ─ D (old leaf, being abandoned)\n    A ───┤\n         └─ E ─ F (target)\n\nCommon ancestor: A\nEntries to summarize: B, C, D\n\nAfter navigation with summary:\n\n         ┌─ B ─ C ─ D\n    A ───┤\n         └─ E ─ F ─ [summary of B,C,D] (new leaf)\n```\n\n### Cumulative File Tracking\n\nBoth compaction and branch summarization track files cumulatively. When generating a summary, pi extracts file operations from:\n- Tool calls in the messages being summarized\n- Previous compaction or branch summary `details` (if any)\n\nThis means file tracking accumulates across multiple compactions or nested branch summaries, preserving the full history of read and modified files.\n\n### BranchSummaryEntry Structure\n\nDefined in [`session-manager.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/session-manager.ts):\n\n```typescript\ninterface BranchSummaryEntry<T = unknown> {\n  type: \"branch_summary\";\n  id: string;\n  parentId: string;\n  timestamp: number;\n  summary: string;\n  fromId: string;      // Entry we navigated from\n  usage?: Usage;       // LLM usage that generated the summary\n  fromHook?: boolean;  // true if provided by extension (legacy field name)\n  details?: T;         // implementation-specific data\n}"
+            }
+          ]
+        },
+        {
+          "id": "codex-files",
+          "expected": "生成 raw_memories.md 和每个选中 rollout 对应的 rollout_summaries/ 文件，并清理不再选中的过时摘要。",
+          "prefilter_patterns": [
+            "raw_memories.md",
+            "rollout_summaries",
+            "清理|删除|prun"
+          ],
+          "evidence": [
+            {
+              "document": "codex",
+              "ordinal": 2,
+              "title": "codex / README.md",
+              "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+              "page": null,
+              "sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7",
+              "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`\n- computes a completion watermark from the claimed watermark + newest input timestamps\n- syncs local memory artifacts under the memories root:\n  - `raw_memories.md` (merged raw memories, stable ascending thread-id order)\n  - `rollout_summaries/` (one summary file per selected rollout)\n- keeps the memories root itself as a git-baseline directory, initialized under\n  `~/.codex/memories/.git` by `codex-git-utils`\n- prunes stale rollout summaries that are no longer selected\n- prunes memory extension resource files older than the extension retention\n  window, so cleanup appears in the workspace diff\n- writes `phase2_workspace_diff.md` in the memories root with the git-style diff\n  from the previous successful Phase 2 baseline to the current worktree\n- if the memory workspace has no changes after artifact sync/pruning, marks the\n  job successful and exits\n\nIf the memory workspace has changes, it then:\n\n- spawns an internal consolidation sub-agent\n- builds the Phase 2 prompt with the path to the generated workspace diff\n- points the agent at `phase2_workspace_diff.md` for the detailed diff context\n- runs it with no approvals, no network, and local write access only\n- disables collab for that agent (to prevent recursive delegation)\n- watches the agent status and heartbeats the global job lease while it runs\n- resets the memory git baseline after the agent completes successfully; the\n  generated diff file is removed before this reset so deleted content is not\n  kept in the prompt artifact or unreachable git objects"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "cross-02",
+      "category": "cross_document",
+      "query": "比较两种信息不足时的回退：ReAct 论文中 CoT-SC→ReAct 在什么多数票条件下切换？OpenClaw 混合检索只有一路可用时如何处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "react-vote",
+          "expected": "n 个 CoT-SC 样本中多数答案出现次数少于 n/2 时回退到 ReAct。",
+          "prefilter_patterns": [
+            "n\\s*/\\s*2|一半|半数",
+            "少于|低于|不足|less"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 15,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 5,
+              "sha256": "3780185e2af03753e2e95fbc52af54dc9ddf30359f4191316822048d1386fe49",
+              "quote": "HotpotQA and FEVER respectively as we ﬁnd more steps will not improve ReAct performance3.\nB) CoT-SC→ ReAct: when the majority answer among n CoT-SC samples occurs less thann/2\ntimes (i.e. internal knowledge might not support the task conﬁdently), back off to ReAct.\nFinetuning Due to the challenge of manually annotating reasoning traces and actions at scale,\nwe consider a bootstraping approach similar to Zelikman et al. (2022), using 3,000 trajectories\nwith correct answers generated by ReAct (also for other baselines) to ﬁnetune smaller language\nmodels (PaLM-8/62B) to decode trajectories (all thoughts, actions, observations) conditioned on\ninput questions/claims. More details are in Appendix B.1.\n3.3 R ESULTS AND OBSERVATIONS\nReAct outperforms Act consistently Table 1 shows HotpotQA and Fever results using PaLM-\n540B as the base model with different prompting methods. We note that ReAct is better than Act\non both tasks, demonstrating the value of reasoning to guide acting, especially for synthesizing the\nﬁnal answer, as shown in Figure 1 (1c-d). Fine-tuning results 3 also conﬁrm the beneﬁt of reasoning\ntraces for more informed acting.\n3Of all trajectories with correct ﬁnal answers, those with 7 steps on HotpotQA and 5 steps on FEVER only\ntake up 0.84% and 1.33% respectively.\n5"
+            }
+          ]
+        },
+        {
+          "id": "single-path",
+          "expected": "只有一路可用时让这一路单独运行。",
+          "prefilter_patterns": [
+            "单独|独立|仅.*一路|only one|alone"
+          ],
+          "evidence": [
+            {
+              "document": "openclaw",
+              "ordinal": 2,
+              "title": "openclaw / memory-search.md",
+              "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+              "page": null,
+              "sha256": "a739134260e92b419937a4c176478750f0af5b0f55f4545d8639f0ad5623935d",
+              "quote": "paths, basenames, and filename stems rank ahead of partial path matches,\n  while snippets and body keyword scores still come from note content.\n\nIf only one path is available, the other runs alone.\n\nThe builtin engine then applies deterministic ranking:\n\n```text\nhybrid relevance × recency decay × importance multiplier\n```\n\nImportance is scored once when an entry is written by a memory workflow that\nalready has a model in the loop. Missing importance is neutral, so existing\nindexes keep their previous relevance signal. Dated daily notes decay with a\n30-day half-life; curated files such as `MEMORY.md` and `USER.md` are evergreen.\nThis follows the relevance, recency, and importance result in\n[Generative Agents (arXiv:2304.03442)](https://arxiv.org/abs/2304.03442) without\nadding a query-time model call.\n\nMMR then reorders the scored hybrid candidate set to reduce redundant\nsnippets. It does not change scores, threshold eligibility, or make another\nprovider call.\n\nSearch preserves keyword matches when every ranked result falls below the\nconfigured minimum score. Hybrid search can also fill remaining result slots\nwith keyword-only matches. These rules also apply in project sessions;\nsemantic-only matches still need to meet the configured minimum score.\n\n## Deterministic trigger recall\n\nOn eligible interactive turns, the builtin engine also compares the inbound\nmessage with short trigger phrases stored on indexed entries. Strong matches\ncan add up to three compact entries to hidden context before the reply. The\nprefilter uses the existing keyword and vector retrieval paths and does not run\na recall model.\n\nAutomatic injection is deliberately narrower than `memory_search`: only\npromoted, trusted entries qualify. Until indexed provenance is available, that"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "cross-03",
+      "category": "cross_document",
+      "query": "开发自定义模块时：Docling 模型类的 __call__ 接收与返回什么？Hermes 对滚动摘要做 defrag 会不会拼接消息或移动游标，重写失败后保留什么？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "callable",
+          "expected": "Docling 模型类实现 Callable，__call__ 接受页面对象迭代器，返回增加预测特征的页面对象迭代器。",
+          "prefilter_patterns": [
+            "__call__|Callable",
+            "迭代器|iterator",
+            "页面|page"
+          ],
+          "evidence": [
+            {
+              "document": "docling",
+              "ordinal": 8,
+              "title": "Docling Technical Report",
+              "url": "https://arxiv.org/abs/2408.09869",
+              "page": 4,
+              "sha256": "0fa435c9bad8f04497d9e6a3806d31843429a9718cb30dfbcbf0bf888a6bb886",
+              "quote": "Docling provides a straight-forward interface to extend its capabilities, namely the model pipeline.\nA model pipeline constitutes the central part in the processing, following initial document parsing\nand preceding output assembly, and can be fully customized by sub-classing from an abstract base-\nclass (BaseModelPipeline) or cloning the default model pipeline. This effectively allows to fully\ncustomize the chain of models, add or replace models, and introduce additional pipeline config-\nuration parameters. To use a custom model pipeline, the custom pipeline class to instantiate can\nbe provided as an argument to the main document conversion methods. We invite everyone in the\ncommunity to propose additional or alternative models and improvements.\nImplementations of model classes must satisfy the pythonCallable interface. The __call__ method\nmust accept an iterator over page objects, and produce another iterator over the page objects which\nwere augmented with the additional features predicted by the model, by extending the provided\nPagePredictions data model accordingly.\n4 Performance\nIn this section, we establish some reference numbers for the processing speed of Docling and the\nresource budget it requires. All tests in this section are run with default options on our standard test\nset distributed with Docling, which consists of three papers from arXiv and two IBM Redbooks,\nwith a total of 225 pages. Measurements were taken using both available PDF backends on two\ndifferent hardware systems: one MacBook Pro M3 Max, and one bare-metal server running Ubuntu\n20.04 LTS on an Intel Xeon E5-2690 CPU. For reproducibility, we fixed the thread budget (through\nsetting OMP NUM THREADS environment variable) once to 4 (Docling default) and once to 16"
+            }
+          ]
+        },
+        {
+          "id": "defrag",
+          "expected": "Hermes defrag 原地重写摘要，不做 splice 或游标移动；重写失败保留原摘要。",
+          "prefilter_patterns": [
+            "游标|cursor",
+            "原|旧|old",
+            "失败|failure"
+          ],
+          "evidence": [
+            {
+              "document": "hermes",
+              "ordinal": 4,
+              "title": "hermes / micro_compaction.py",
+              "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+              "page": null,
+              "sha256": "e12ac04ddfbd1b762f1ea706e94515b7d31398b17a2b130951c357a09722476f",
+              "quote": "\"micro-summarization output hit the token cap (finish_reason=length) — discarding partial summary\",\n            )\n            return None\n\n        message = response.choices[0].message\n        content = message.get(\"content\") if isinstance(message, dict) else getattr(message, \"content\", message)\n        content = (content if isinstance(content, str) else str(content) if content else \"\").strip()\n        if not content:\n            logger.info(\"micro-summarization returned empty content\")\n            return None\n\n        from agent.agent_runtime_helpers import strip_think_blocks\n        return strip_think_blocks(None, content).strip() or None\n\n    def _needs_defrag(self) -> bool:\n        \"\"\"Return True when the rolling summary is large enough to defrag.\"\"\"\n        return estimate_tokens_rough(self._micro_compact_rolling_summary) >= self._micro_compact_defrag_threshold_tokens\n\n    def _defrag_rolling_summary(self, messages: List[Dict[str, Any]]) -> bool:\n        \"\"\"Re-summarize the rolling summary text and rewrite the marker in place.\n        Transcript-shape-neutral (no splice, no cursor move). Returns True when it rewrote.\"\"\"\n        old_summary = self._micro_compact_rolling_summary\n        if not old_summary.strip():\n            return False\n        # Empty base turns the merge prompt into a rewrite-compactly instruction.\n        self._micro_compact_rolling_summary = \"\"\n        fresh_summary = self._micro_summarize_one(old_summary)\n        self._micro_compact_rolling_summary = fresh_summary or old_summary\n        if not fresh_summary:\n            return False\n        # Rewrite only the newest MICRO marker (resume rehydrates from it); a batch marker holds\n        # history we lack.\n        entry = next((e for e in reversed(messages) if _is_micro_marker(e)), None)"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "cross-04",
+      "category": "cross_document",
+      "query": "分别给出 ReAct 自举微调数据的规模及生成筛选方式，以及 OpenClaw 混合候选 MMR 的 lambda、相似度方法和局部复杂度。不要把两项目参数混用。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "bootstrap",
+          "expected": "使用 ReAct 生成的 3000 条答案正确的轨迹微调较小模型。",
+          "prefilter_patterns": [
+            "3,?000",
+            "正确|correct"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 15,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 5,
+              "sha256": "3780185e2af03753e2e95fbc52af54dc9ddf30359f4191316822048d1386fe49",
+              "quote": "HotpotQA and FEVER respectively as we ﬁnd more steps will not improve ReAct performance3.\nB) CoT-SC→ ReAct: when the majority answer among n CoT-SC samples occurs less thann/2\ntimes (i.e. internal knowledge might not support the task conﬁdently), back off to ReAct.\nFinetuning Due to the challenge of manually annotating reasoning traces and actions at scale,\nwe consider a bootstraping approach similar to Zelikman et al. (2022), using 3,000 trajectories\nwith correct answers generated by ReAct (also for other baselines) to ﬁnetune smaller language\nmodels (PaLM-8/62B) to decode trajectories (all thoughts, actions, observations) conditioned on\ninput questions/claims. More details are in Appendix B.1.\n3.3 R ESULTS AND OBSERVATIONS\nReAct outperforms Act consistently Table 1 shows HotpotQA and Fever results using PaLM-\n540B as the base model with different prompting methods. We note that ReAct is better than Act\non both tasks, demonstrating the value of reasoning to guide acting, especially for synthesizing the\nﬁnal answer, as shown in Figure 1 (1c-d). Fine-tuning results 3 also conﬁrm the beneﬁt of reasoning\ntraces for more informed acting.\n3Of all trajectories with correct ﬁnal answers, those with 7 steps on HotpotQA and 5 steps on FEVER only\ntake up 0.84% and 1.33% respectively.\n5"
+            }
+          ]
+        },
+        {
+          "id": "mmr-parameters",
+          "expected": "OpenClaw 固定 lambda 0.7，片段 token 的 Jaccard 重叠，局部 O(k²)。",
+          "prefilter_patterns": [
+            "0\\.7",
+            "Jaccard",
+            "O\\s*\\(?k|k²|平方"
+          ],
+          "evidence": [
+            {
+              "document": "openclaw",
+              "ordinal": 4,
+              "title": "openclaw / memory-search.md",
+              "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+              "page": null,
+              "sha256": "3235ce8476ed677044601064f0c7ef9ade6cfd998ef5d03ffec0b867a03aa218",
+              "quote": "indexing. Retained transcript archives use their indexed file modification\ntime. Individual message timestamps remain provenance metadata and do not\ndetermine the source's recency weight.\n\n### MMR (diversity)\n\nReduces redundant results. If five notes all mention the same router config,\nMMR favors a similarly relevant result with different content instead of\nrepeating near-identical snippets. The fixed relevance-biased setting uses\nlambda `0.7` with Jaccard overlap over snippet tokens. Its local work is\n`O(k²)`: ordinary defaults request 200 candidates per retrieval leg, for at\nmost 400 unique non-exact candidates before overlap; broader project and\nidentifier searches remain separately capped.\n\n<Tip>\nNo configuration is required. FTS-only and vector-only fallback paths do not\nrun the hybrid MMR pass.\n</Tip>\n\n## Multimodal memory\n\nWith `gemini-embedding-2`, you can index images and audio alongside\nMarkdown. This only applies to files under `memory.search.extraPaths`; default\nmemory roots (`MEMORY.md`, `memory/*.md`) stay Markdown-only. Search queries\nremain text, but they match against visual and audio content. See\n[Memory configuration reference](/reference/memory-config#multimodal-memory-gemini)\nfor setup.\n\n## Session memory search\n\nFor exact full-text recall from session transcripts, use [`sessions_search`](/concepts/session-search)\nand then open a result with `sessions_history`. Session-memory search remains the semantic,\nexperimental complement.\n\nOptionally index session transcripts so `memory_search` can recall earlier\nconversations. This is opt-in: set `experimental.sessionMemory: true` and add\n`\"sessions\"` to `sources` (default `sources` is `[\"memory\"]`).\n\nUse `corpus: \"memory\"` to search only memory notes. Results containing no session"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "premise-01",
+      "category": "false_premise",
+      "query": "有人说 ReAct 的 Wikipedia action space 比最先进的词法/神经检索器更强，因此论文用它是为了检索效果领先。根据论文核实，并说明作者给出的目的。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "weaker",
+          "expected": "论文说该动作空间显著弱于最先进词法或神经检索器。",
+          "prefilter_patterns": [
+            "弱|weaker"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 11,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 4,
+              "sha256": "085f38b6c4e5b0f36102d1dfd85e89b262603c02dc6157ea319caedd3f47f7dc",
+              "quote": "veriﬁcation. As shown in Figure 1(1d), by interacting with a Wikipedia API, ReAct is able to\nretrieve information to support reasoning, while also use reasoning to target what to retrieve next,\ndemonstrating a synergy of reasoning and acting.\n3.1 S ETUP\nDomains We consider two datasets challenging knowledge retrieval and reasoning: (1) Hot-\nPotQA (Yang et al., 2018), a multi-hop question answering benchmark that requires reasoning\nover two or more Wikipedia passages, and (2) FEVER (Thorne et al., 2018), a fact veriﬁcation\nbenchmark where each claim is annotated SUPPORTS, REFUTES, or NOT ENOUGH INFO, based\non if there exists a Wikipedia passage to verify the claim. In this work, we operate in a question-only\nsetup for both tasks, where models only receive the question/claim as input without access to support\nparagraphs, and have to rely on their internal knowledge or retrieve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page\ncontaining string, simulating Ctrl+F functionality on the browser. (3) finish[answer], which\nwould ﬁnish the current task with answer. We note that this action space mostly can only retrieve a\nsmall part of a passage based on exact passage name, which is signiﬁcantly weaker than state-of-the-\nart lexical or neural retrievers. The purpose is to simulate how humans would interact with Wikipedia,\nand force models to retrieve via explicit reasoning in language.\n3.2 M ETHODS"
+            }
+          ]
+        },
+        {
+          "id": "purpose",
+          "expected": "目的是模拟人类与 Wikipedia 交互，并迫使模型通过显式语言推理检索。",
+          "prefilter_patterns": [
+            "人类|人|human",
+            "显式|明确|explicit"
+          ],
+          "evidence": [
+            {
+              "document": "react",
+              "ordinal": 11,
+              "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+              "url": "https://arxiv.org/abs/2210.03629",
+              "page": 4,
+              "sha256": "085f38b6c4e5b0f36102d1dfd85e89b262603c02dc6157ea319caedd3f47f7dc",
+              "quote": "veriﬁcation. As shown in Figure 1(1d), by interacting with a Wikipedia API, ReAct is able to\nretrieve information to support reasoning, while also use reasoning to target what to retrieve next,\ndemonstrating a synergy of reasoning and acting.\n3.1 S ETUP\nDomains We consider two datasets challenging knowledge retrieval and reasoning: (1) Hot-\nPotQA (Yang et al., 2018), a multi-hop question answering benchmark that requires reasoning\nover two or more Wikipedia passages, and (2) FEVER (Thorne et al., 2018), a fact veriﬁcation\nbenchmark where each claim is annotated SUPPORTS, REFUTES, or NOT ENOUGH INFO, based\non if there exists a Wikipedia passage to verify the claim. In this work, we operate in a question-only\nsetup for both tasks, where models only receive the question/claim as input without access to support\nparagraphs, and have to rely on their internal knowledge or retrieve knowledge via interacting with\nan external environment to support reasoning.\nAction Space We design a simple Wikipedia web API with three types of actions to support\ninteractive information retrieval: (1) search[entity], which returns the ﬁrst 5 sentences from\nthe corresponding entity wiki page if it exists, or else suggests top-5 similar entities from the\nWikipedia search engine, (2) lookup[string], which would return the next sentence in the page\ncontaining string, simulating Ctrl+F functionality on the browser. (3) finish[answer], which\nwould ﬁnish the current task with answer. We note that this action space mostly can only retrieve a\nsmall part of a passage based on exact passage name, which is signiﬁcantly weaker than state-of-the-\nart lexical or neural retrievers. The purpose is to simulate how humans would interact with Wikipedia,\nand force models to retrieve via explicit reasoning in language.\n3.2 M ETHODS"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "premise-02",
+      "category": "false_premise",
+      "query": "请核实：“Docling 这份技术报告已经发布了公式识别、代码识别与图像分类三个模型”。报告把它们列为现有能力还是未来计划？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "future",
+          "expected": "图像分类、公式识别、代码识别模型被列为 future work 的未来扩展计划，不能当成已发布功能。",
+          "prefilter_patterns": [
+            "未来|计划|future",
+            "公式|equation",
+            "代码|code"
+          ],
+          "evidence": [
+            {
+              "document": "docling",
+              "ordinal": 11,
+              "title": "Docling Technical Report",
+              "url": "https://arxiv.org/abs/2408.09869",
+              "page": 5,
+              "sha256": "0eaa59d4da0a6e4826bcb88215e65db11271be8f218527497b84a463ec9b4b2b",
+              "quote": "efit to automated knowledge-base construction [11, 10]. Docling is also integrated within the open\nIBM data prep kit [6], which implements scalable data transforms to build large-scale multi-modal\ntraining datasets.\n6 Future work and contributions\nDocling is designed to allow easy extension of the model library and pipelines. In the future, we\nplan to extend Docling with several more models, such as a figure-classifier model, an equation-\nrecognition model, a code-recognition model and more. This will help improve the quality of con-\nversion for specific types of content, as well as augment extracted document metadata with ad-\nditional information. Further investment into testing and optimizing GPU acceleration as well as\nimproving the Docling-native PDF backend are on our roadmap, too.\nWe encourage everyone to propose or implement additional features and models, and will\ngladly take your inputs and contributions under review. The codebase of Docling is open for use\nand contribution, under the MIT license agreement and in alignment with our contributing guidelines\nincluded in the Docling repository. If you use Docling in your projects, please consider citing this\ntechnical report."
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "premise-03",
+      "category": "false_premise",
+      "query": "有人把 OpenClaw 的 MMR 说成再次调用模型改写相似度分数、改变最低分数门槛的流程。原文支持这个说法吗？分别说明它做和不做什么。",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "reorder-only",
+          "expected": "MMR 重排候选减少冗余，但不改分数、不改阈值资格，也不发额外 provider 请求。",
+          "prefilter_patterns": [
+            "重排|排序|reorder",
+            "冗余|重复|redund",
+            "分数|score",
+            "阈值|门槛|threshold",
+            "调用|请求|call"
+          ],
+          "evidence": [
+            {
+              "document": "openclaw",
+              "ordinal": 2,
+              "title": "openclaw / memory-search.md",
+              "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+              "page": null,
+              "sha256": "a739134260e92b419937a4c176478750f0af5b0f55f4545d8639f0ad5623935d",
+              "quote": "paths, basenames, and filename stems rank ahead of partial path matches,\n  while snippets and body keyword scores still come from note content.\n\nIf only one path is available, the other runs alone.\n\nThe builtin engine then applies deterministic ranking:\n\n```text\nhybrid relevance × recency decay × importance multiplier\n```\n\nImportance is scored once when an entry is written by a memory workflow that\nalready has a model in the loop. Missing importance is neutral, so existing\nindexes keep their previous relevance signal. Dated daily notes decay with a\n30-day half-life; curated files such as `MEMORY.md` and `USER.md` are evergreen.\nThis follows the relevance, recency, and importance result in\n[Generative Agents (arXiv:2304.03442)](https://arxiv.org/abs/2304.03442) without\nadding a query-time model call.\n\nMMR then reorders the scored hybrid candidate set to reduce redundant\nsnippets. It does not change scores, threshold eligibility, or make another\nprovider call.\n\nSearch preserves keyword matches when every ranked result falls below the\nconfigured minimum score. Hybrid search can also fill remaining result slots\nwith keyword-only matches. These rules also apply in project sessions;\nsemantic-only matches still need to meet the configured minimum score.\n\n## Deterministic trigger recall\n\nOn eligible interactive turns, the builtin engine also compares the inbound\nmessage with short trigger phrases stored on indexed entries. Strong matches\ncan add up to three compact entries to hidden context before the reply. The\nprefilter uses the existing keyword and vector retrieval paths and does not run\na recall model.\n\nAutomatic injection is deliberately narrower than `memory_search`: only\npromoted, trusted entries qualify. Until indexed provenance is available, that"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "premise-04",
+      "category": "false_premise",
+      "query": "核实 Hermes micro-compaction 连续失败后跳过一个 exchange 的含义：是否会把这段原始对话删除？它更新什么状态，留下的内容以后如何处理？",
+      "unanswerable": false,
+      "facts": [
+        {
+          "id": "retained-exchange",
+          "expected": "卡住的 exchange 仍留在 transcript 供批量压缩/defrag，游标前进到 exchange_end，并重置连续失败跟踪。",
+          "prefilter_patterns": [
+            "保留|留在|仍在|stays",
+            "游标|cursor",
+            "重置|reset"
+          ],
+          "evidence": [
+            {
+              "document": "hermes",
+              "ordinal": 8,
+              "title": "hermes / micro_compaction.py",
+              "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+              "page": null,
+              "sha256": "c0821473a050b5049805c62b3e6fc24826a5b6232669f56aaf18259e1c25465e",
+              "quote": "\"Micro-compaction: skipping exchange at cursor %d after %d consecutive failures\",\n            exchange_start, self._micro_compact_consecutive_failures,\n        )\n        # Skip the stuck exchange; it stays in the transcript for batch compression/defrag.\n        self._micro_compact_cursor = exchange_end\n        self._reset_micro_failure_tracking()\n        return \"exchange_skipped\"\n\n    def _next_exchange(self, messages: List[Dict[str, Any]]) -> Optional[tuple[int, int]]:\n        \"\"\"The next un-absorbed exchange inside the compressible window, or None.\"\"\"\n        compress_start = self._align_boundary_forward(messages, self._protect_head_size(messages))\n        compress_end = self._find_tail_cut_by_tokens(messages, compress_start)\n        if compress_start >= compress_end:\n            return None\n        cursor = self._resolve_compact_cursor(messages, compress_start, compress_end)\n        return None if cursor >= compress_end else self._find_one_exchange(messages, cursor, compress_end)\n\n    @staticmethod\n    def _rolling_summary_from_marker(content: Any) -> str:\n        \"\"\"Recover the rolling-summary text from a summary marker (resume rehydration).\"\"\"\n        cc = _cc()\n        if not isinstance(content, str) or not content.strip():\n            return \"\"\n        # rfind: SUMMARY_PREFIX itself mentions the heading, so the first hit is in the preamble.\n        idx = content.rfind(cc.HISTORICAL_TASK_HEADING)\n        body = content[idx + len(cc.HISTORICAL_TASK_HEADING):] if idx != -1 else content\n        end = body.find(cc._SUMMARY_END_MARKER)\n        return (body[:end] if end != -1 else body).strip()\n\n    def _cursor_after_splice(self, result: List[Dict[str, Any]], fallback: int) -> int:\n        \"\"\"Cursor position just past the summary marker in *result*. Must derive from the SPLICED"
+            }
+          ]
+        }
+      ],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。"
+    },
+    {
+      "id": "absent-01",
+      "category": "unanswerable",
+      "query": "只依据这些资料，Docling 在 2026 年银行财报表格测试集上的精确 F1 分数是多少？请给出测试集定义与数值；未提供就明确说明，不能用处理秒数代替准确率。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。",
+      "absence_basis": {
+        "scope": "Only the six frozen source snapshots; not a claim that the information cannot exist elsewhere.",
+        "expected": "明确说明当前资料没有所要求的实测数值/实验报告，不杜撰数字，不以无关数字替代；可以解释已知相关机制。",
+        "corpus_search_review": "已阅读相关完整片段并检索本冻结语料，未见问题要求的具体对照/时间分位数/数据集准确率；相关片段只是缺口审阅背景，不是能够证明全球不存在的证据。",
+        "related_originals": [
+          {
+            "document": "docling",
+            "ordinal": 7,
+            "title": "Docling Technical Report",
+            "url": "https://arxiv.org/abs/2408.09869",
+            "page": 4,
+            "sha256": "750dc50275e989831cc0c992de016e7c735c5902fce2852eaa562234bbeb0595",
+            "quote": "The Docling pipeline feeds all table objects detected in the layout analysis to the TableFormer model,\nby providing an image-crop of the table and the included text cells. TableFormer structure predic-\ntions are matched back to the PDF cells in post-processing to avoid expensive re-transcription text\nin the table image. Typical tables require between 2 and 6 seconds to be processed on a standard\nCPU, strongly depending on the amount of included table cells.\nOCR\nDocling provides optional support for OCR, for example to cover scanned PDFs or content in\nbitmaps images embedded on a page. In our initial release, we rely onEasyOCR [1], a popular third-\nparty OCR library with support for many languages. Docling, by default, feeds a high-resolution\npage image (216 dpi) to the OCR engine, to allow capturing small print detail in decent quality.\nWhile EasyOCR delivers reasonable transcription quality, we observe that it runs fairly slow on\nCPU (upwards of 30 seconds per page).\nWe are actively seeking collaboration from the open-source community to extend Docling with\nadditional OCR backends and speed improvements.\n3.3 Assembly\nIn the final pipeline stage, Docling assembles all prediction results produced on each page into a\nwell-defined datatype that encapsulates a converted document, as defined in the auxiliary package\ndocling-core. The generated document object is passed through a post-processing model which\nleverages several algorithms to augment features, such as detection of the document language, cor-\nrecting the reading order, matching figures with captions and labelling metadata such as title, authors\nand references. The final output can then be serialized to JSON or transformed into a Markdown\nrepresentation at the users request.\n3.4 Extensibility"
+          },
+          {
+            "document": "docling",
+            "ordinal": 10,
+            "title": "Docling Technical Report",
+            "url": "https://arxiv.org/abs/2408.09869",
+            "page": 5,
+            "sha256": "e416fa5398544d7c79c4cce9c0e120ff9fd11cb69f67bd2c4d0c054a8d2725e8",
+            "quote": "torch runtimes backing the Docling pipeline. We will deliver updates on this topic at in a future\nversion of this report.\nTable 1: Runtime characteristics of Docling with the standard model pipeline and settings, on our\ntest dataset of 225 pages, on two different systems. OCR is disabled. We show the time-to-solution\n(TTS), computed throughput in pages per second, and the peak memory used (resident set size) for\nboth the Docling-native PDF backend and for the pypdfium backend, using 4 and 16 threads.\nCPU Thread\nbudget\nnative backend pypdfium backend\nTTS Pages/s Mem TTS Pages/s Mem\nApple M3 Max\n(16 cores)\n4 177 s 1.27 6.20 GB 103 s 2.18 2.56 GB16 167 s 1.34 92 s 2.45\nIntel(R) Xeon\nE5-2690\n(16 cores)\n4 375 s 0.60 6.16 GB 239 s 0.94 2.42 GB16 244 s 0.92 143 s 1.57\n5 Applications\nThanks to the high-quality, richly structured document conversion achieved by Docling, its out-\nput qualifies for numerous downstream applications. For example, Docling can provide a base\nfor detailed enterprise document search, passage retrieval or classification use-cases, or support\nknowledge extraction pipelines, allowing specific treatment of different structures in the document,\nsuch as tables, figures, section structure or references. For popular generative AI application pat-\nterns, such as retrieval-augmented generation (RAG), we providequackling, an open-source package\nwhich capitalizes on Docling’s feature-rich document output to enable document-native optimized\nvector embedding and chunking. It plugs in seamlessly with LLM frameworks such as LlamaIn-\ndex [8]. Since Docling is fast, stable and cheap to run, it also makes for an excellent choice to build\ndocument-derived datasets. With its powerful table structure recognition, it provides significant ben-"
+          }
+        ]
+      }
+    },
+    {
+      "id": "absent-02",
+      "category": "unanswerable",
+      "query": "只依据 Pi 这份 compaction 文档，开启压缩相对关闭压缩让真实编码任务成功率提升多少个百分点？请给出对照实验样本量和置信区间；没有实验数据就说明无法确定。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。",
+      "absence_basis": {
+        "scope": "Only the six frozen source snapshots; not a claim that the information cannot exist elsewhere.",
+        "expected": "明确说明当前资料没有所要求的实测数值/实验报告，不杜撰数字，不以无关数字替代；可以解释已知相关机制。",
+        "corpus_search_review": "已阅读相关完整片段并检索本冻结语料，未见问题要求的具体对照/时间分位数/数据集准确率；相关片段只是缺口审阅背景，不是能够证明全球不存在的证据。",
+        "related_originals": [
+          {
+            "document": "pi",
+            "ordinal": 0,
+            "title": "pi / compaction.md",
+            "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+            "page": null,
+            "sha256": "8dc218bec20fb7f2c94111e930f1db7a34236c2fa75d36323a18b6b727a95a3e",
+            "quote": "# Compaction & Branch Summarization\n\nLLMs have limited context windows. When conversations grow too long, Pi uses compaction to summarize older content while preserving recent work. This page covers both auto-compaction and branch summarization.\n\n**Source files** ([pi](https://github.com/earendil-works/pi)):\n- [`packages/coding-agent/src/core/compaction/compaction.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/compaction/compaction.ts) - Auto-compaction logic\n- [`packages/coding-agent/src/core/compaction/branch-summarization.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/compaction/branch-summarization.ts) - Branch summarization\n- [`packages/coding-agent/src/core/compaction/utils.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/compaction/utils.ts) - Shared utilities (file tracking, serialization)\n- [`packages/coding-agent/src/core/session-manager.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/session-manager.ts) - Entry types (`CompactionEntry`, `BranchSummaryEntry`)\n- [`packages/coding-agent/src/core/extensions/types.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/extensions/types.ts) - Extension event types\n\nFor TypeScript definitions in your project, inspect `node_modules/@earendil-works/pi-coding-agent/dist/`.\n\n## Overview\n\nPi has two summarization mechanisms:\n\n| Mechanism | Trigger | Purpose |\n|-----------|---------|---------|\n| Compaction | Context exceeds threshold, or `/compact` | Summarize old messages to free up context |\n| Branch summarization | `/tree` navigation | Preserve context when switching branches |"
+          },
+          {
+            "document": "pi",
+            "ordinal": 7,
+            "title": "pi / compaction.md",
+            "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+            "page": null,
+            "sha256": "f211f479f570fe81f90e1ed0548e5deb2d040bc34ff70e41f4d760c31593360a",
+            "quote": "Tool results are truncated to 2000 characters during serialization. Content beyond that limit is replaced with a marker indicating how many characters were truncated. This keeps summarization requests within reasonable token budgets, since tool results (especially from `read` and `bash`) are typically the largest contributors to context size.\n\n## Custom Summarization via Extensions\n\nExtensions can intercept and customize both compaction and branch summarization. See [`extensions/types.ts`](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/extensions/types.ts) for event type definitions.\n\n### session_before_compact\n\nFired before auto-compaction or `/compact`. Can cancel or provide custom summary. See `SessionBeforeCompactEvent` and `CompactionPreparation` in the types file.\n\n```typescript\npi.on(\"session_before_compact\", async (event, ctx) => {\n  const { preparation, branchEntries, customInstructions, reason, willRetry, signal } = event;\n\n  // preparation.messagesToSummarize - messages to summarize\n  // preparation.turnPrefixMessages - split turn prefix (if isSplitTurn)\n  // preparation.previousSummary - previous compaction summary\n  // preparation.fileOps - extracted file operations\n  // preparation.tokensBefore - context tokens before compaction\n  // preparation.firstKeptEntryId - where kept messages start\n  // preparation.settings - effective settings after applying model overrides\n\n  // branchEntries - all entries on current branch (for custom state)\n  // reason - \"manual\" (/compact), \"threshold\", or \"overflow\"\n  // willRetry - whether the aborted turn is retried after compaction (overflow recovery)\n  // signal - AbortSignal (pass to LLM calls)\n\n  // Cancel:\n  return { cancel: true };\n\n  // Custom summary:\n  return {\n    compaction: {\n      summary: \"Your summary...\","
+          }
+        ]
+      }
+    },
+    {
+      "id": "absent-03",
+      "category": "unanswerable",
+      "query": "OpenClaw 的这份资料有没有 BGE-M3 与 gemini-embedding-2 在同一 BEIR 测试集上的 nDCG@10 对比？请只报资料支持的两个数值，没有就说明缺少对照结果。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。",
+      "absence_basis": {
+        "scope": "Only the six frozen source snapshots; not a claim that the information cannot exist elsewhere.",
+        "expected": "明确说明当前资料没有所要求的实测数值/实验报告，不杜撰数字，不以无关数字替代；可以解释已知相关机制。",
+        "corpus_search_review": "已阅读相关完整片段并检索本冻结语料，未见问题要求的具体对照/时间分位数/数据集准确率；相关片段只是缺口审阅背景，不是能够证明全球不存在的证据。",
+        "related_originals": [
+          {
+            "document": "openclaw",
+            "ordinal": 4,
+            "title": "openclaw / memory-search.md",
+            "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+            "page": null,
+            "sha256": "3235ce8476ed677044601064f0c7ef9ade6cfd998ef5d03ffec0b867a03aa218",
+            "quote": "indexing. Retained transcript archives use their indexed file modification\ntime. Individual message timestamps remain provenance metadata and do not\ndetermine the source's recency weight.\n\n### MMR (diversity)\n\nReduces redundant results. If five notes all mention the same router config,\nMMR favors a similarly relevant result with different content instead of\nrepeating near-identical snippets. The fixed relevance-biased setting uses\nlambda `0.7` with Jaccard overlap over snippet tokens. Its local work is\n`O(k²)`: ordinary defaults request 200 candidates per retrieval leg, for at\nmost 400 unique non-exact candidates before overlap; broader project and\nidentifier searches remain separately capped.\n\n<Tip>\nNo configuration is required. FTS-only and vector-only fallback paths do not\nrun the hybrid MMR pass.\n</Tip>\n\n## Multimodal memory\n\nWith `gemini-embedding-2`, you can index images and audio alongside\nMarkdown. This only applies to files under `memory.search.extraPaths`; default\nmemory roots (`MEMORY.md`, `memory/*.md`) stay Markdown-only. Search queries\nremain text, but they match against visual and audio content. See\n[Memory configuration reference](/reference/memory-config#multimodal-memory-gemini)\nfor setup.\n\n## Session memory search\n\nFor exact full-text recall from session transcripts, use [`sessions_search`](/concepts/session-search)\nand then open a result with `sessions_history`. Session-memory search remains the semantic,\nexperimental complement.\n\nOptionally index session transcripts so `memory_search` can recall earlier\nconversations. This is opt-in: set `experimental.sessionMemory: true` and add\n`\"sessions\"` to `sources` (default `sources` is `[\"memory\"]`).\n\nUse `corpus: \"memory\"` to search only memory notes. Results containing no session"
+          }
+        ]
+      }
+    },
+    {
+      "id": "absent-04",
+      "category": "unanswerable",
+      "query": "根据 Codex memories README，Phase 1 和 Phase 2 在线上各自的 P95 延迟具体是多少毫秒？不要用并发限制推算，没有测量值就明确说明。",
+      "unanswerable": true,
+      "facts": [],
+      "review_instructions": "逐事实查看实际回答、绑定的 E 引用和完整来源。关键词命中仅用于预筛；最终 correctness、supported、citation_sufficient 均须逐项人工审阅。",
+      "absence_basis": {
+        "scope": "Only the six frozen source snapshots; not a claim that the information cannot exist elsewhere.",
+        "expected": "明确说明当前资料没有所要求的实测数值/实验报告，不杜撰数字，不以无关数字替代；可以解释已知相关机制。",
+        "corpus_search_review": "已阅读相关完整片段并检索本冻结语料，未见问题要求的具体对照/时间分位数/数据集准确率；相关片段只是缺口审阅背景，不是能够证明全球不存在的证据。",
+        "related_originals": [
+          {
+            "document": "codex",
+            "ordinal": 1,
+            "title": "codex / README.md",
+            "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+            "page": null,
+            "sha256": "11fd35ef176862f19b6fd2ded7d9e5664b117c9ffb030dd1a589ec7ce3f1bed2",
+            "quote": "- idle long enough (to avoid summarizing still-active/fresh rollouts)\n- not already owned by another in-flight phase-1 worker\n- within startup scan/claim limits (bounded work per startup)\n\nWhat it does:\n\n- claims a bounded set of rollout jobs from the state DB (startup claim)\n- filters rollout content down to memory-relevant response items\n- sends each rollout to a model (in parallel, with a concurrency cap)\n- expects structured output containing:\n  - a detailed `raw_memory`\n  - a compact `rollout_summary`\n  - an optional `rollout_slug`\n- redacts secrets from the generated memory fields\n- stores successful outputs back into the state DB as stage-1 outputs\n\nConcurrency / coordination:\n\n- Phase 1 runs multiple extraction jobs in parallel (with a fixed concurrency cap) so startup memory generation can process several rollouts at once.\n- Each job is leased/claimed in the state DB before processing, which prevents duplicate work across concurrent workers/startups.\n- Failed jobs are marked with retry backoff, so they are retried later instead of hot-looping.\n\nJob outcomes:\n\n- `succeeded` (memory produced)\n- `succeeded_no_output` (valid run but nothing useful generated)\n- `failed` (with retry backoff/lease handling in DB)\n\nPhase 1 is the stage that turns individual rollouts into DB-backed memory records.\n\n## Phase 2: Global Consolidation\n\nPhase 2 consolidates the latest stage-1 outputs into the filesystem memory artifacts and then runs a dedicated consolidation agent.\n\nWhat it does:\n\n- claims a single global phase-2 lock before touching the memories root (so only one consolidation\n  inspects or mutates the workspace at a time)\n- loads a bounded set of stage-1 outputs from the state DB using phase-2\n  selection rules:\n  - ignores memories whose `last_usage` falls outside the configured\n    `max_unused_days` window"
+          },
+          {
+            "document": "codex",
+            "ordinal": 2,
+            "title": "codex / README.md",
+            "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+            "page": null,
+            "sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7",
+            "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`\n- computes a completion watermark from the claimed watermark + newest input timestamps\n- syncs local memory artifacts under the memories root:\n  - `raw_memories.md` (merged raw memories, stable ascending thread-id order)\n  - `rollout_summaries/` (one summary file per selected rollout)\n- keeps the memories root itself as a git-baseline directory, initialized under\n  `~/.codex/memories/.git` by `codex-git-utils`\n- prunes stale rollout summaries that are no longer selected\n- prunes memory extension resource files older than the extension retention\n  window, so cleanup appears in the workspace diff\n- writes `phase2_workspace_diff.md` in the memories root with the git-style diff\n  from the previous successful Phase 2 baseline to the current worktree\n- if the memory workspace has no changes after artifact sync/pruning, marks the\n  job successful and exits\n\nIf the memory workspace has changes, it then:\n\n- spawns an internal consolidation sub-agent\n- builds the Phase 2 prompt with the path to the generated workspace diff\n- points the agent at `phase2_workspace_diff.md` for the detailed diff context\n- runs it with no approvals, no network, and local write access only\n- disables collab for that agent (to prevent recursive delegation)\n- watches the agent status and heartbeats the global job lease while it runs\n- resets the memory git baseline after the agent completes successfully; the\n  generated diff file is removed before this reset so deleted content is not\n  kept in the prompt artifact or unreachable git objects"
+          }
+        ]
+      }
+    }
+  ]
+}

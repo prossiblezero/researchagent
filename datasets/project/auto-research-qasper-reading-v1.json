@@ -1,0 +1,11 @@
+{
+  "schema": "auto-research-reading/v1",
+  "reading": {
+    "id": "qasper-originals-draft-recovery",
+    "origin": "actual failed QASPER r2 research subtask",
+    "source_job": "737ad43894e140979a53c72a38b1cbc4",
+    "question": "Read and verify QASPER original paper and one evidence paragraph retrieval method paper relevant to scientific QA. Report exact input/corpus/paragraph evidence mapping and evaluation boundaries, with evidence IDs and source citations. Prefer QASPER paper and a method such as BM25/dense retrieval or paragraph selection.",
+    "effort": "deep",
+    "scope": "Resume retained production checkpoint, inspect originals and repair citations; not new research or scientific baseline validation."
+  }
+}

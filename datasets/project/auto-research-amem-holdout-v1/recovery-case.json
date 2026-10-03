@@ -1,0 +1,121 @@
+{
+  "schema": "auto-research-amem-holdout-recovery/v1",
+  "origin": "Official benchmark holdout evaluating a frozen project research method",
+  "campaign": {
+    "id": "amem-corrected-mmr-holdout-same-trial-recovery-v1",
+    "provenance": "Official disjoint LoCoMo holdout conv-41/conv-42; all1292 turns and40 category1-4 questions; empty cache and frozen development-selected method. Explicit manual recovery of the SAME interrupted trial; carries 851 saved turns and 20 predictions unchanged, not a new trial.",
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-amem-holdout-v1/holdout-tasks.json",
+        "destination": "data/locomo/tasks.json",
+        "sha256": "7a6c64433cba73255894542b38518c285e7c414a8870ded1cb4fafc72841542c"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-holdout-v1/holdout-corpus.json",
+        "destination": "data/locomo/corpus.json",
+        "sha256": "39d68798cccdf6022480ba165487f970720ddc0916b1f21c71aa349c0f3d1494"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-state/conv-41.json",
+        "destination": "results/baseline-state/conv-41.json",
+        "sha256": "723fbf2eac5f550bf70c2653a100d84f2b4d3a92a201a3068224f28683ffd923"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-state/conv-41.slot0.npy",
+        "destination": "results/baseline-state/conv-41.slot0.npy",
+        "sha256": "540eb10816d41ffb061f67f9ec389f4fc1cb42a88edf6903e372d38c77f2600b"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-state/conv-42.json",
+        "destination": "results/baseline-state/conv-42.json",
+        "sha256": "c2bc0877813cc67fb6883f9db0cb18384b6d9106b81133f5fdfa10237142e588"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-state/conv-42.slot1.npy",
+        "destination": "results/baseline-state/conv-42.slot1.npy",
+        "sha256": "07f1c65caea66457c9e7742c905c876ce4f20c255d619aae53d4ded1c5911a0e"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-predictions.jsonl",
+        "destination": "results/baseline-predictions.jsonl",
+        "sha256": "d46dd20670912794f24f28fd81b928cb801e158a8514fb31f3308a9c020df8f5"
+      },
+      {
+        "source": "evals/reports/amem-holdout-recovery-20261002/continuation-cache/results/baseline-condition.json",
+        "destination": "results/baseline-condition.json",
+        "sha256": "0be35ba42d6acccff48cf40f7035fdd418e9675754d13dd1ea04431356250012"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-holdout-v1/RECOVERY.md",
+        "destination": "RECOVERY.md",
+        "sha256": "2b0a0c70297a307f6fb77c6812d555de0450292d743e278fe12f04a6c1e115da"
+      }
+    ],
+    "labels_sha256": "34be239707aaf418c315bc1fc948cf1895cb9715ff6e9caf8fbdc0c23553a59e",
+    "assets_sha256": "e6bb7c433bb337983342c641f99d16500e739d5d7e860d8802f3e2fc4a0dfd26",
+    "goal": "这是同一轮独立holdout的显式中断续接，只完成测量和解释，不重新调研或编码。先读RECOVERY.md和原READ_FIRST.md/PROTOCOL.md，然后保存HYPOTHESIS验证方案。旧父已终态blocked，不改写旧任务。已原样带入本轮851轮记忆与20题预测，必须保留，不重新采样已完成题；baseline继续剩余441轮与20题。数据、方法、seed13、Luna/provider默认条件不变，禁止调参。按CLI运行完整baseline后assess_results，再用其完成的同一记忆运行MMR候选和top10消融，三组40题全量后assess_results并reported。原研究/引用缺口与人工恢复需披露，不能将此测量恢复称完整自主研究通过。预算仅剩17决策/0research/0coding，实验64935秒、9313调用/58535模型秒；实际墙钟最多40000秒。旧未知请求费用保留。没有targets，不宣称SOTA或goal_met。",
+    "requires_method_iteration": false,
+    "requires_result_assessment": true,
+    "requires_multi_seed": false,
+    "seeds": [
+      13
+    ],
+    "audit_dataset": "locomo",
+    "requires_independent_audit": true,
+    "budget": {
+      "decisions": 17,
+      "research_calls": 0,
+      "coding_calls": 0,
+      "coding_seconds": 30,
+      "coding_tokens": 2000,
+      "experiment_seconds": 64935,
+      "preparations": 0,
+      "download_mb": 1,
+      "experiment_model_calls": 9313,
+      "experiment_model_seconds": 58535
+    },
+    "wall_seconds": 40000,
+    "targets": [],
+    "protocol_sha256": "c8640e63b4899c1d6f11c580cd599e9b975a20e5cc2d731cfc4ebd420be5f4ce",
+    "frozen_sources": {
+      "upstream": "directory:95b225660243a47f06c76cd8916c28f2edc6d235857c3b32eeb64a30d49f54a2",
+      "PROTOCOL.md": "c8640e63b4899c1d6f11c580cd599e9b975a20e5cc2d731cfc4ebd420be5f4ce",
+      "run_baseline.py": "1a8d285417a3b7f7a10f87c65907e5bfc1a7ca6e792660faf60e908ff46af2ac",
+      "run_fixed_retrieval.py": "6d47b26816786438c8eb3045b1042995e391b6a6e5d164d2cf7a626c70e17e24",
+      "READ_FIRST.md": "21be298b41b7ba880c30bcd3304cad9ad0570bd72f0d040254c9a0cf60ac8b39",
+      "RECOVERY.md": "2b0a0c70297a307f6fb77c6812d555de0450292d743e278fe12f04a6c1e115da"
+    },
+    "split": "holdout",
+    "labels_source": "datasets/project/auto-research-amem-holdout-v1/holdout-labels.json",
+    "protocol_source": "datasets/project/auto-research-amem-holdout-v1/PROTOCOL.md",
+    "phase_scope": "same-trial measurement recovery and assessment; no new research, coding or tuning; original full-path acceptance gate unchanged",
+    "selection_source": "evals/reports/amem-live-20261002-luna-r7-corrected-measurement/report.md",
+    "selection_caveat": "Parent report says pre-existing recall@10 preference, but case targets=[] and saved plan did not predeclare that priority. Treat development selection rationale as post-result, not preregistered. Holdout metric priorities must be frozen before scores.",
+    "cache_migration": {
+      "manual_preparation": true,
+      "same_trial": true,
+      "imported_turns": 851,
+      "imported_predictions": 20,
+      "imported_scores": 0,
+      "source_job_id": "fb2edf28771d40049e50548f796d0c50",
+      "scientific_conditions_unchanged": true
+    },
+    "metric_priority": [
+      "evidence_recall_at_10",
+      "answer_f1",
+      "evidence_recall_at_5",
+      "exact_match"
+    ],
+    "previous_phase": {
+      "job_id": "fb2edf28771d40049e50548f796d0c50",
+      "run": "evals/reports/amem-live-20261002-luna-holdout-r1",
+      "manual_continuation": true,
+      "outcome": "blocked",
+      "terminal_preserved": true,
+      "decisions_used": 15,
+      "unknown_experiment_requests": 1,
+      "unknown_tokens_are_not_zero": true
+    },
+    "recovery_deadline": "2026-10-03T08:43:52+08:00"
+  }
+}

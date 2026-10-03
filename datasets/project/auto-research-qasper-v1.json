@@ -1,0 +1,40 @@
+{
+  "schema": "auto-research-qasper/v1",
+  "origin": "project-authored task built from QASPER official dev evidence mappings",
+  "purpose": "Cross-task Auto Research acceptance for evidence retrieval with multi-seed comparison; not official QASPER leaderboard scoring.",
+  "campaign": {
+    "id": "qasper-evidence-retrieval-multiseed",
+    "provenance": "24 mapping-complete retrieval-eligible QASPER official dev tasks, frozen from datasets/open/qasper/tasks.json; full public paragraph corpus, no generated answers.",
+    "requires_method_iteration": true,
+    "requires_multi_seed": true,
+    "seeds": [
+      13,
+      17,
+      29
+    ],
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-qasper-v1/tasks.json",
+        "destination": "data/qasper/tasks.json",
+        "sha256": "a8424e063f7de82fe287de5bafd4fdd83620ac56dc02a66c7b861089d4418a0c"
+      },
+      {
+        "source": "datasets/open/qasper/corpus.json",
+        "destination": "data/qasper/corpus.json",
+        "sha256": "4ae556d5df759d3f80b07aa6b2fb5d88a4e88ef818268ffcd47937808f58bc54"
+      }
+    ],
+    "goal": "围绕论文证据段落检索完成一次跨任务、多seed的真实方法研究。项目已提供冻结的24条QASPER官方dev可回答题和完整公开段落语料，任务只评估给定论文集合中的证据段落检索，不冒充QASPER端到端答案生成或官方榜单。先阅读QASPER原论文及一个证据检索方法原文，确认输入、段落ID、证据映射和评价边界。自主选择轻量CPU baseline与有原文依据的候选方法，保存HYPOTHESIS和方案后委派Codex实现，运行baseline/candidate/ablation。每个方法必须在相同24题、相同候选语料和seed=[13,17,29]上重复，config记录完整seeds，metrics至少包含recall_at_5和mrr_at_5；逐seed结果放diagnostics并保存逐题排名。收到首轮宿主结果后，分析漏召回或排序错误，结合原文提出一个方法修订，保存第二版方案并实际修改代码重跑对应baseline、candidate和独立ablation。固定评分入口和输入数据不可修改，不能用gold evidence选择查询或调参；训练/参数选择若有，只能在预先说明的开发部分完成。结果无须提升，必须如实报告负结果、失败、统计限制和未完成项。",
+    "budget": {
+      "decisions": 45,
+      "research_calls": 3,
+      "coding_calls": 4,
+      "coding_seconds": 1200,
+      "coding_tokens": 1600000,
+      "experiment_seconds": 1800,
+      "preparations": 3,
+      "download_mb": 512
+    },
+    "wall_seconds": 3600
+  }
+}

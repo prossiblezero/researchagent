@@ -1,0 +1,111 @@
+{
+  "schema": "auto-research-amem-corrected-measurement/v1",
+  "origin": "Project research goal with pinned official A-MEM robust implementation and frozen LoCoMo development subset",
+  "campaign": {
+    "id": "amem-corrected-mmr-measurement-recovery-v1",
+    "provenance": "Official LoCoMo complete conversations conv-26/conv-30; 40 original category 1-4 questions; development only; held-out conv-41/conv-42 excluded.",
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-tasks.json",
+        "destination": "data/locomo/tasks.json",
+        "sha256": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-corpus.json",
+        "destination": "data/locomo/corpus.json",
+        "sha256": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.json",
+        "destination": "results/baseline-state/conv-26.json",
+        "sha256": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.slot0.npy",
+        "destination": "results/baseline-state/conv-26.slot0.npy",
+        "sha256": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.json",
+        "destination": "results/baseline-state/conv-30.json",
+        "sha256": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.slot0.npy",
+        "destination": "results/baseline-state/conv-30.slot0.npy",
+        "sha256": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-condition.json",
+        "destination": "results/baseline-condition.json",
+        "sha256": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-mmr-correction-v1/METHOD_REVIEW.json",
+        "destination": "METHOD_REVIEW.json",
+        "sha256": "e1f3ce4f3b5a268ddac0d97f3dce6b259b7f49fd0b02aa150213080679a935c6"
+      }
+    ],
+    "labels_sha256": "11b837faff579a307ff1667febba4b3f4a081291ecc5ab7f0110fd24f777f7b0",
+    "assets_sha256": "e6bb7c433bb337983342c641f99d16500e739d5d7e860d8802f3e2fc4a0dfd26",
+    "goal": "完成修正后MMR的测量恢复。先读READ_FIRST.md，已有算法和数值测试已修正且冻结，本阶段不再编码、不改方法。必须先按准确CLI及匹配的--output/result_path运行完整baseline并assess_results，再宿主执行corrected MMR candidate与top10 ablation，全部为同788轮记忆/40题的新预测。模型桥接已含3次请求重试；遇瞬时失败可在剩余实验预算内用新唯一输出路径恢复，保留旧失败与成本。三组均有效后assess_results，根据实测选择保留的方法并报告。24决策/1定向原文研究为新阶段预算，实验资源只继承旧剩余；不声称这是新方法迭代或holdout，原r6失败不可改写。",
+    "requires_method_iteration": false,
+    "requires_result_assessment": true,
+    "requires_multi_seed": false,
+    "seeds": [
+      13
+    ],
+    "audit_dataset": "locomo",
+    "requires_independent_audit": true,
+    "budget": {
+      "decisions": 24,
+      "research_calls": 1,
+      "coding_calls": 0,
+      "coding_seconds": 3010,
+      "coding_tokens": 991496,
+      "experiment_seconds": 9347,
+      "preparations": 0,
+      "download_mb": 1,
+      "experiment_model_calls": 645,
+      "experiment_model_seconds": 7667
+    },
+    "wall_seconds": 10000,
+    "targets": [],
+    "protocol_sha256": "7a7e77ac03db84e8a1318371358e3d30aae27cf2634d23f1537bb0c17c4c6e2c",
+    "frozen_sources": {
+      "upstream": "directory:95b225660243a47f06c76cd8916c28f2edc6d235857c3b32eeb64a30d49f54a2",
+      "run_baseline.py": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+      "results/baseline-state/conv-26.json": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f",
+      "results/baseline-state/conv-26.slot0.npy": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39",
+      "results/baseline-state/conv-30.json": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff",
+      "results/baseline-state/conv-30.slot0.npy": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d",
+      "results/baseline-condition.json": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b",
+      "READ_FIRST.md": "db22b23ef9a8a8d6f0d4c19b2d2b92e2bd3bb68295e008acfca6d808c3a6ce38",
+      "PROTOCOL.md": "7a7e77ac03db84e8a1318371358e3d30aae27cf2634d23f1537bb0c17c4c6e2c",
+      "METHOD_REVIEW.json": "e1f3ce4f3b5a268ddac0d97f3dce6b259b7f49fd0b02aa150213080679a935c6",
+      "run_fixed_retrieval.py": "b45aaff19ffa7e2e640184546618fb164089f2506fe38d4c73f05df53c2ebc7b",
+      "tests/test_mmr_regression.py": "c980e6793557b003bc907d8363d28800673b87a28d324e6371451c3f3ff9341b"
+    },
+    "cache_migration": {
+      "manual_preparation": true,
+      "source_case": "auto-research-amem-continuation-v3",
+      "imported_turns": 788,
+      "applies_to": [
+        "baseline",
+        "candidate",
+        "ablation"
+      ],
+      "imported_predictions": 0,
+      "historical_construction_cost_separate": true
+    },
+    "previous_phase": {
+      "job_id": "a2aaef0db2ac4166b69d0cd5630a0077",
+      "pipeline_passed": false,
+      "method_review_passed": true,
+      "manual_continuation": true,
+      "reason": "baseline result-path mismatch and transient SSL exhaustion; scientific code now frozen"
+    },
+    "protocol_source": "datasets/project/auto-research-amem-fixed-memory-v1/PROTOCOL.md",
+    "phase_scope": "measurement recovery and interpretation only; original method-iteration gate unchanged"
+  }
+}

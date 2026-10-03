@@ -1,0 +1,656 @@
+[
+  {
+    "id": "diverse-direct-00",
+    "split": "dev",
+    "category": "direct",
+    "query": "Docling future work figure classifier equation recognition code recognition roadmap",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 11
+      }
+    ],
+    "fact_groups": [
+      "docling-future-models"
+    ],
+    "evidence": [
+      {
+        "group": "docling-future-models",
+        "document": "docling",
+        "ordinal": 11,
+        "quote": "In the future, we\nplan to extend Docling with several more models, such as a figure-classifier model, an equation-\nrecognition model, a code-recognition model and more. This will help improve the quality of con-\nversion for specific types of content, as well as augment extracted document metadata with ad-\nditional information.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 5,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "0eaa59d4da0a6e4826bcb88215e65db11271be8f218527497b84a463ec9b4b2b"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-semantic-00",
+    "split": "dev",
+    "category": "semantic",
+    "query": "文档转换报告计划补充哪些识别模型来增强内容转换和元数据？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 11
+      }
+    ],
+    "fact_groups": [
+      "docling-future-models"
+    ],
+    "evidence": [
+      {
+        "group": "docling-future-models",
+        "document": "docling",
+        "ordinal": 11,
+        "quote": "In the future, we\nplan to extend Docling with several more models, such as a figure-classifier model, an equation-\nrecognition model, a code-recognition model and more. This will help improve the quality of con-\nversion for specific types of content, as well as augment extracted document metadata with ad-\nditional information.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 5,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "0eaa59d4da0a6e4826bcb88215e65db11271be8f218527497b84a463ec9b4b2b"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-direct-01",
+    "split": "dev",
+    "category": "direct",
+    "query": "ReAct finetuning PaLM 8B 62B comparison prompting",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 18
+      }
+    ],
+    "fact_groups": [
+      "react-finetuning-scale"
+    ],
+    "evidence": [
+      {
+        "group": "react-finetuning-scale",
+        "document": "react",
+        "ordinal": 18,
+        "quote": "when ﬁnetuned with just 3,000 examples, ReAct becomes the best\nmethod among the four, with PaLM-8B ﬁnetuned ReAct outperforming all PaLM-62B prompting\nmethods, and PaLM-62B ﬁnetuned ReAct outperforming all 540B prompting methods.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 6,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "8e8b082a1bbcfcfab1995d34dbf9e914c1e3f96c8cbfc8c5d515169397dc9988"
+      }
+    ],
+    "annotation_note": "The result comparison is stated in react:18. react:15 explains these are bootstrapped correct-answer trajectories, so the question does not call them human annotations."
+  },
+  {
+    "id": "diverse-semantic-01",
+    "split": "dev",
+    "category": "semantic",
+    "query": "ReAct 的少量示例微调让较小模型与较大模型的提示方式相比表现如何？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 18
+      }
+    ],
+    "fact_groups": [
+      "react-finetuning-scale"
+    ],
+    "evidence": [
+      {
+        "group": "react-finetuning-scale",
+        "document": "react",
+        "ordinal": 18,
+        "quote": "when ﬁnetuned with just 3,000 examples, ReAct becomes the best\nmethod among the four, with PaLM-8B ﬁnetuned ReAct outperforming all PaLM-62B prompting\nmethods, and PaLM-62B ﬁnetuned ReAct outperforming all 540B prompting methods.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 6,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "8e8b082a1bbcfcfab1995d34dbf9e914c1e3f96c8cbfc8c5d515169397dc9988"
+      }
+    ],
+    "annotation_note": "The result comparison is stated in react:18. react:15 explains these are bootstrapped correct-answer trajectories, so the question does not call them human annotations."
+  },
+  {
+    "id": "diverse-direct-02",
+    "split": "dev",
+    "category": "direct",
+    "query": "Pi branch summarization common ancestor collect entries newest first",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 5
+      }
+    ],
+    "fact_groups": [
+      "pi-branch-common-ancestor"
+    ],
+    "evidence": [
+      {
+        "group": "pi-branch-common-ancestor",
+        "document": "pi",
+        "ordinal": 5,
+        "quote": "1. **Find common ancestor**: Deepest node shared by old and new positions\n2. **Collect entries**: Walk from old leaf back to common ancestor\n3. **Prepare with budget**: Include messages up to token budget (newest first)\n4. **Generate summary**: Call LLM with structured format\n5. **Append entry**: Save `BranchSummaryEntry` at navigation point",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8d59019a339f1d75755191523e696be5f6c43d0e72855200b5d9386f1e0034bd"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-semantic-02",
+    "split": "dev",
+    "category": "semantic",
+    "query": "Pi 切换对话树分支时怎样选出需要摘要的消息范围？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 5
+      }
+    ],
+    "fact_groups": [
+      "pi-branch-common-ancestor"
+    ],
+    "evidence": [
+      {
+        "group": "pi-branch-common-ancestor",
+        "document": "pi",
+        "ordinal": 5,
+        "quote": "1. **Find common ancestor**: Deepest node shared by old and new positions\n2. **Collect entries**: Walk from old leaf back to common ancestor\n3. **Prepare with budget**: Include messages up to token budget (newest first)\n4. **Generate summary**: Call LLM with structured format\n5. **Append entry**: Save `BranchSummaryEntry` at navigation point",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8d59019a339f1d75755191523e696be5f6c43d0e72855200b5d9386f1e0034bd"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-direct-03",
+    "split": "dev",
+    "category": "direct",
+    "query": "Codex memories usage_count last_usage generated_at selection priority",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 2
+      }
+    ],
+    "fact_groups": [
+      "codex-memory-priority"
+    ],
+    "evidence": [
+      {
+        "group": "codex-memory-priority",
+        "document": "codex",
+        "ordinal": 2,
+        "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-semantic-03",
+    "split": "dev",
+    "category": "semantic",
+    "query": "Codex 对从未被使用的记忆怎样补充时间信息，并以什么顺序优先选择？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 2
+      }
+    ],
+    "fact_groups": [
+      "codex-memory-priority"
+    ],
+    "evidence": [
+      {
+        "group": "codex-memory-priority",
+        "document": "codex",
+        "ordinal": 2,
+        "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-direct-04",
+    "split": "dev",
+    "category": "direct",
+    "query": "OpenClaw explicit embedding provider unavailable FTS-only behavior",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 3
+      }
+    ],
+    "fact_groups": [
+      "openclaw-explicit-provider-failure"
+    ],
+    "evidence": [
+      {
+        "group": "openclaw-explicit-provider-failure",
+        "document": "openclaw",
+        "ordinal": 3,
+        "quote": "**Explicit provider unavailable.** If you name any other provider explicitly\n(for example `openai`, `ollama`, `gemini`) and it becomes unavailable at\nrequest time (bad auth, network failure), `memory_search` reports memory as\nunavailable instead of silently degrading to FTS-only results. This keeps a\nbroken configured provider visible. Set `provider: \"none\"` for deliberate\nFTS-only recall, or fix the provider/auth configuration to restore semantic\nranking.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "262caf8192c8cf35f91b50ea23729161e9326b6c111b5c1e39a48f8a86a16373"
+      }
+    ],
+    "annotation_note": "Explicit openai/ollama/gemini providers report unavailable; provider none/auto/local have distinct keyword fallback rules in the same source chunk."
+  },
+  {
+    "id": "diverse-semantic-04",
+    "split": "dev",
+    "category": "semantic",
+    "query": "将 OpenClaw 向量服务明确设为 openai、ollama 或 gemini 时，认证或联网失败会静默退成关键词搜索吗？",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 3
+      }
+    ],
+    "fact_groups": [
+      "openclaw-explicit-provider-failure"
+    ],
+    "evidence": [
+      {
+        "group": "openclaw-explicit-provider-failure",
+        "document": "openclaw",
+        "ordinal": 3,
+        "quote": "**Explicit provider unavailable.** If you name any other provider explicitly\n(for example `openai`, `ollama`, `gemini`) and it becomes unavailable at\nrequest time (bad auth, network failure), `memory_search` reports memory as\nunavailable instead of silently degrading to FTS-only results. This keeps a\nbroken configured provider visible. Set `provider: \"none\"` for deliberate\nFTS-only recall, or fix the provider/auth configuration to restore semantic\nranking.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "262caf8192c8cf35f91b50ea23729161e9326b6c111b5c1e39a48f8a86a16373"
+      }
+    ],
+    "annotation_note": "Explicit openai/ollama/gemini providers report unavailable; provider none/auto/local have distinct keyword fallback rules in the same source chunk."
+  },
+  {
+    "id": "diverse-direct-05",
+    "split": "dev",
+    "category": "direct",
+    "query": "Hermes defrag fresh_summary old_summary failure preservation",
+    "gold": [
+      {
+        "document": "hermes",
+        "ordinal": 4
+      }
+    ],
+    "fact_groups": [
+      "hermes-summary-failure-preservation"
+    ],
+    "evidence": [
+      {
+        "group": "hermes-summary-failure-preservation",
+        "document": "hermes",
+        "ordinal": 4,
+        "quote": "fresh_summary = self._micro_summarize_one(old_summary)\n        self._micro_compact_rolling_summary = fresh_summary or old_summary\n        if not fresh_summary:\n            return False",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "e12ac04ddfbd1b762f1ea706e94515b7d31398b17a2b130951c357a09722476f"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-semantic-05",
+    "split": "dev",
+    "category": "semantic",
+    "query": "Hermes 重新整理已有摘要失败时，怎样避免把原来的摘要清空？",
+    "gold": [
+      {
+        "document": "hermes",
+        "ordinal": 4
+      }
+    ],
+    "fact_groups": [
+      "hermes-summary-failure-preservation"
+    ],
+    "evidence": [
+      {
+        "group": "hermes-summary-failure-preservation",
+        "document": "hermes",
+        "ordinal": 4,
+        "quote": "fresh_summary = self._micro_summarize_one(old_summary)\n        self._micro_compact_rolling_summary = fresh_summary or old_summary\n        if not fresh_summary:\n            return False",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "e12ac04ddfbd1b762f1ea706e94515b7d31398b17a2b130951c357a09722476f"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-cross-00",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "查找文档转换报告未来新增识别模型的计划，以及 ReAct 用少量示例微调后的大小模型对比。",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 11
+      },
+      {
+        "document": "react",
+        "ordinal": 18
+      }
+    ],
+    "fact_groups": [
+      "docling-future-models",
+      "react-finetuning-scale"
+    ],
+    "evidence": [
+      {
+        "group": "docling-future-models",
+        "document": "docling",
+        "ordinal": 11,
+        "quote": "In the future, we\nplan to extend Docling with several more models, such as a figure-classifier model, an equation-\nrecognition model, a code-recognition model and more. This will help improve the quality of con-\nversion for specific types of content, as well as augment extracted document metadata with ad-\nditional information.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 5,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "0eaa59d4da0a6e4826bcb88215e65db11271be8f218527497b84a463ec9b4b2b"
+      },
+      {
+        "group": "react-finetuning-scale",
+        "document": "react",
+        "ordinal": 18,
+        "quote": "when ﬁnetuned with just 3,000 examples, ReAct becomes the best\nmethod among the four, with PaLM-8B ﬁnetuned ReAct outperforming all PaLM-62B prompting\nmethods, and PaLM-62B ﬁnetuned ReAct outperforming all 540B prompting methods.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 6,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "8e8b082a1bbcfcfab1995d34dbf9e914c1e3f96c8cbfc8c5d515169397dc9988"
+      }
+    ],
+    "annotation_note": "The result comparison is stated in react:18. react:15 explains these are bootstrapped correct-answer trajectories, so the question does not call them human annotations."
+  },
+  {
+    "id": "diverse-cross-01",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "查找 Pi 分支摘要的消息范围选择，以及 Codex 从未被使用记忆的优先级规则。",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 5
+      },
+      {
+        "document": "codex",
+        "ordinal": 2
+      }
+    ],
+    "fact_groups": [
+      "pi-branch-common-ancestor",
+      "codex-memory-priority"
+    ],
+    "evidence": [
+      {
+        "group": "pi-branch-common-ancestor",
+        "document": "pi",
+        "ordinal": 5,
+        "quote": "1. **Find common ancestor**: Deepest node shared by old and new positions\n2. **Collect entries**: Walk from old leaf back to common ancestor\n3. **Prepare with budget**: Include messages up to token budget (newest first)\n4. **Generate summary**: Call LLM with structured format\n5. **Append entry**: Save `BranchSummaryEntry` at navigation point",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8d59019a339f1d75755191523e696be5f6c43d0e72855200b5d9386f1e0034bd"
+      },
+      {
+        "group": "codex-memory-priority",
+        "document": "codex",
+        "ordinal": 2,
+        "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-cross-02",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "比较明确把嵌入服务设为 openai 且请求失败时 OpenClaw 如何响应，以及 Hermes 整理摘要失败时如何保留旧内容。",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 3
+      },
+      {
+        "document": "hermes",
+        "ordinal": 4
+      }
+    ],
+    "fact_groups": [
+      "openclaw-explicit-provider-failure",
+      "hermes-summary-failure-preservation"
+    ],
+    "evidence": [
+      {
+        "group": "openclaw-explicit-provider-failure",
+        "document": "openclaw",
+        "ordinal": 3,
+        "quote": "**Explicit provider unavailable.** If you name any other provider explicitly\n(for example `openai`, `ollama`, `gemini`) and it becomes unavailable at\nrequest time (bad auth, network failure), `memory_search` reports memory as\nunavailable instead of silently degrading to FTS-only results. This keeps a\nbroken configured provider visible. Set `provider: \"none\"` for deliberate\nFTS-only recall, or fix the provider/auth configuration to restore semantic\nranking.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "262caf8192c8cf35f91b50ea23729161e9326b6c111b5c1e39a48f8a86a16373"
+      },
+      {
+        "group": "hermes-summary-failure-preservation",
+        "document": "hermes",
+        "ordinal": 4,
+        "quote": "fresh_summary = self._micro_summarize_one(old_summary)\n        self._micro_compact_rolling_summary = fresh_summary or old_summary\n        if not fresh_summary:\n            return False",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "e12ac04ddfbd1b762f1ea706e94515b7d31398b17a2b130951c357a09722476f"
+      }
+    ],
+    "annotation_note": "Explicit openai/ollama/gemini providers report unavailable; provider none/auto/local have distinct keyword fallback rules in the same source chunk."
+  },
+  {
+    "id": "diverse-cross-03",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "同时查明 Docling 的未来模型扩展方向，以及 Pi 切换分支时如何收集被离开分支的消息。",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 11
+      },
+      {
+        "document": "pi",
+        "ordinal": 5
+      }
+    ],
+    "fact_groups": [
+      "docling-future-models",
+      "pi-branch-common-ancestor"
+    ],
+    "evidence": [
+      {
+        "group": "docling-future-models",
+        "document": "docling",
+        "ordinal": 11,
+        "quote": "In the future, we\nplan to extend Docling with several more models, such as a figure-classifier model, an equation-\nrecognition model, a code-recognition model and more. This will help improve the quality of con-\nversion for specific types of content, as well as augment extracted document metadata with ad-\nditional information.",
+        "url": "https://arxiv.org/abs/2408.09869",
+        "page": 5,
+        "source_sha256": "82dd470712ce8389f19f20eb9330475e2166a281f8c7990a9f1d0763d73b4d22",
+        "chunk_sha256": "0eaa59d4da0a6e4826bcb88215e65db11271be8f218527497b84a463ec9b4b2b"
+      },
+      {
+        "group": "pi-branch-common-ancestor",
+        "document": "pi",
+        "ordinal": 5,
+        "quote": "1. **Find common ancestor**: Deepest node shared by old and new positions\n2. **Collect entries**: Walk from old leaf back to common ancestor\n3. **Prepare with budget**: Include messages up to token budget (newest first)\n4. **Generate summary**: Call LLM with structured format\n5. **Append entry**: Save `BranchSummaryEntry` at navigation point",
+        "url": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/compaction.md",
+        "page": null,
+        "source_sha256": "f70e26e5d54aa0d9d131dbc49cd316deb0909030fab2b66d6a071b5f0ae72c26",
+        "chunk_sha256": "8d59019a339f1d75755191523e696be5f6c43d0e72855200b5d9386f1e0034bd"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-cross-04",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "同时查明 ReAct 小模型微调后的表现，以及 OpenClaw 明确设为 openai 的向量服务不可用时是否回退。",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 18
+      },
+      {
+        "document": "openclaw",
+        "ordinal": 3
+      }
+    ],
+    "fact_groups": [
+      "react-finetuning-scale",
+      "openclaw-explicit-provider-failure"
+    ],
+    "evidence": [
+      {
+        "group": "react-finetuning-scale",
+        "document": "react",
+        "ordinal": 18,
+        "quote": "when ﬁnetuned with just 3,000 examples, ReAct becomes the best\nmethod among the four, with PaLM-8B ﬁnetuned ReAct outperforming all PaLM-62B prompting\nmethods, and PaLM-62B ﬁnetuned ReAct outperforming all 540B prompting methods.",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "page": 6,
+        "source_sha256": "f285b0971ae4a790e402fb93966bed3adde2cf0a04977d08b2b40d6ab0cace69",
+        "chunk_sha256": "8e8b082a1bbcfcfab1995d34dbf9e914c1e3f96c8cbfc8c5d515169397dc9988"
+      },
+      {
+        "group": "openclaw-explicit-provider-failure",
+        "document": "openclaw",
+        "ordinal": 3,
+        "quote": "**Explicit provider unavailable.** If you name any other provider explicitly\n(for example `openai`, `ollama`, `gemini`) and it becomes unavailable at\nrequest time (bad auth, network failure), `memory_search` reports memory as\nunavailable instead of silently degrading to FTS-only results. This keeps a\nbroken configured provider visible. Set `provider: \"none\"` for deliberate\nFTS-only recall, or fix the provider/auth configuration to restore semantic\nranking.",
+        "url": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory-search.md",
+        "page": null,
+        "source_sha256": "3fff9c3f4e3d22253bffd383b731c0e5e59dd7eb7c53431a5c8bfdbae879dbda",
+        "chunk_sha256": "262caf8192c8cf35f91b50ea23729161e9326b6c111b5c1e39a48f8a86a16373"
+      }
+    ],
+    "annotation_note": "The result comparison is stated in react:18. react:15 explains these are bootstrapped correct-answer trajectories, so the question does not call them human annotations."
+  },
+  {
+    "id": "diverse-cross-05",
+    "split": "dev",
+    "category": "cross_document",
+    "query": "查找 Codex 对未使用记忆的排序规则，并对照 Hermes 重写摘要失败后的保留行为。",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 2
+      },
+      {
+        "document": "hermes",
+        "ordinal": 4
+      }
+    ],
+    "fact_groups": [
+      "codex-memory-priority",
+      "hermes-summary-failure-preservation"
+    ],
+    "evidence": [
+      {
+        "group": "codex-memory-priority",
+        "document": "codex",
+        "ordinal": 2,
+        "quote": "- for memories with no `last_usage`, falls back to `generated_at` so fresh\n    never-used memories can still be selected\n  - ranks eligible memories by `usage_count` first, then by the most recent\n    `last_usage` / `generated_at`",
+        "url": "https://github.com/openai/codex/blob/main/codex-rs/memories/README.md",
+        "page": null,
+        "source_sha256": "c9c63a556b0b83dfcba11d78de4c9d8f0db77c452864d3ca5cd32e62f104cdff",
+        "chunk_sha256": "d3355f60167eec19e64b6bbd13c44497aa64d1f3b2cf905dcb7d952b142b4cd7"
+      },
+      {
+        "group": "hermes-summary-failure-preservation",
+        "document": "hermes",
+        "ordinal": 4,
+        "quote": "fresh_summary = self._micro_summarize_one(old_summary)\n        self._micro_compact_rolling_summary = fresh_summary or old_summary\n        if not fresh_summary:\n            return False",
+        "url": "https://github.com/NousResearch/hermes-agent/blob/main/agent/micro_compaction.py",
+        "page": null,
+        "source_sha256": "d12ac14e1d2e7c756a4c3ba88c63db1862fb502a130796dc37d69a214d788327",
+        "chunk_sha256": "e12ac04ddfbd1b762f1ea706e94515b7d31398b17a2b130951c357a09722476f"
+      }
+    ],
+    "annotation_note": "Evidence span supports the requested fact; this is retrieval relevance, not answer-generation scoring."
+  },
+  {
+    "id": "diverse-absent-00",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "Docling 技术报告中，计划增加的 equation-recognition 模型已经发布的准确率是多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The report presents this model as future work, without a released accuracy."
+  },
+  {
+    "id": "diverse-absent-01",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "ReAct 论文报告的 MMLU 测试集最终正确率是多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen ReAct source does not report a MMLU result."
+  },
+  {
+    "id": "diverse-absent-02",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "Pi 分支摘要上传云端时采用哪种端到端加密算法？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen documentation does not specify cloud-upload encryption for branch summaries."
+  },
+  {
+    "id": "diverse-absent-03",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "Codex 两阶段记忆经多少长期用户的随机对照实验验证，生产率提升多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen implementation documentation gives no such user study or productivity percentage."
+  },
+  {
+    "id": "diverse-absent-04",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "OpenClaw 的记忆重排在 RTX 4090 上每次需要多少毫秒？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen memory-search documentation reports no RTX 4090 timing."
+  },
+  {
+    "id": "diverse-absent-05",
+    "split": "dev",
+    "category": "unanswerable",
+    "query": "Hermes 微压缩摘要的人评标注人数与一致性 Kappa 系数是多少？",
+    "gold": [],
+    "fact_groups": [],
+    "evidence": [],
+    "annotation_note": "The frozen code has no human-evaluation sample or Kappa result."
+  }
+]

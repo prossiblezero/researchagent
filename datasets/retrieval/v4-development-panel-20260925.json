@@ -1,0 +1,233 @@
+{
+  "version": "20260925-fact-groups-r2",
+  "fingerprint": "3b73d6c07a5d59b8104fcf57f49b9b5f5f66d78b04d485a29c099f3853375666",
+  "historical_fingerprint": "7be20d80d41db7fee01d65a4962c9def09d2bad1f4a810c48407cef2900f0a1e",
+  "legacy_question_file_sha256": "88a9a484d9ec4e8a00e7390e43ec1f182fc34e12e224031bbf3120437aeacb37",
+  "dev_file_sha256": "549f00d27bd9c0bf5abaddc6f49424b380db8aa81ddc381bdc55440edeb04f9e",
+  "final_file_sha256": "d4d38ea12e6d1e47ddf324bc369f6328b2f7d0a1e62b36c3d46e6bb6e0564e66",
+  "corpus_snapshot_sha256": "d1f877d6536ecb0f51a3ae05d77b94f4e59674e7fb1f7bce82aa65299f8a956e",
+  "groups": {
+    "dev": {
+      "questions": 24,
+      "answerable": 18,
+      "categories": {
+        "direct": 6,
+        "semantic": 6,
+        "cross_document": 6,
+        "unanswerable": 6
+      },
+      "fact_group_count": 6,
+      "sources": [
+        "codex",
+        "docling",
+        "hermes",
+        "openclaw",
+        "pi",
+        "react"
+      ]
+    },
+    "held_out": {
+      "questions": 12,
+      "answerable": 9,
+      "categories": {
+        "direct": 3,
+        "semantic": 3,
+        "cross_document": 3,
+        "unanswerable": 3
+      },
+      "fact_group_count": 6,
+      "sources": [
+        "codex",
+        "docling",
+        "hermes",
+        "openclaw",
+        "pi",
+        "react"
+      ]
+    }
+  },
+  "source_quotes_verified": true,
+  "source_hash_reference_verified": true,
+  "chunk_content_hashes_recomputed": true,
+  "metadata_validation_tests_passed": 4,
+  "gold_references": 36,
+  "new_gold_chunks_disjoint_from_historical": true,
+  "dev_final_fact_groups_disjoint": true,
+  "dev_final_gold_chunks_disjoint": true,
+  "review": [
+    {
+      "fact_group": "docling-future-models",
+      "gold": [
+        "docling:11"
+      ],
+      "related_chunks_reviewed": [
+        "docling:8"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "The extension interface in :8 does not list the future figure/equation/code models."
+    },
+    {
+      "fact_group": "react-finetuning-scale",
+      "gold": [
+        "react:18"
+      ],
+      "related_chunks_reviewed": [
+        "react:15",
+        "react:17",
+        "react:19",
+        "react:20",
+        "react:43"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "15 provides bootstrap training data and 43 training steps; 17 ends before the comparison; 19/20 extracted chart text lacks comparable values. Only 18 states the cross-size outperforming result."
+    },
+    {
+      "fact_group": "pi-branch-common-ancestor",
+      "gold": [
+        "pi:5"
+      ],
+      "related_chunks_reviewed": [
+        "pi:6",
+        "pi:9"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "6 gives summary format; 9 exposes event parameters without the old-leaf-to-ancestor collection algorithm."
+    },
+    {
+      "fact_group": "codex-memory-priority",
+      "gold": [
+        "codex:2"
+      ],
+      "related_chunks_reviewed": [
+        "codex:0",
+        "codex:1",
+        "codex:3",
+        "codex:4"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "Only 2 states generated_at fallback plus usage_count then recency ordering; 1 covers eligibility and 3 workspace selection bookkeeping."
+    },
+    {
+      "fact_group": "openclaw-explicit-provider-failure",
+      "gold": [
+        "openclaw:3"
+      ],
+      "related_chunks_reviewed": [
+        "openclaw:0",
+        "openclaw:1",
+        "openclaw:2",
+        "openclaw:4",
+        "openclaw:5"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "Only 3 distinguishes named openai/ollama/gemini failure from none/auto/local fallback; question wording now preserves this exception."
+    },
+    {
+      "fact_group": "hermes-summary-failure-preservation",
+      "gold": [
+        "hermes:4"
+      ],
+      "related_chunks_reviewed": [
+        "hermes:5",
+        "hermes:6",
+        "hermes:7",
+        "hermes:8"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "Only 4 assigns fresh_summary or old_summary for defrag; nearby call/skip paths do not state this retained-summary fallback."
+    },
+    {
+      "fact_group": "doclaynet-data-saturation",
+      "gold": [
+        "docling:29"
+      ],
+      "related_chunks_reviewed": [
+        "docling:16",
+        "docling:27",
+        "docling:28",
+        "docling:30"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "16 gives a broad sufficient-size claim; 27 is architecture comparison and 30 human/model gap. Only 29 gives the learning curve flattening around 80 percent."
+    },
+    {
+      "fact_group": "react-webshop-evaluation",
+      "gold": [
+        "react:21"
+      ],
+      "related_chunks_reviewed": [
+        "react:20",
+        "react:22",
+        "react:23",
+        "react:24"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "23 lists numeric Score/SR outcomes but does not define percentage-of-attributes vs all-requirements or the 500 instructions; 21 fully defines both requested metrics."
+    },
+    {
+      "fact_group": "pi-model-override-validation",
+      "gold": [
+        "pi:10"
+      ],
+      "related_chunks_reviewed": [
+        "pi:9",
+        "pi:11"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "9 has ordinary defaults and 11 merge precedence; only 10 specifies exact key matching and invalid-value errors."
+    },
+    {
+      "fact_group": "codex-empty-selection-cleanup",
+      "gold": [
+        "codex:3"
+      ],
+      "related_chunks_reviewed": [
+        "codex:2",
+        "codex:4"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "2 describes general pruning but not the empty-input placeholder and consolidated outputs left for agent update."
+    },
+    {
+      "fact_group": "openclaw-session-visibility",
+      "gold": [
+        "openclaw:5"
+      ],
+      "related_chunks_reviewed": [
+        "openclaw:4"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "4 enables session indexing without self/tree/agent scopes or the dmScope non-restriction."
+    },
+    {
+      "fact_group": "hermes-persist-before-resume",
+      "gold": [
+        "hermes:10"
+      ],
+      "related_chunks_reviewed": [
+        "hermes:5",
+        "hermes:11",
+        "hermes:12"
+      ],
+      "decision": "fully_supported_no_omitted_complete_equivalent_for_final_wording",
+      "reason": "5 and 11 also support the old broad duplicate-resume wording. Before any scoring, both questions were narrowed to ask the active=1 field and summary-plus-original double loading; only 10 states that full fact."
+    }
+  ],
+  "changes": {
+    "gold_ids_changed": false,
+    "question_wordings_changed": [
+      "diverse-semantic-01",
+      "diverse-cross-00",
+      "diverse-semantic-04",
+      "diverse-cross-02",
+      "diverse-cross-04",
+      "final-semantic-02",
+      "final-cross-02"
+    ],
+    "evidence_quotes": "Replaced arbitrary-length excerpts with complete exact source spans. Added chunk_sha256.",
+    "loader": "Now checks source_sha256 against frozen source metadata, page equality, and recomputed chunk_sha256; pins complete corpus snapshot bytes.",
+    "ranking_or_model_results_seen": false
+  },
+  "hash_boundary": "source_sha256 is checked against the original-source hash declared in the frozen snapshot; run-time validation does not reopen or download original PDF/GitHub files. Exact text is independently hashed and whole snapshot bytes are fingerprinted.",
+  "boundary": "Author-reviewed frozen questions on shared source corpus; not independent second-human annotation. Historical 60 questions are seen regression. Final answerable count 9 comes from 6 fact clusters. No model call or metric run."
+}

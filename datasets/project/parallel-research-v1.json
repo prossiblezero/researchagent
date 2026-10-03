@@ -1,0 +1,57 @@
+{
+  "schema": "parallel-research-acceptance/v1",
+  "origin": "project_authored_from_frozen_public_originals",
+  "purpose": "Real Workbench/ResearchAgent/Luna workload, identical research_parallel tool and controller goal; serial baseline has one research worker, candidate two. Not an official benchmark score or broad research-quality claim.",
+  "panel_source": "datasets/evidence_qa/evidence_qa_cases_20260927.json",
+  "panel_sha256": "8f8f3bb67640d74f23afdce8fa93e5bf9b87833fbb4079c72ecd9eadabddcaac",
+  "corpus_source": "datasets/retrieval/retrieval_corpus_v3.json",
+  "corpus_sha256": "d1f877d6536ecb0f51a3ae05d77b94f4e59674e7fb1f7bce82aa65299f8a956e",
+  "model": "sudocode-luna",
+  "repeats": 2,
+  "cases": [
+    {
+      "id": "documents-and-reasoning",
+      "title": "文档解析与Agent检索能力调研",
+      "task_ids": [
+        "normal-01",
+        "normal-02"
+      ]
+    },
+    {
+      "id": "context-and-memory",
+      "title": "Agent上下文与记忆机制调研",
+      "task_ids": [
+        "normal-03",
+        "normal-04"
+      ]
+    }
+  ],
+  "budget": {
+    "wall_seconds_per_run": 900,
+    "total_requests_per_run": 60,
+    "reported_tokens_per_run": 600000,
+    "per_model_requests": 24,
+    "per_model_seconds": 720,
+    "per_model_tokens": 240000,
+    "parent_decisions": 6,
+    "research_calls": 2
+  },
+  "question_suffix": "仅回答题目所问要点，每个要点附已读原文的[E数字]引用；不要延伸综述。仅使用当前研究区已导入的原文资料，不检索历史对话或记忆，不联网，不写代码或执行实验。",
+  "metrics": [
+    "delivery_seconds",
+    "settled_seconds",
+    "actual_child_overlap_seconds",
+    "completed_children",
+    "harness_verified_claims",
+    "gold_read_coverage",
+    "gold_citation_coverage",
+    "manual_fact_correctness",
+    "manual_citation_support",
+    "model_requests",
+    "reported_tokens",
+    "unknown_usage_attempts"
+  ],
+  "failure_policy": "Retain every first attempt and failure; no resampling successful answers or cherry-picking fast runs. All paired runs included in time summary; report comparable successful pairs separately if failures differ.",
+  "order": "repeat0: first case serial/parallel, second parallel/serial; repeat1 reverses each pair",
+  "scope": "4 existing project questions grounded in public paper/source text, 2 independent pairs x2 repetitions x2 scheduling modes; 16 real child research runs, 9 expected facts x2 repeats per mode."
+}

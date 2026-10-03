@@ -1,0 +1,105 @@
+{
+  "schema": "auto-research-amem-fixed-memory/v1",
+  "origin": "Project research goal with pinned official A-MEM robust implementation and frozen LoCoMo development subset",
+  "campaign": {
+    "id": "amem-locomo-fixed-memory-development-v1",
+    "provenance": "Official LoCoMo complete conversations conv-26/conv-30; 40 original category 1-4 questions; development only; held-out conv-41/conv-42 excluded.",
+    "inputs": [
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-tasks.json",
+        "destination": "data/locomo/tasks.json",
+        "sha256": "82ba782f9616e761eef0e20e51fe02066a6ad1ad1dbbba38789805eb6eec8f0d"
+      },
+      {
+        "source": "datasets/project/auto-research-amem-v1/development-corpus.json",
+        "destination": "data/locomo/corpus.json",
+        "sha256": "4f5ebe8e5e99b21da44dde427fbb13631a6c0057ff61f9c300e5fa15a788fc34"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.json",
+        "destination": "results/baseline-state/conv-26.json",
+        "sha256": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-26.slot0.npy",
+        "destination": "results/baseline-state/conv-26.slot0.npy",
+        "sha256": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.json",
+        "destination": "results/baseline-state/conv-30.json",
+        "sha256": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-state/conv-30.slot0.npy",
+        "destination": "results/baseline-state/conv-30.slot0.npy",
+        "sha256": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d"
+      },
+      {
+        "source": "evals/reports/amem-continuation-preparation-20261002/cache/results/baseline-condition.json",
+        "destination": "results/baseline-condition.json",
+        "sha256": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b"
+      }
+    ],
+    "labels_sha256": "11b837faff579a307ff1667febba4b3f4a081291ecc5ab7f0110fd24f777f7b0",
+    "assets_sha256": "e6bb7c433bb337983342c641f99d16500e739d5d7e860d8802f3e2fc4a0dfd26",
+    "goal": "继续完整Auto Research，完成同记忆的真实开发研究与反馈迭代。先读READ_FIRST.md和原文，研究区已有A-MEM论文，固定官方源码在upstream/。本轮所有方法必须读取同一份完整788轮baseline记忆，40道原题不变，旧预测未导入。先保存baseline方案并实际运行现有run_baseline.py取得新宿主反馈；评估具体失败后结合原文提出一个待验证的检索变化，保存新的方法/实验方案，再由你按需调用Codex实现独立固定记忆入口及对应消融。旧run_retrieval_variants.py仅供参考，其conv30重建逻辑不可直接运行；不修改官方baseline、记忆、QA提示、数据或评分。方案必须说明研究缺口、假设、方法变化、预期收益、风险和验证。宿主实测candidate/ablation后assess_results并按失败决定是否补读、修订一轮或诚实结束。报告原文依据、各方法/源码版本、F1/EM/R5/R10、实际请求/token/耗时和失败。provider-default生成与历史缓存条件保持；seed13不证明采样固定。不把运行成功当科研有效，不声称SOTA或独立holdout完成。当前只提供development；普通聊天和调研不受此流程影响。",
+    "requires_method_iteration": true,
+    "requires_result_assessment": true,
+    "requires_multi_seed": false,
+    "seeds": [
+      13
+    ],
+    "audit_dataset": "locomo",
+    "requires_independent_audit": true,
+    "budget": {
+      "decisions": 48,
+      "research_calls": 2,
+      "coding_calls": 3,
+      "coding_seconds": 3600,
+      "coding_tokens": 2000000,
+      "experiment_seconds": 10800,
+      "preparations": 1,
+      "download_mb": 1,
+      "experiment_model_calls": 1000,
+      "experiment_model_seconds": 9000
+    },
+    "wall_seconds": 14400,
+    "targets": [],
+    "protocol_sha256": "7a7e77ac03db84e8a1318371358e3d30aae27cf2634d23f1537bb0c17c4c6e2c",
+    "frozen_sources": {
+      "upstream": "directory:95b225660243a47f06c76cd8916c28f2edc6d235857c3b32eeb64a30d49f54a2",
+      "run_baseline.py": "85e54a600c8418e8d0d072e2ea4ce0c82cef8121228c42d1764ee5649a221617",
+      "results/baseline-state/conv-26.json": "71c0c4c3df03be2d9eb3dc93ed6d5238b1d452ed9ddc5d7f42b46336b2c1000f",
+      "results/baseline-state/conv-26.slot0.npy": "99e0ec4ed20afdf80a6d16821bd9d7f92cc3f4daf9dd4e2cd764c2f3f280fa39",
+      "results/baseline-state/conv-30.json": "f608e7a35985b1e8849694583a5239f3c01c4e6af3d85ff4060e3de10724c1ff",
+      "results/baseline-state/conv-30.slot0.npy": "23f36249ef358107b896f73c8dc8ed82dfaf1444775d5bf3691374e294643c4d",
+      "results/baseline-condition.json": "e26158e5e38136d75e77f048ab0e1e13e1f447cbb0955cec04300b6a140ee93b",
+      "READ_FIRST.md": "59850cfbd7ddcf013dc4117c376f6d6c119c4545c585a5f2e6d276a59fa8bf3d",
+      "PROTOCOL.md": "7a7e77ac03db84e8a1318371358e3d30aae27cf2634d23f1537bb0c17c4c6e2c"
+    },
+    "cache_migration": {
+      "manual_preparation": true,
+      "source_case": "auto-research-amem-continuation-v3",
+      "imported_turns": 788,
+      "applies_to": [
+        "baseline",
+        "candidate",
+        "ablation"
+      ],
+      "imported_predictions": 0,
+      "historical_construction_cost_separate": true
+    },
+    "previous_phase": {
+      "job_id": "4c087faece0d418f9632e90b7c4822fb",
+      "status": "completed",
+      "outcome": "reported",
+      "passed": false,
+      "reported_tokens": 3412369,
+      "total_tokens_coverage": 0.9987220447284345,
+      "seconds": 11680.609000000171,
+      "new_budget_not_old_job_reset": true
+    },
+    "protocol_source": "datasets/project/auto-research-amem-fixed-memory-v1/PROTOCOL.md"
+  }
+}

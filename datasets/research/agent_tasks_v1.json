@@ -1,0 +1,178 @@
+{
+  "version": "researchagent-formal-v1",
+  "license": "CC0-1.0 applies only to authored task/rubric text; source extracts retain original licenses.",
+  "split": "development-regression; source papers and some questions overlap prior acceptance, not a held-out public test set",
+  "judge_version": "rubric-semantic-v1",
+  "cases": [
+    {
+      "id": "docling_architecture",
+      "intent": "LOCAL_QA",
+      "question": "仅根据本地 Docling Technical Report：版面检测器来自什么架构、用什么推理运行时？TableFormer 的任务和推理框架又是什么？分别引用原文页码，不要联网。",
+      "paraphrase": "请读本地保存的 Docling 报告，分清两个模型：版面分析模型的架构与运行时，以及表格结构模型负责的内容与运行框架。给出页码依据，仅用本地资料。",
+      "criteria": [
+        "版面检测器架构派生自 RT-DETR，不能把 DocLayNet 数据集说成架构。",
+        "版面模型推理使用 onnxruntime。",
+        "TableFormer 恢复表格逻辑行列/表头等结构，推理使用 PyTorch。"
+      ],
+      "local_titles": [
+        "Docling Technical Report"
+      ],
+      "reference_evidence": [
+        {
+          "page": 3,
+          "section": "introduction",
+          "line_start": 1,
+          "line_end": 35,
+          "content": "Layout\nAnalysis\nSerialize as \nJSON\nor Markdown\n{;}\nParse \nPDF pages\nTable \nStructure\nOCR\nModel Pipeline\nAssemble results,\nApply document \npost-processing\nFigure 1: Sketch of Docling’s default processing pipeline. The inner part of the model pipeline is\neasily customizable and extensible.\nlicensing (e.g. pymupdf [7]), poor speed or unrecoverable quality issues, such as merged text cells\nacross far-apart text tokens or table columns (pypdfium, PyPDF) [15, 14].\nWe therefore decided to provide multiple backend choices, and additionally open-source a custom-\nbuilt PDF parser, which is based on the low-level qpdf [4] library. It is made available in a separate\npackage named docling-parse and powers the default PDF backend in Docling. As an alternative,\nwe provide a PDF backend relying onpypdfium, which may be a safe backup choice in certain cases,\ne.g. if issues are seen with particular font encodings.\n3.2 AI models\nAs part of Docling, we initially release two highly capable AI models to the open-source community,\nwhich have been developed and published recently by our team. The first model is a layout analysis\nmodel, an accurate object-detector for page elements [13]. The second model is TableFormer [12, 9],\na state-of-the-art table structure recognition model. We provide the pre-trained weights (hosted on\nhuggingface) and a separate package for the inference code as docling-ibm-models. Both models\nare also powering the open-access deepsearch-experience, our cloud-native service for knowledge\nexploration tasks.\nLayout Analysis Model\nOur layout analysis model is an object-detector which predicts the bounding-boxes and classes of\nvarious elements on the image of a given page. Its architecture is derived from RT-DETR [16] and"
+        },
+        {
+          "page": 3,
+          "section": "introduction",
+          "line_start": 36,
+          "line_end": 52,
+          "content": "re-trained on DocLayNet [13], our popular human-annotated dataset for document-layout analysis,\namong other proprietary datasets. For inference, our implementation relies on the onnxruntime [5].\nThe Docling pipeline feeds page images at 72 dpi resolution, which can be processed on a single\nCPU with sub-second latency. All predicted bounding-box proposals for document elements are\npost-processed to remove overlapping proposals based on confidence and size, and then intersected\nwith the text tokens in the PDF to group them into meaningful and complete units such as paragraphs,\nsection titles, list items, captions, figures or tables.\nTable Structure Recognition\nThe TableFormer model [12], first published in 2022 and since refined with a custom structure token\nlanguage [9], is a vision-transformer model for table structure recovery. It can predict the logical\nrow and column structure of a given table based on an input image, and determine which table\ncells belong to column headers, row headers or the table body. Compared to earlier approaches,\nTableFormer handles many characteristics of tables, such as partial or no borderlines, empty cells,\nrows or columns, cell spans and hierarchy both on column-heading or row-heading level, tables with\ninconsistent indentation or alignment and other complexities. For inference, our implementation\nrelies on PyTorch[2].\n3"
+        },
+        {
+          "page": 6,
+          "section": "references",
+          "line_start": 1,
+          "line_end": 23,
+          "content": "machine learning through dynamic python bytecode transformation and graph compilation.\nIn Proceedings of the 29th ACM International Conference on Architectural Support for Pro-\ngramming Languages and Operating Systems, Volume 2 (ASPLOS ’24) . ACM, 4 2024. doi:\n10.1145/3620665.3640366. URL https://pytorch.org/assets/pytorch2-2.pdf.\n[3] C. Auer, M. Dolfi, A. Carvalho, C. B. Ramis, and P. W. Staar. Delivering document conversion\nas a cloud service with high throughput and responsiveness. In 2022 IEEE 15th International\nConference on Cloud Computing (CLOUD), pages 363–373. IEEE, 2022.\n[4] J. Berkenbilt. Qpdf: A content-preserving pdf document transformer, 2024. URL https:\n//github.com/qpdf/qpdf.\n[5] O. R. developers. Onnx runtime. https://onnxruntime.ai/, 2024. Version: 1.18.1.\n[6] IBM. Data Prep Kit: a community project to democratize and accelerate unstructured\ndata preparation for LLM app developers, 2024. URL https://github.com/IBM/\ndata-prep-kit.\n[7] A. S. Inc. PyMuPDF, 2024. URL https://github.com/pymupdf/PyMuPDF.\n[8] J. Liu. LlamaIndex, 11 2022. URL https://github.com/jerryjliu/llama_index.\n[9] M. Lysak, A. Nassar, N. Livathinos, C. Auer, and P. Staar. Optimized Table Tokenization\nfor Table Structure Recognition. In Document Analysis and Recognition - ICDAR 2023: 17th\nInternational Conference, San Jos´e, CA, USA, August 21–26, 2023, Proceedings, Part II, pages\n37–50, Berlin, Heidelberg, Aug. 2023. Springer-Verlag. ISBN 978-3-031-41678-1. doi: 10.\n1007/978-3-031-41679-8 3. URL https://doi.org/10.1007/978-3-031-41679-8_3 .\n[10] L. Mishra, S. Dhibi, Y . Kim, C. Berrospi Ramis, S. Gupta, M. Dolfi, and P. Staar. State-\nments: Universal information extraction from tables with large language models for ESG\nKPIs. In D. Stammbach, J. Ni, T. Schimanski, K. Dutia, A. Singh, J. Bingler, C. Christi-"
+        }
+      ]
+    },
+    {
+      "id": "react_benchmarks",
+      "intent": "LOCAL_QA",
+      "question": "只读本地 ReAct 论文：作者在哪四个 benchmark 上评测，分别是什么任务？只列名称与任务类型并引用原文，不要联网。",
+      "paraphrase": "依据本地保存的 ReAct 原文，做一个四行对照：每个评测数据集/环境对应哪类任务？不要检索网页，请附原文引用。",
+      "criteria": [
+        "HotpotQA 对应问答。",
+        "FEVER 对应事实验证。",
+        "ALFWorld 对应文本交互游戏/家庭任务环境。",
+        "WebShop 对应网页导航/购物任务。"
+      ],
+      "local_titles": [
+        "ReAct: Synergizing Reasoning and Acting in Language Models"
+      ],
+      "reference_evidence": [
+        {
+          "page": 3,
+          "section": "abstract",
+          "line_start": 1,
+          "line_end": 20,
+          "content": "Published as a conference paper at ICLR 2023\nWe conduct empirical evaluations ofReAct and state-of-the-art baselines on four diverse benchmarks:\nquestion answering (HotPotQA, Yang et al., 2018), fact veriﬁcation (Fever, Thorne et al., 2018),\ntext-based game (ALFWorld, Shridhar et al., 2020b), and webpage navigation (WebShop, Yao\net al., 2022). For HotPotQA and Fever, with access to a Wikipedia API that the model can interact\nwith, ReAct outperforms vanilla action generation models while being competitive with chain-of-\nthought reasoning (CoT) (Wei et al., 2022). The best approach overall is a combination of ReAct\nand CoT that allows for the use of both internal knowledge and externally obtained information\nduring reasoning. On ALFWorld and WebShop, two or even one-shot ReAct prompting is able\nto outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances,\nwith an absolute improvement of 34% and 10% in success rates respectively. We also demonstrate\nthe importance of sparse, versatile reasoning in decision making by showing consistent advantages\nover controlled baselines with actions only. Besides general applicability and performance boost,\nthe combination of reasoning and acting also contributes to model interpretability, trustworthiness,\nand diagnosability across all domains, as humans can readily distinguish information from model’s\ninternal knowledge versus external environments, as well as inspect reasoning traces to understand\nthe decision basis of model actions.\nTo summarize, our key contributions are the following: (1) we introduce ReAct, a novel prompt-\nbased paradigm to synergize reasoning and acting in language models for general task solving; (2) we\nperform extensive experiments across diverse benchmarks to showcase the advantage of ReAct in a"
+        }
+      ]
+    },
+    {
+      "id": "cross_paper_mechanisms",
+      "intent": "LOCAL_QA",
+      "question": "仅据本地 Docling 和 ReAct，比较二者怎样使用图像或外部环境信息：Docling 如何恢复表格结构并处理表格文字？ReAct 如何用动作获得新信息？每篇至少一处原文引用，别把两者都笼统叫成 OCR。",
+      "paraphrase": "请用本地两篇论文解释两个不同机制：Docling 给 TableFormer 什么输入、结构输出如何与 PDF 文字结合；ReAct 的行动如何补充推理所需信息。两篇都给原文证据，不联网。",
+      "criteria": [
+        "Docling 把表格图像裁剪及相关文字单元送入 TableFormer。",
+        "结构预测回配 PDF 文字单元以避免重新识别表格文字。",
+        "ReAct 交替生成推理与动作，通过动作同知识库或环境交互取得新信息；不把它当作 OCR。"
+      ],
+      "local_titles": [
+        "Docling Technical Report",
+        "ReAct: Synergizing Reasoning and Acting in Language Models"
+      ],
+      "reference_evidence": [
+        {
+          "page": 4,
+          "section": "introduction",
+          "line_start": 1,
+          "line_end": 23,
+          "content": "The Docling pipeline feeds all table objects detected in the layout analysis to the TableFormer model,\nby providing an image-crop of the table and the included text cells. TableFormer structure predic-\ntions are matched back to the PDF cells in post-processing to avoid expensive re-transcription text\nin the table image. Typical tables require between 2 and 6 seconds to be processed on a standard\nCPU, strongly depending on the amount of included table cells.\nOCR\nDocling provides optional support for OCR, for example to cover scanned PDFs or content in\nbitmaps images embedded on a page. In our initial release, we rely onEasyOCR [1], a popular third-\nparty OCR library with support for many languages. Docling, by default, feeds a high-resolution\npage image (216 dpi) to the OCR engine, to allow capturing small print detail in decent quality.\nWhile EasyOCR delivers reasonable transcription quality, we observe that it runs fairly slow on\nCPU (upwards of 30 seconds per page).\nWe are actively seeking collaboration from the open-source community to extend Docling with\nadditional OCR backends and speed improvements.\n3.3 Assembly\nIn the final pipeline stage, Docling assembles all prediction results produced on each page into a\nwell-defined datatype that encapsulates a converted document, as defined in the auxiliary package\ndocling-core. The generated document object is passed through a post-processing model which\nleverages several algorithms to augment features, such as detection of the document language, cor-\nrecting the reading order, matching figures with captions and labelling metadata such as title, authors\nand references. The final output can then be serialized to JSON or transformed into a Markdown\nrepresentation at the users request.\n3.4 Extensibility"
+        },
+        {
+          "page": 1,
+          "section": "abstract",
+          "line_start": 9,
+          "line_end": 32,
+          "content": "ABSTRACT\nWhile large language models (LLMs) have demonstrated impressive performance\nacross tasks in language understanding and interactive decision making, their\nabilities for reasoning (e.g. chain-of-thought prompting) and acting (e.g. action\nplan generation) have primarily been studied as separate topics. In this paper, we\nexplore the use of LLMs to generate both reasoning traces and task-speciﬁc actions\nin an interleaved manner, allowing for greater synergy between the two: reasoning\ntraces help the model induce, track, and update action plans as well as handle\nexceptions, while actions allow it to interface with and gather additional information\nfrom external sources such as knowledge bases or environments. We apply our\napproach, named ReAct, to a diverse set of language and decision making tasks\nand demonstrate its effectiveness over state-of-the-art baselines in addition to\nimproved human interpretability and trustworthiness. Concretely, on question\nanswering (HotpotQA) and fact veriﬁcation (Fever), ReAct overcomes prevalent\nissues of hallucination and error propagation in chain-of-thought reasoning by\ninteracting with a simple Wikipedia API, and generating human-like task-solving\ntrajectories that are more interpretable than baselines without reasoning traces.\nFurthermore, on two interactive decision making benchmarks (ALFWorld and\nWebShop), ReAct outperforms imitation and reinforcement learning methods by\nan absolute success rate of 34% and 10% respectively, while being prompted with\nonly one or two in-context examples.\n1 I NTRODUCTION\nA unique feature of human intelligence is the ability to seamlessly combine task-oriented actions with\nverbal reasoning (or inner speech, Alderson-Day & Fernyhough, 2015), which has been theorized to"
+        }
+      ]
+    },
+    {
+      "id": "unavailable_private_cost",
+      "intent": "LOCAL_QA",
+      "question": "仅依据本地 Docling Technical Report，给出作者未公开的私人云 GPU 账单的准确美元金额。若论文不能支持，明确无法确定，不要估算，也不要联网。",
+      "paraphrase": "本地 Docling 报告是否足以确定作者个人 GPU 云服务最终支付了多少美元？只按原文回答；没有披露就说未知，不猜金额、不查网页。",
+      "criteria": [
+        "明确指出本地原文没有披露私人 GPU 云账单，因此无法确定准确金额。",
+        "没有编造、估算、暗示具体账单金额，没有将模型性能耗时当作费用。"
+      ],
+      "local_titles": [],
+      "abstain": true,
+      "reference_evidence": [
+        {
+          "page": 1,
+          "section": "正文",
+          "line_start": 1,
+          "line_end": 8,
+          "content": "Docling Technical Report\nVersion 1.0\nChristoph Auer Maksym Lysak Ahmed Nassar Michele Dolfi Nikolaos Livathinos\nPanos Vagenas Cesar Berrospi Ramis Matteo Omenetti Fabian Lindlbauer\nKasper Dinkla Lokesh Mishra Yusik Kim Shubham Gupta Rafael Teixeira de Lima\nValery Weber Lucas Morin Ingmar Meijer Viktor Kuropiatnyk Peter W. J. Staar\nAI4K Group, IBM Research\nR¨uschlikon, Switzerland"
+        },
+        {
+          "page": 1,
+          "section": "abstract",
+          "line_start": 9,
+          "line_end": 15,
+          "content": "Abstract\nThis technical report introduces Docling, an easy to use, self-contained, MIT-\nlicensed open-source package for PDF document conversion. It is powered by\nstate-of-the-art specialized AI models for layout analysis (DocLayNet) and table\nstructure recognition (TableFormer), and runs efficiently on commodity hardware\nin a small resource budget. The code interface allows for easy extensibility and\naddition of new features and models."
+        },
+        {
+          "page": 1,
+          "section": "introduction",
+          "line_start": 16,
+          "line_end": 33,
+          "content": "1 Introduction\nConverting PDF documents back into a machine-processable format has been a major challenge\nfor decades due to their huge variability in formats, weak standardization and printing-optimized\ncharacteristic, which discards most structural features and metadata. With the advent of LLMs\nand popular application patterns such as retrieval-augmented generation (RAG), leveraging the rich\ncontent embedded in PDFs has become ever more relevant. In the past decade, several powerful\ndocument understanding solutions have emerged on the market, most of which are commercial soft-\nware, cloud offerings [3] and most recently, multi-modal vision-language models. As of today, only\na handful of open-source tools cover PDF conversion, leaving a significant feature and quality gap\nto proprietary solutions.\nWith Docling, we open-source a very capable and efficient document conversion tool which builds\non the powerful, specialized AI models and datasets for layout analysis and table structure recog-\nnition we developed and presented in the recent past [12, 13, 9]. Docling is designed as a simple,\nself-contained python library with permissive license, running entirely locally on commodity hard-\nware. Its code architecture allows for easy extensibility and addition of new features and models.\nDocling Technical Report\n1\narXiv:2408.09869v5  [cs.CL]  9 Dec 2024"
+        },
+        {
+          "page": 4,
+          "section": "introduction",
+          "line_start": 1,
+          "line_end": 23,
+          "content": "The Docling pipeline feeds all table objects detected in the layout analysis to the TableFormer model,\nby providing an image-crop of the table and the included text cells. TableFormer structure predic-\ntions are matched back to the PDF cells in post-processing to avoid expensive re-transcription text\nin the table image. Typical tables require between 2 and 6 seconds to be processed on a standard\nCPU, strongly depending on the amount of included table cells.\nOCR\nDocling provides optional support for OCR, for example to cover scanned PDFs or content in\nbitmaps images embedded on a page. In our initial release, we rely onEasyOCR [1], a popular third-\nparty OCR library with support for many languages. Docling, by default, feeds a high-resolution\npage image (216 dpi) to the OCR engine, to allow capturing small print detail in decent quality.\nWhile EasyOCR delivers reasonable transcription quality, we observe that it runs fairly slow on\nCPU (upwards of 30 seconds per page).\nWe are actively seeking collaboration from the open-source community to extend Docling with\nadditional OCR backends and speed improvements.\n3.3 Assembly\nIn the final pipeline stage, Docling assembles all prediction results produced on each page into a\nwell-defined datatype that encapsulates a converted document, as defined in the auxiliary package\ndocling-core. The generated document object is passed through a post-processing model which\nleverages several algorithms to augment features, such as detection of the document language, cor-\nrecting the reading order, matching figures with captions and labelling metadata such as title, authors\nand references. The final output can then be serialized to JSON or transformed into a Markdown\nrepresentation at the users request.\n3.4 Extensibility"
+        }
+      ]
+    },
+    {
+      "id": "meta_harness_objective",
+      "intent": "RESEARCH",
+      "question": "Meta-Harness: End-to-End Optimization of Model Harnesses 这篇论文主要在优化什么？它怎样利用过去候选的反馈？请核对论文或作者项目，用两三句话回答并给原始来源引用。",
+      "paraphrase": "我想确认 Meta-Harness: End-to-End Optimization of Model Harnesses 的机制：搜索对象是什么，历史试验信息如何供下一次改进使用？查原论文/作者项目，简要解释并引用，不要混淆同名脚手架仓库。",
+      "criteria": [
+        "优化搜索对象是模型外围的 harness 代码，不能说主要是在训练/更新基础模型权重。",
+        "agentic proposer 通过文件系统访问此前候选的代码、评估分数和执行轨迹，提出/评估新的 harness。",
+        "论述明确对应给定论文，不能把 ruvnet/metaharness 脚手架仓库当成论文实现。"
+      ],
+      "min_sources": 1,
+      "reference_evidence": [
+        {
+          "url": "https://arxiv.org/abs/2603.28052",
+          "content": "Abstract\nThe performance of large language model (LLM) systems depends not\nonly on model weights, but also on theirharness: the code that determines\nwhat information to store, retrieve, and present to the model. Yet harnesses\nare still designed largely by hand, and existing text optimizers are poorly\nmatched to this setting because they compress feedback too aggressively:\nthey are memoryless, condition only on scalar scores, or restrict feedback to\nshort templates or summaries. We introduceMeta-Harness, an outer-loop\nsystem that searches over harness code for LLM applications. It uses an\nagentic proposer that accesses the source code, scores, and execution traces\nof all prior candidates through a filesystem. On online text classification,\nMeta-Harness improves over a state-of-the-art context management system\nby 7.7 points while using 4× fewer context tokens. On retrieval-augmented\nmath reasoning, a single discovered harness improves accuracy on 200\nIMO-level problems by 4.7 points on average across five held-out models.\nOn agentic coding, discovered harnesses surpass the best hand-engineered\nbaselines on TerminalBench-2. Together, these results show that richer\naccess to prior experience can enable automated harness engineering.\n\n第 1 页 · introduction\n1 Introduction\nChanging the harness around a fixed large language model (LLM) can produce a 6 ×\nperformance gap on the same benchmark [47]. Theharness—the code that determines what\nto store, retrieve, and show to the model—often matters as much as the model itself. This\nsensitivity has led to growing interest inharness engineering, the practice of refining the\ncode around an LLM to improve the overall system’s performance [36; 21; 10; 9]. But despite\nits importance, harness engineering remains largely manual: practitioners inspect failures,\n1\narXiv:2603.28052v1  [cs.AI]  30 Mar 2026\n\n第 2 页 · introduction\nFilesystem w/Mc6\nAll Experience\n/\n Maximize\nHarness+LLMHarness\nPropose/M19\nHarness Code\n1 2\nStore all Logs to Filesystem\nTasks\nEvaluate\nProposed \nCode\nReasoning \nTraces\nEva/M1S3\nScore\nFigure 2:Meta-Harness search loop. (1)An agent reads a filesystem containing all prior\ncandidates’ source code, execution traces, and scores, and proposes a new harness.(2)We\nevaluate the proposed harness on evaluation tasks.(3)All logs (proposed code, reasoning\ntraces, evaluation scores) are stored in the filesystem in a new directory, and the loop repeats.\nMethod History Log content MTok/iter\nOPRO [51] Window past (solution, score) pairs 0.002\nTextGrad [53] Last textual feedback on current artifact 0.015\nAlphaEvolve [35] Window program database + eval. scores 0.022\nGEPA [1] Summary reflective feedback from rollout traces 0.008\nFeedback Descent [26] Summary comparison + textual feedback 0.012\nTTT-Discover [54] Window prev. solution fragment 0.026\nMeta-HarnessFullalllogs and scores 10.0\n"
+        }
+      ]
+    },
+    {
+      "id": "github_contents_limits",
+      "intent": "RESEARCH",
+      "question": "请查 GitHub 官方文档的 Get repository content 接口：分别怎样处理不超过 1 MB、1–100 MB、超过 100 MB 的文件？在中间区间使用 object 类型时 content 和 encoding 是什么？给官方依据。",
+      "paraphrase": "我准备使用 GitHub Contents API 读文件。请核实官方说明的三个大小区间（≤1 MB、1–100 MB、>100 MB）各支持什么，并说明中档文件的 object 响应中 content/encoding 字段，附官方引用。",
+      "criteria": [
+        "不超过 1 MB 时支持该端点全部功能。",
+        "1–100 MB 仅支持 raw/object 自定义媒体类型；object 响应 content 为空字符串且 encoding 为 none，取正文可用 raw。",
+        "超过 100 MB 不支持此端点，不能声称仍可直接读取。"
+      ],
+      "min_sources": 1,
+      "reference_evidence": [
+        {
+          "page": null,
+          "content": "If the content is a submodule, the submodule_git_url field identifies the location of the submodule repository, and the sha identifies a specific commit within the submodule repository. Git uses the given URL when cloning the submodule repository, and checks out the submodule at that specific commit. If the submodule repository is not hosted on github.com, the Git URLs ( git_url and _links[\"git\"] ) and the github.com URLs ( html_url and _links[\"html\"] ) will have null values.\n\nNotes:\n\n- To get a repository's contents recursively, you can recursively get the tree.\n\n- This API has an upper limit of 1,000 files for a directory. If you need to retrieve more files, use the Git Trees API.\n\n- Download URLs expire and are meant to be used just once. To ensure the download URL does not expire, please use the contents API to obtain a fresh download URL for each download.\n\n- If the requested file's size is: 1 MB or smaller: All features of this endpoint are supported. Between 1-100 MB: Only the raw or object custom media types are supported. Both will work as normal, except that when using the object media type, the content field will be an empty string and the encoding field will be \"none\" . To get the contents of these larger files, use the raw media type. Greater than 100 MB: This endpoint is not supported.\n\n### Fine-grained access tokens for \"Get repository content\"\n\nThis endpoint works with the following fine-grained token types:\n\n- GitHub App user access tokens\n\n- GitHub App installation access tokens\n\n- Fine-grained personal access tokens\n\nThe fine-grained token must have the following permission set:\n\n- \"Contents\" repository permissions (read)\n\nThis endpoint can be used without authentication or the aforementioned permissions if only public resources are requested."
+        }
+      ]
+    }
+  ]
+}

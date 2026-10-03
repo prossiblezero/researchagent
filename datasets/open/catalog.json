@@ -1,0 +1,48 @@
+{
+  "version": "20260929-product-v2",
+  "seed": 20260928,
+  "qasper": {
+    "tasks": 80,
+    "source_files": {
+      "dev": "D:\\paper\\researchagent-benchmarks\\raw\\qasper_train.parquet",
+      "held_out": "D:\\paper\\researchagent-benchmarks\\raw\\qasper_validation.parquet"
+    },
+    "raw_sha256": {
+      "dev": "9af08092ee26c4f700202c1f90d1592b662926f23f3a308a10ff0a53345e37fe",
+      "held_out": "089781b91c337d348dd9e8b57cc8adc100ed2d9cab84a6127402bcccf1559222"
+    },
+    "corpus": 4342
+  },
+  "scifact": {
+    "tasks": 60,
+    "corpus": 5183,
+    "raw_sha256": {
+      "claims_train.jsonl": "f4c8fa82d8bd0653a9cc8d61a6ea48c25eacea64e90af5dbf390ebb1b74372f0",
+      "claims_dev.jsonl": "86f0435d08fdb65d1aa41d1472684f57e6e71930626497bdf4d7a9ec1a632217",
+      "corpus.jsonl": "b8d6c89624cb2ed74dee8938effc4f5d8bd2086887880af8110d64be4ceade62"
+    }
+  },
+  "hotpotqa": {
+    "tasks": 50,
+    "raw_sha256": {
+      "validation": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6"
+    },
+    "protocol": "distractor"
+  },
+  "longmemeval": {
+    "tasks": 50,
+    "raw_sha256": {
+      "cleaned": "d6f21ea9d60a0d56f34a05b609c79c88a451d2ae03597821ea3d5a9678c3a442"
+    },
+    "condition": "S cleaned"
+  },
+  "project": {
+    "tasks": 80,
+    "contexts": 174,
+    "sources": [
+      "retrieval-v4",
+      "evidence-qa",
+      "tests/"
+    ]
+  }
+}

@@ -1,0 +1,772 @@
+[
+  {
+    "id": "direct-00",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling RT-DETR architecture layout detector",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 5
+      }
+    ]
+  },
+  {
+    "id": "semantic-00",
+    "category": "semantic",
+    "split": "dev",
+    "query": "版面识别的目标检测器是从哪种架构改造的？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 5
+      }
+    ]
+  },
+  {
+    "id": "direct-01",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling onnxruntime 72 dpi inference",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "semantic-01",
+    "category": "semantic",
+    "split": "dev",
+    "query": "文档转换工具将页面图片以什么分辨率送入模型，用哪个运行时推理？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "direct-02",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling TableFormer PyTorch table structure",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "semantic-02",
+    "category": "semantic",
+    "split": "dev",
+    "query": "如何恢复表格的逻辑行列和表头结构，负责这个任务的模型用什么框架运行？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "direct-03",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling TableFormer matched PDF cells re-transcription",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 7
+      }
+    ]
+  },
+  {
+    "id": "semantic-03",
+    "category": "semantic",
+    "split": "dev",
+    "query": "表格结构预测后怎样与已有文字单元对齐，从而避免重复识别图片中的文字？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 7
+      }
+    ]
+  },
+  {
+    "id": "direct-04",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling BaseModelPipeline extensibility",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 8
+      }
+    ]
+  },
+  {
+    "id": "semantic-04",
+    "category": "semantic",
+    "split": "dev",
+    "query": "如果希望给文档转换添加自己的模型组件，哪个扩展接口可以定制整个处理流程？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 8
+      }
+    ]
+  },
+  {
+    "id": "direct-05",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling pypdfium low-resource quality tradeoff",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 9
+      }
+    ]
+  },
+  {
+    "id": "semantic-05",
+    "category": "semantic",
+    "split": "dev",
+    "query": "内存和算力很少时可以换什么解析后端，其速度与提取质量之间有什么取舍？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 9
+      }
+    ]
+  },
+  {
+    "id": "direct-06",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling 225 pages OCR disabled benchmark",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 10
+      }
+    ]
+  },
+  {
+    "id": "semantic-06",
+    "category": "semantic",
+    "split": "dev",
+    "query": "这份文档处理报告的计时实验用了多少页，字符识别功能是否开启？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 10
+      }
+    ]
+  },
+  {
+    "id": "direct-07",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling JSON Markdown metadata OCR",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 3
+      }
+    ]
+  },
+  {
+    "id": "semantic-07",
+    "category": "semantic",
+    "split": "dev",
+    "query": "文档转换会输出哪些机器可读格式，还能取出哪些元信息？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 3
+      }
+    ]
+  },
+  {
+    "id": "direct-08",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling CPU threads runtime options Dockerfile",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 4
+      }
+    ]
+  },
+  {
+    "id": "semantic-08",
+    "category": "semantic",
+    "split": "dev",
+    "query": "用户能控制哪些运行时开关和线程预算，有没有容器运行示例？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 4
+      }
+    ]
+  },
+  {
+    "id": "direct-09",
+    "category": "direct",
+    "split": "dev",
+    "query": "Docling MIT licensed commodity hardware",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "semantic-09",
+    "category": "semantic",
+    "split": "dev",
+    "query": "这个PDF转换包使用什么开源许可，对硬件资源有什么要求？",
+    "gold": [
+      {
+        "document": "docling",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "direct-10",
+    "category": "direct",
+    "split": "held_out",
+    "query": "ReAct interleaved reason to act act to reason",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "semantic-10",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "交替思考和操作如何使高层计划随环境反馈动态调整？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 6
+      }
+    ]
+  },
+  {
+    "id": "direct-11",
+    "category": "direct",
+    "split": "held_out",
+    "query": "ReAct HotpotQA Fever ALFWorld WebShop benchmarks",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 7
+      }
+    ]
+  },
+  {
+    "id": "semantic-11",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "把推理和行动结合的论文在哪四类知识和交互任务上进行了评价？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 7
+      }
+    ]
+  },
+  {
+    "id": "direct-12",
+    "category": "direct",
+    "split": "held_out",
+    "query": "ReAct HotpotQA Fever 6 3 few-shot exemplars",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 12
+      }
+    ]
+  },
+  {
+    "id": "semantic-12",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "知识问答和事实核验的提示中分别用了多少个人工编写的示例轨迹？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 12
+      }
+    ]
+  },
+  {
+    "id": "direct-13",
+    "category": "direct",
+    "split": "held_out",
+    "query": "pi contextTokens contextWindow reserveTokens auto-compaction",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "semantic-13",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "这个编码助手在工具返回后，依据什么条件判断该腾出上下文空间？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "direct-14",
+    "category": "direct",
+    "split": "held_out",
+    "query": "pi cut point tool results compaction",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 4
+      }
+    ]
+  },
+  {
+    "id": "semantic-14",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "压缩旧对话时，为什么不能把工具返回单独留在另一边？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 4
+      }
+    ]
+  },
+  {
+    "id": "direct-15",
+    "category": "direct",
+    "split": "held_out",
+    "query": "pi repeated compactions firstKeptEntryId",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      },
+      {
+        "document": "pi",
+        "ordinal": 2
+      },
+      {
+        "document": "pi",
+        "ordinal": 3
+      },
+      {
+        "document": "pi",
+        "ordinal": 4
+      },
+      {
+        "document": "pi",
+        "ordinal": 7
+      },
+      {
+        "document": "pi",
+        "ordinal": 8
+      }
+    ]
+  },
+  {
+    "id": "semantic-15",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "第二次压缩如何继续覆盖上次留下的消息，避免把仍有用的历史遗漏掉？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      },
+      {
+        "document": "pi",
+        "ordinal": 2
+      },
+      {
+        "document": "pi",
+        "ordinal": 3
+      },
+      {
+        "document": "pi",
+        "ordinal": 4
+      },
+      {
+        "document": "pi",
+        "ordinal": 7
+      },
+      {
+        "document": "pi",
+        "ordinal": 8
+      }
+    ]
+  },
+  {
+    "id": "direct-16",
+    "category": "direct",
+    "split": "held_out",
+    "query": "codex Phase 1 rollout extraction eligible idle",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "semantic-16",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "跨会话记忆的第一阶段怎样挑选已经空闲的对话并提取结构化记录？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "direct-17",
+    "category": "direct",
+    "split": "held_out",
+    "query": "codex Phase 2 global consolidation lock",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "semantic-17",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "多个记忆任务并发运行时，怎样防止它们同时修改共享的整合结果？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "direct-18",
+    "category": "direct",
+    "split": "held_out",
+    "query": "OpenClaw BM25 vector exact terms",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "semantic-18",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "当提问与原文措辞不同，但又包含必须精确匹配的错误码时，两条检索路径分别解决什么？",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "direct-19",
+    "category": "direct",
+    "split": "held_out",
+    "query": "Hermes micro-compaction prompt prefix cache",
+    "gold": [
+      {
+        "document": "hermes",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "semantic-19",
+    "category": "semantic",
+    "split": "held_out",
+    "query": "为什么逐轮重写摘要的优化默认关闭，它对供应商的提示缓存有什么影响？",
+    "gold": [
+      {
+        "document": "hermes",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "cross-00",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "交替思考和操作如何使高层计划随环境反馈动态调整？ 同时查找：这个编码助手在工具返回后，依据什么条件判断该腾出上下文空间？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 6
+      },
+      {
+        "document": "pi",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "cross-01",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "交替思考和操作如何使高层计划随环境反馈动态调整？ 同时查找：当提问与原文措辞不同，但又包含必须精确匹配的错误码时，两条检索路径分别解决什么？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 6
+      },
+      {
+        "document": "openclaw",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "cross-02",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "把推理和行动结合的论文在哪四类知识和交互任务上进行了评价？ 同时查找：跨会话记忆的第一阶段怎样挑选已经空闲的对话并提取结构化记录？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 7
+      },
+      {
+        "document": "codex",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "cross-03",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "知识问答和事实核验的提示中分别用了多少个人工编写的示例轨迹？ 同时查找：压缩旧对话时，为什么不能把工具返回单独留在另一边？",
+    "gold": [
+      {
+        "document": "react",
+        "ordinal": 12
+      },
+      {
+        "document": "pi",
+        "ordinal": 4
+      }
+    ]
+  },
+  {
+    "id": "cross-04",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "这个编码助手在工具返回后，依据什么条件判断该腾出上下文空间？ 同时查找：为什么逐轮重写摘要的优化默认关闭，它对供应商的提示缓存有什么影响？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      },
+      {
+        "document": "hermes",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "cross-05",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "压缩旧对话时，为什么不能把工具返回单独留在另一边？ 同时查找：多个记忆任务并发运行时，怎样防止它们同时修改共享的整合结果？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 4
+      },
+      {
+        "document": "codex",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "cross-06",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "第二次压缩如何继续覆盖上次留下的消息，避免把仍有用的历史遗漏掉？ 同时查找：跨会话记忆的第一阶段怎样挑选已经空闲的对话并提取结构化记录？",
+    "gold": [
+      {
+        "document": "pi",
+        "ordinal": 1
+      },
+      {
+        "document": "pi",
+        "ordinal": 2
+      },
+      {
+        "document": "pi",
+        "ordinal": 3
+      },
+      {
+        "document": "pi",
+        "ordinal": 4
+      },
+      {
+        "document": "pi",
+        "ordinal": 7
+      },
+      {
+        "document": "pi",
+        "ordinal": 8
+      },
+      {
+        "document": "codex",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "cross-07",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "跨会话记忆的第一阶段怎样挑选已经空闲的对话并提取结构化记录？ 同时查找：当提问与原文措辞不同，但又包含必须精确匹配的错误码时，两条检索路径分别解决什么？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 0
+      },
+      {
+        "document": "openclaw",
+        "ordinal": 1
+      }
+    ]
+  },
+  {
+    "id": "cross-08",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "多个记忆任务并发运行时，怎样防止它们同时修改共享的整合结果？ 同时查找：为什么逐轮重写摘要的优化默认关闭，它对供应商的提示缓存有什么影响？",
+    "gold": [
+      {
+        "document": "codex",
+        "ordinal": 1
+      },
+      {
+        "document": "hermes",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "cross-09",
+    "category": "cross_document",
+    "split": "held_out",
+    "query": "当提问与原文措辞不同，但又包含必须精确匹配的错误码时，两条检索路径分别解决什么？ 同时查找：为什么逐轮重写摘要的优化默认关闭，它对供应商的提示缓存有什么影响？",
+    "gold": [
+      {
+        "document": "openclaw",
+        "ordinal": 1
+      },
+      {
+        "document": "hermes",
+        "ordinal": 0
+      }
+    ]
+  },
+  {
+    "id": "absent-00",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "Docling 未公开的逐客户合同收入和银行卡账号是什么？",
+    "gold": []
+  },
+  {
+    "id": "absent-01",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "ReAct 作者个人家庭住址",
+    "gold": []
+  },
+  {
+    "id": "absent-02",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "pi 内部未公开训练集精确大小与私有API密钥",
+    "gold": []
+  },
+  {
+    "id": "absent-03",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "Hermes 2028年12月31日尚未发生的线上事故原因",
+    "gold": []
+  },
+  {
+    "id": "absent-04",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "OpenClaw 用户私有数据库密码",
+    "gold": []
+  },
+  {
+    "id": "absent-05",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "Codex 未公开每个客户的 GPU 账单",
+    "gold": []
+  },
+  {
+    "id": "absent-06",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "这些资料里有没有不存在的算法 ZXQ-771 的正确率？",
+    "gold": []
+  },
+  {
+    "id": "absent-07",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "火星上的木屋壁炉2029年销售数据",
+    "gold": []
+  },
+  {
+    "id": "absent-08",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "请查这些文档未记载的量子芯片 Q-ABCD 配方",
+    "gold": []
+  },
+  {
+    "id": "absent-09",
+    "category": "unanswerable",
+    "split": "held_out",
+    "query": "作者没有提供的盲审审稿人姓名",
+    "gold": []
+  }
+]
