@@ -6,7 +6,7 @@ ResearchAgent 将检索资料、阅读原文、整理证据、提出方案和运
 
 项目使用 Python 显式编排 Agent 循环，以 SQLite 保存任务、会话和研究状态，通过原生 Web 界面展示回答、证据和实时进度。
 
-[快速开始](#快速开始) · [工作原理](#工作原理) · [源码教程](docs/tutorial/README.md) · [评测与数据](#评测与数据)
+[快速开始](#快速开始) · [工作原理](#工作原理) · [源码教程](docs/tutorial/README.md) · [评测与数据](#评测与数据) · [优化历程](docs/optimization-history/README.md)
 
 ## 可以做什么
 
