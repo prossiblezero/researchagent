@@ -2,13 +2,16 @@ name: Offline acceptance
 on: [push, pull_request]
 jobs:
   acceptance:
+    timeout-minutes: 30
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     env:
       OFFLINE_MODE: '1'
       PYTHONUTF8: '1'
+      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

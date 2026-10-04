@@ -29,3 +29,11 @@
 完整离线检查耗时 129.406 秒；发布副本的本地日志和汇总位于 `data/ci-portability-20261004-r1/`，未随源码上传。测试使用隔离数据库与固定输入，没有运行付费模型或重做历史科研实验。
 
 Ubuntu 和 Windows 的远程复验以[对应修复提交的 Actions 记录](https://github.com/prossiblezero/researchagent/actions/workflows/ci.yml)为准；本地通过不能替代远程结果。此前失败运行继续保留。
+
+## 远程复验暴露的等待问题
+
+路径修复 `07f4955` 的 [CI 运行 37213530770](https://github.com/prossiblezero/researchagent/actions/runs/37213530770) 中，Ubuntu 全部通过：592 项中 572 通过、20 项按原条件跳过，V1 6/6、V2 5/5。Windows 在静默全量测试中运行约 16 分钟后被主动取消；取消栈位于后段 `test_workbench.py` 的临时 SQLite 建表，说明运行已有推进，不能据此断言死锁，也不能计为测试通过。
+
+后续将 CI 的 `TMPDIR` 指向 runner 提供的临时目录，减少系统默认临时盘带来的影响；CI 下输出逐项 unittest 进度，本地仍保持简洁输出。每个系统设置 30 分钟任务时限，关闭跨系统 fail-fast，让两边分别留下结论。这些是执行环境与可观测性调整，不改生产 SQLite 的持久化设置或研究区数据。临时目录是否改善耗时，以后续实际运行结果为准。
+
+新 CI 设置的本地复验：`CI=true` 且 `TMPDIR` 指向独立临时目录，592 项中 585 通过、7 项按原条件跳过，全部离线阶段通过，耗时 126.125 秒。日志位于发布副本本地 `data/ci-portability-20261004-r2/`。

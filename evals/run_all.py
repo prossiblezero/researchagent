@@ -1,6 +1,6 @@
 """Run all deterministic checks that do not require external APIs."""
 from __future__ import annotations
-import json, subprocess, sys, tempfile
+import json, os, subprocess, sys, tempfile
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -8,7 +8,7 @@ sys.path.insert(0, str(ROOT))
 from research_agent import (FixtureSearch, OfflineModel, ResearchAgent, SearchResponse,
                             ModelDecision, Evidence, Claim, verify_claims)
 from research_agent.policy import before_tool, before_finalize
-commands = [[sys.executable, "-m", "unittest", "discover", "-s", "tests", "-q"], [sys.executable, "evals/run_stage1.py"], [sys.executable, "evals/run_metrics.py"]]
+commands = [[sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v" if os.getenv("CI") == "true" else "-q"], [sys.executable, "evals/run_stage1.py"], [sys.executable, "evals/run_metrics.py"]]
 for command in commands:
     completed = subprocess.run(command, cwd=ROOT)
     if completed.returncode:
