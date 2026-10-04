@@ -37,3 +37,5 @@ Ubuntu 和 Windows 的远程复验以[对应修复提交的 Actions 记录](http
 后续将 CI 的 `TMPDIR` 指向 runner 提供的临时目录，减少系统默认临时盘带来的影响；CI 下输出逐项 unittest 进度，本地仍保持简洁输出。每个系统设置 30 分钟任务时限，关闭跨系统 fail-fast，让两边分别留下结论。这些是执行环境与可观测性调整，不改生产 SQLite 的持久化设置或研究区数据。临时目录是否改善耗时，以后续实际运行结果为准。
 
 新 CI 设置的本地复验：`CI=true` 且 `TMPDIR` 指向独立临时目录，592 项中 585 通过、7 项按原条件跳过，全部离线阶段通过，耗时 126.125 秒。日志位于发布副本本地 `data/ci-portability-20261004-r2/`。
+
+首次 CI 配置提交 `6c90667` 把 `runner.temp` 放在 job 级 `env`，被 GitHub 表达式校验拒绝，0 个测试任务启动；[失败运行 37215014490](https://github.com/prossiblezero/researchagent/actions/runs/37215014490)保留。随后将该变量移到全量测试步骤的 `env`，使用该位置支持的 runner 上下文。本地 Python 回归不能发现 GitHub 表达式上下文错误，远程工作流启动与完成需分别确认。
