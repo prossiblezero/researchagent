@@ -170,7 +170,7 @@ def seed(out):
     if seed_path.exists():
         raise ValueError('Incomplete seed; preserve it and use a new debug output')
     store = WorkbenchStore(seed_path)
-    sid = store.save_space({'name': 'Evidence QA frozen public sources', 'download_root': r'D:\paper'})['id']
+    sid = store.save_space({'name': 'Evidence QA frozen public sources'})['id']
     lib = Library(store)
     chunk_map = {}
     for d in read(out / 'sources.json'):

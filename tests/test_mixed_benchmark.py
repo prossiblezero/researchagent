@@ -49,6 +49,7 @@ class MixedBenchmarkTests(unittest.TestCase):
         task = {'id':'host-only-id','benchmark':'qasper','source_id':'paper','query':'cobalt capacitor','gold_context_ids':['b']}
         with tempfile.TemporaryDirectory() as tmp:
             store, engine, info = seed(Path(tmp),'qasper',task,contexts,'lexical')
+            self.assertTrue(Path(store.space(info['space_id'])['download_root']).is_relative_to(Path(tmp).resolve()))
             result = engine.retrieve(info['space_id'],task['query'],top_k=5)
             self.assertEqual([info['context_map'][str(h['chunk_id'])] for h in result['results']],['b'])
             self.assertNotIn('host-only-id',json.dumps(engine._rows(info['space_id'],'documents')))

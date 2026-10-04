@@ -50,7 +50,7 @@ def corpus(out):
     write(out/'sources.json',docs);write(out/'questions.json',cases);write(out/'live-questions.json',LIVE)
     store=WorkbenchStore(out/'public.sqlite')
     spaces=store.spaces()
-    sid=spaces[0]['id'] if spaces else store.save_space({'name':'Public Harness evaluation','download_root':r'D:\paper'})['id']
+    sid=spaces[0]['id'] if spaces else store.save_space({'name':'Public Harness evaluation'})['id']
     lib=Library(store);chunk_map={}
     for d in docs:
         item,_=lib.save(sid,{'kind':'paper' if d['key'] in ('docling','react') else 'document','title':d['title'],'url':d['url'],'canonical_id':d['key'],

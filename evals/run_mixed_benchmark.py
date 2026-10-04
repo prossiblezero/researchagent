@@ -98,7 +98,7 @@ def seed(out,name,task,contexts,mode):
         info=read(directory/'seed.json')
     else:
         if store.spaces():raise RuntimeError('Interrupted source import: '+str(directory))
-        sid=store.save_space({'name':'Frozen '+name,'download_root':r'D:\paper'})['id']
+        sid=store.save_space({'name':'Frozen '+name})['id']
         info={'space_id':sid,'chunk_map':{},'context_map':{},'conversation_map':{},'source_hash':qa.digest(pool(task,contexts))}
         if name=='longmemeval':
             for row in pool(task,contexts):

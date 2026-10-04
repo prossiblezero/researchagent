@@ -91,7 +91,7 @@ def run_one(folder, case, tasks, docs, protocol, mode):
                 active.discard(job['id'])
     app.execute = measured_execute
     try:
-        sid = store.save_space({'name': case['title'], 'download_root': r'D:\paper'})['id']
+        sid = store.save_space({'name': case['title']})['id']
         chunk_map = {}
         for doc in docs:
             artifact, _ = app.library.save(sid, {

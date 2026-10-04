@@ -161,5 +161,6 @@
 | --- | --- |
 | [63c007e](https://github.com/prossiblezero/researchagent/commit/63c007e616783d044dd1b96b4f6e020c7f27c773) | 干净源码首发，包含教程、数据集和回归输入。 |
 | [226369f](https://github.com/prossiblezero/researchagent/commit/226369f341eb214a0eb0d7f1029ca924edacd700) | README 改为描述当前产品能力。 |
+| [5ded43a](https://github.com/prossiblezero/researchagent/commit/5ded43ac74d165fbbc63a8359e3cb14f2530bd56) | 新建优化历程目录，保存阶段结果、104 条本地提交索引与24份来源指纹。 |
 
-本目录的首次整理及后续变更直接保存在公开仓库：[查看优化历程目录的提交记录](https://github.com/prossiblezero/researchagent/commits/main/docs/optimization-history)。首次整理不在正文自写其尚未产生的 commit SHA；以 GitHub 实际提交记录为准。
+本目录的后续变更直接保存在公开仓库：[查看优化历程目录的提交记录](https://github.com/prossiblezero/researchagent/commits/main/docs/optimization-history)。尚未产生的本次提交 SHA 不在正文自写，以 GitHub 实际提交记录为准。

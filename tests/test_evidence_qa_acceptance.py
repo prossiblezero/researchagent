@@ -86,6 +86,8 @@ class EvidenceQAAcceptanceTests(unittest.TestCase):
             out = Path(tmp)
             qa.write(out / 'sources.json', qa.read(qa.CORPUS))
             info = qa.seed(out)
+            seed_store = WorkbenchStore(out / 'seed.sqlite')
+            self.assertTrue(Path(seed_store.space(info['space_id'])['download_root']).is_relative_to(out.resolve()))
             condition = {'model_id': 'sudocode-luna', 'budget': qa.BUDGET, 'arms': qa.ARMS}
             case = panel['cases'][0]
             one = qa.run_one(out, condition, info, case, 'baseline')
