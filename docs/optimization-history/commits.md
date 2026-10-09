@@ -164,3 +164,16 @@
 | [5ded43a](https://github.com/prossiblezero/researchagent/commit/5ded43ac74d165fbbc63a8359e3cb14f2530bd56) | 新建优化历程目录，保存阶段结果、104 条本地提交索引与24份来源指纹。 |
 
 本目录的后续变更直接保存在公开仓库：[查看优化历程目录的提交记录](https://github.com/prossiblezero/researchagent/commits/main/docs/optimization-history)。尚未产生的本次提交 SHA 不在正文自写，以 GitHub 实际提交记录为准。
+
+
+## 2026-10-09：迁移前检查点与 FastAPI 实现
+
+此处为上方 104 条历史提交的续记，本地实现提交与公开快照仍分别标识。
+
+| 范围 | 提交 | 内容 |
+| --- | --- | --- |
+| 本地 | `9c38cdb4791d5e0d3eac8ed75e77a29b082faece` | FastAPI 迁移前保存当前研究工作台、简历与评测修复。 |
+| 本地 | `31eb0cda4b88a5bacfb687fb66fe1abc8f24d8d6` | FastAPI/Uvicorn、请求合同、生命周期、兼容测试及过程文档。 |
+| 公开 | [c630d7d](https://github.com/prossiblezero/researchagent/commit/c630d7d8601dc8b15d8424b4b3c8c0dcbe5ae973) | 迁移前源码检查点，标签 `pre-fastapi-20261009`。 |
+
+迁移版本的公开提交以[本阶段记录的 Git 历史](https://github.com/prossiblezero/researchagent/commits/main/docs/optimization-history/11-fastapi-service.md)为准。

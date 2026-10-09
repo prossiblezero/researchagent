@@ -12,7 +12,7 @@
 
 ```text
 web/app.js 提交消息
-  → server.Handler.handle_api()
+  → FastAPI → research_agent.http_api.send()
   → Workbench.send()：保存用户消息
   → route_intent()：分类并形成执行简报
   → WorkbenchStore.enqueue()：持久排队
@@ -81,7 +81,7 @@ flowchart LR
 
 还有任务 Trace 事件读取接口 `/api/spaces/{space}/jobs/{job}/events`。它按序号返回 JSON，和会话 SSE 不是同一种传输。
 
-模型流输出中的草稿尚未通过最终核验；UI 中的“正在生成”“正在核验”“完成”需要分开。主页面用原生 JS 实现，HTTP 服务基于 `ThreadingHTTPServer`，这里没有前端框架或外部消息队列。
+模型流输出中的草稿尚未通过最终核验；UI 中的“正在生成”“正在核验”“完成”需要分开。主页面用原生 JS 实现，HTTP 服务基于 FastAPI / Uvicorn，同步业务在线程池执行，SSE 使用异步事件流，这里没有前端框架或外部消息队列。
 
 ## 动手验证
 
@@ -91,7 +91,7 @@ flowchart LR
 & $tutorialPython -B -m unittest discover -s tests -p 'test_workbench.py' -v
 ```
 
-读 [server.py](../../server.py) 中 `/messages`、`/jobs`、`/events` 的路由，再追到对应 `Workbench` 方法。完成标准：能解释浏览器刷新后为什么仍能找到任务，以及为什么 HTTP 202 只表示接受处理。
+读 [http_api.py](../../research_agent/http_api.py) 中 `/messages`、`/jobs`、`/events` 的路由，再追到对应 `Workbench` 方法。完成标准：能解释浏览器刷新后为什么仍能找到任务，以及为什么 HTTP 202 只表示接受处理。
 
 ## 面试表达与自测
 

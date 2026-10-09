@@ -65,3 +65,21 @@
 在持有本地档案的环境，从项目根目录按表中路径打开报告。可用 PowerShell `Get-FileHash -Algorithm SHA256 -LiteralPath <报告路径>` 对照指纹；报告内进一步指向题面、来源、回答、运行轨迹、成本和失败。不同阶段的原始产物范围不同，不能仅凭索引推断每项都具有完整 token 或完整全文阅读。
 
 在公开仓库中，可直接阅读本目录的阶段结果，查看 [datasets](../../datasets/README.md)、[tests](../../tests) 和 [evals](../../evals) 中保留的输入及核心验证代码。部分早期一次性脚本未公开，复现范围以[发布说明](../github-publication.md)为准。
+
+
+## 2026-10-09：FastAPI 迁移验收指纹
+
+[迁移过程](11-fastapi-service.md)记录改动、修复及回归结果。以下路径是本地验收档案，未将日志、SQLite 或运行目录上传；哈希按实际保存文件计算，早期失败保留。
+
+| 本地文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| `data/fastapi-migration-20261009/final-offline.log` | 3370 | `d1015a8067415c1571791c9a2995e8a319e1aa038142fb247e12adf33a474172` |
+| `data/fastapi-migration-20261009/final-frontend.log` | 3251 | `3eae3d5eb4d4e7c439b114f45f87220646eadc46ed32ce4ced937b2b780216d7` |
+| `data/fastapi-migration-20261009/final-v1.json` | 18451 | `cbfd2e4a31d83ac6415926ec80380ae02500d8f97712bed66a0689e18d231673` |
+| `data/fastapi-migration-20261009/final-v2.json` | 5561 | `d96f1f0c8dcee9245b7a475c07ba37b20830472f5d8fde852ee797f1a4a34fb0` |
+| `data/fastapi-migration-20261009/entrypoint/result.json` | 671 | `2fc0fcafbaac3f4bb7726941fca356a2db0986c20dda677a24d9ddf90137dc1c` |
+| `data/fastapi-migration-20261009/final-source-sha256.json` | 42150 | `c8545961ded9e7aca7239f05aec0001adb464433c8dc8bd59c112c595aa3f142` |
+| `data/fastapi-migration-20261009/http-regression-r1.log` | 11563 | `8a0408a4b1fc678676d069ebbebc4f960bb60624934614b376d5c22efe743295` |
+| `data/fastapi-migration-20261009/http-regression-r2.log` | 1294 | `ecad7bd2b5977f1f37b12e62bb3952af79a4f5c57f58e6bc3c9e2c648550dd8f` |
+| `data/fastapi-migration-20261009/http-regression-r3.log` | 2881 | `6d76a4dc93532c9c5ed0947866caf1348f5c906271e1bdb8d709e55677848cb5` |
+| `data/fastapi-migration-20261009/http-regression-r4.log` | 362 | `627d712247d0f05a7ff0611e93ec0ac47cd381ad5853fcf6734bacf9bd7d674c` |

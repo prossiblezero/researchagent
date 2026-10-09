@@ -1,6 +1,6 @@
 # ResearchAgent｜科研调研与自动实验工作台
 
-**技术栈：**Python、JavaScript、Agent Harness、Multi-Agent、SQLite、ChromaDB、Docker
+**技术栈：**Python、JavaScript、FastAPI、Agent Harness、Multi-Agent、SQLite、ChromaDB、Docker
 
 **项目描述：**独立开发面向论文调研的 Agent 工作台，支持论文检索、原文问答和报告生成，并可拆分调研任务、调用编码工具开展对比实验。
 

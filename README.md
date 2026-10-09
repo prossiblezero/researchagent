@@ -4,7 +4,7 @@
 
 ResearchAgent 将检索资料、阅读原文、整理证据、提出方案和运行实验放进同一个研究流程。你可以围绕一个课题管理论文与会话，让 Agent 生成带出处的回答，也可以启动 Auto Research，由研究模型规划任务、委派编码，再根据宿主执行的实验结果继续修订方案。
 
-项目使用 Python 显式编排 Agent 循环，以 SQLite 保存任务、会话和研究状态，通过原生 Web 界面展示回答、证据和实时进度。
+项目使用 Python 显式编排 Agent 循环，以 SQLite 保存任务、会话和研究状态，通过 FastAPI / Uvicorn 提供接口和 SSE 事件流，原生 Web 界面展示回答、证据和实时进度。
 
 [快速开始](#快速开始) · [工作原理](#工作原理) · [源码教程](docs/tutorial/README.md) · [评测与数据](#评测与数据) · [优化历程](docs/optimization-history/README.md)
 
@@ -90,7 +90,7 @@ python3.12 -m venv .venv
 PYTHONUTF8=1 OFFLINE_MODE=1 RETRIEVAL_MODE=lexical .venv/bin/python server.py
 ```
 
-打开 **[http://127.0.0.1:8000](http://127.0.0.1:8000)**，创建研究区和会话，即可查看聊天、后台任务、资料库与研究成果面板。按 `Ctrl+C` 停止服务。
+打开 **[http://127.0.0.1:8000](http://127.0.0.1:8000)**，创建研究区和会话，即可查看聊天、后台任务、资料库与研究成果面板。按 `Ctrl+C` 停止服务。接口文档位于 [/docs](http://127.0.0.1:8000/docs)，机器可读契约位于 [/openapi.json](http://127.0.0.1:8000/openapi.json)；部署与生命周期说明见 [FastAPI 服务层](docs/fastapi-service.md)。
 
 离线模式使用固定模型与搜索/阅读样例，适合检查流程、引用和失败处理；真实论文检索、开放式问答与自动实验需要在线配置。向量检索在下一节单独启用。
 
@@ -173,7 +173,7 @@ Auto Research 适用于需要“调研 → 实现 → 实验 → 根据结果调
 
 ```text
 researchagent/
-├── server.py                  HTTP API、Web 页面与事件流
+├── server.py                  FastAPI 入口、生命周期与 HTTP 防护
 ├── main.py                    命令行研究入口
 ├── research_agent/
 │   ├── workbench.py           意图路由、任务调度与研究工作台

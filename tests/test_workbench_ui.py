@@ -18,7 +18,8 @@ from research_agent.folders import choose_folder
 from research_agent.search import ArxivSearch
 from research_agent.workbench import OfflineRouter, Workbench, route_intent
 from research_agent.workbench_store import WorkbenchStore
-from server import Handler, make_server
+from server import make_server
+from research_agent import http_support
 
 
 class ScopedSearchTests(unittest.TestCase):
@@ -252,7 +253,7 @@ class RefinementHttpTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 400)
 
     def test_folder_endpoint_requires_local_same_origin_and_handles_cancel(self):
-        with patch.object(Handler, 'local_desktop', return_value=True), patch('server.choose_folder') as picker:
+        with patch.object(http_support, 'local_desktop', return_value=True), patch('research_agent.http_api.choose_folder') as picker:
             picker.return_value = {'path':None, 'cancelled':True}
             self.assertTrue(self.request('/api/folders/pick', {}, {'Origin':self.address})['cancelled'])
             picker.return_value = {'path':str(self.root), 'cancelled':False}
@@ -262,19 +263,20 @@ class RefinementHttpTests(unittest.TestCase):
                     self.request('/api/folders/pick', {}, headers)
                 self.assertEqual(error.exception.code, 403)
             self.assertEqual(picker.call_count, 2)
-        with patch.object(Handler, 'local_desktop', return_value=False), patch('server.choose_folder') as picker:
+        with patch.object(http_support, 'local_desktop', return_value=False), patch('research_agent.http_api.choose_folder') as picker:
             with self.assertRaises(HTTPError):
                 self.request('/api/folders/pick', {}, {'Origin':self.address})
             picker.assert_not_called()
 
     def test_folder_capability_rejects_remote_hosts_and_public_bind(self):
-        handler = SimpleNamespace(headers={'Host':'localhost:8000'}, client_address=('127.0.0.1', 1), server=SimpleNamespace(server_address=('127.0.0.1',8000)))
-        self.assertEqual(Handler.local_desktop(handler), os.name == 'nt')
-        handler.headers['Host'] = 'evil.test:8000'
-        self.assertFalse(Handler.local_desktop(handler))
-        handler.headers['Host'] = 'localhost:8000'
-        handler.server.server_address = ('0.0.0.0',8000)
-        self.assertFalse(Handler.local_desktop(handler))
+        handler = SimpleNamespace(headers={'host':'localhost:8000'}, client=SimpleNamespace(host='127.0.0.1'),
+                                  app=SimpleNamespace(state=SimpleNamespace(runtime=SimpleNamespace(host='127.0.0.1'))))
+        self.assertEqual(http_support.local_desktop(handler), os.name == 'nt')
+        handler.headers['host'] = 'evil.test:8000'
+        self.assertFalse(http_support.local_desktop(handler))
+        handler.headers['host'] = 'localhost:8000'
+        handler.app.state.runtime.host = '0.0.0.0'
+        self.assertFalse(http_support.local_desktop(handler))
 
     @unittest.skipUnless(os.name == 'nt', 'Windows native chooser')
     def test_native_picker_success_cancel_timeout_and_invalid_paths(self):

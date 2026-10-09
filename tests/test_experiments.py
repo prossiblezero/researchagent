@@ -157,7 +157,8 @@ class ExecutionTests(unittest.TestCase):
         import threading
         from urllib.request import Request,urlopen
         from urllib.error import HTTPError
-        from server import make_server,Handler
+        from server import make_server
+        from research_agent import http_support
         server=make_server(port=0,db_path=self.store.path,trace_dir=self.root/'http-traces',model_factory=OfflineRouter,start_worker=False)
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
         self.addCleanup(thread.join,3);self.addCleanup(server.server_close);self.addCleanup(server.shutdown)
@@ -170,7 +171,7 @@ class ExecutionTests(unittest.TestCase):
         with self.assertRaises(HTTPError) as denied:urlopen(artifact_url+'private-file.json',timeout=3)
         self.assertEqual(denied.exception.code,404)
         paths=[f'/research-records/experiment-versions/{self.version}/execute',f'/jobs/{run["job_id"]}/resume',f'/jobs/{run["job_id"]}/retry']
-        with patch.object(Handler,'local_desktop',return_value=False):
+        with patch.object(http_support,'local_desktop',return_value=False):
             for path in paths:
                 with self.assertRaises(HTTPError) as exc:urlopen(Request(prefix+path,data=json.dumps(self.body).encode(),headers={'Content-Type':'application/json'}),timeout=3)
                 self.assertEqual(exc.exception.code,403)

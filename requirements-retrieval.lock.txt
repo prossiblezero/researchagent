@@ -92,3 +92,5 @@ watchfiles==1.2.0
 websocket-client==1.9.2
 websockets==17.1
 yarl==1.25.1
+fastapi==0.143.0
+starlette==1.7.0
