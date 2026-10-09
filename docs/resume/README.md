@@ -1,10 +1,10 @@
 # 当前投递稿
 
-[ResearchAgent 简历正文（2026-10-03 扩展版）](researchagent-20261003-r2.md) · [指标证据与面试说明](researchagent-20261003-evidence.md)
+[ResearchAgent 简历正文（2026-10-09，最终实现与项目成果）](researchagent-20261009.md) · [指标证据与面试说明](researchagent-20261009-evidence.md)
 
-本版参考用户提供的 Pico Harness 示例和此前可信 RAG 项目图片，采用“核心技术＋项目描述＋六条职责与贡献”。分别展开 Harness、RAG、Memory、Multi-Agent/恢复、Auto Research、反馈策略/评测；每条说明问题、实现机制与有依据的结果，详细实验口径和失败放入附件。
+本版采用“技术栈＋项目描述＋五条主要工作”，第4条为“多Agent写作与Auto Research”，采用多Agent专项32项事实及引用核对全部通过、SciFact开发集证据分类macro-F1从45.04%提升为49.00%的结果；其余按任务执行、检索、记忆和评测组织。正文直接写具体做法与结果，减少术语堆叠。正文采用“任务完成率从25%提升至75%”的自然表述，版本日期、原始分母和复核过程放在证据附件。任务指标采用09-29修复前旧版与当前版在同24题上的实测对照：严格完成6/24→18/24（25.0%→75.0%）、多工具协议失败14/24→0/24；检索与记忆召回指标保持各自范围。该基线是明确阶段的旧版，不称为项目最初雏形。
 
-用户最新要求取代此前固定四条的篇幅约束。上一版[四条正文](researchagent-20261003.md)及更早版本保留，不再作为当前投递入口。本次仅修订简历表达，没有新增实验、修改生产代码或重启已完成的 Goal。
+历史31.25%→75.0%与近期70.8%→75.0%分别保留为阶段记录，见[优化进展](../optimization-history/10-original-reading-and-delivery.md)及[评测报告](../../research-notes/subset-e2e-20261009/final-report.md)。该09-29旧版源码已[独立恢复](../../research-notes/baseline-recovery-20261009/report.md)，并完成[同24题重新实测](../../research-notes/legacy-24-20261009/report.md)，旧版新成绩不预设为历史31.25%。上一版[2026-10-07 场景版](researchagent-20261007.md)、[2026-10-03 六条稿](researchagent-20261003-r2.md)、[四条稿](researchagent-20261003.md)及更早版本保留。
 
 以下均为历史版本记录，当前投递仅使用上方正文链接。
 

@@ -150,15 +150,16 @@ class OpenAICompatibleModel:
 
     def complete(self, messages, tools):
         checking=self.usage_purpose=="answer_verification"
-        # Long original-paper checks need the configured request timeout too.
-        # Retries share this allowance and still obey the enclosing task deadline.
-        deadline=min(self.request_deadline or float("inf"),time.monotonic()+max(90,self.timeout) if checking else float("inf"))
+        # Verification shares the task deadline. A separate 90s cutoff used to
+        # discard a running check even when the task still had minutes left.
+        # Standalone checks retain a finite allowance; retries share it.
+        deadline=self.request_deadline or (time.monotonic()+max(90,self.timeout) if checking else float("inf"))
         attempts=2 if checking else 3
         for attempt in range(attempts):
             self._check_request()
             remaining=deadline-time.monotonic()
             if remaining<=0:raise TimeoutError("Model request budget exhausted")
-            self._active_timeout=min(self.timeout,remaining)
+            self._active_timeout=remaining if checking else min(self.timeout,remaining)
             started = time.perf_counter()
             self.last_usage = normalize_usage(None)
             error = None
@@ -237,6 +238,8 @@ class OpenAICompatibleModel:
             payload["max_tokens"] = self.max_tokens
         if tools:
             payload.update({"tools": tools, "tool_choice": "auto", "parallel_tool_calls": False})
+        elif self.usage_purpose in {'answer_verification','answer_repair'}:
+            payload['response_format'] = {'type': 'json_object'}
         if self.stream_callback:
             payload.update(stream=True, stream_options={'include_usage': True})
         request = Request(

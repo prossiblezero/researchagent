@@ -29,7 +29,7 @@
 | 实验结果推动方法版本和编码 | [A-MEM r5 原报告](../evals/reports/amem-live-20261002-luna-r5-fixed-memory/report.md)、[方法审计](../evals/reports/amem-fixed-memory-method-audit-20261002/finding.json) | 实际有两版方案、编码、结果回传；MMR实现错误由人工发现，原报告与失败保留 |
 | 修正方法后的三组比较 | [r7 独立审计](../evals/reports/amem-corrected-measurement-audit-20261002/report.md) | 同788轮记忆、三组各40题；F1、R5、R10和EM有取舍，不能把全部增益归于方法 |
 | 独立留出测量完成、候选未获验证 | [终验完整报告](../evals/reports/amem-holdout-final-audit-20261003/report.md) | 独立40题/1292轮，三组完整比较与独立复算，MMR未达到冻结收益条件 |
-| 检索/记忆等简历指标 | [当前简历](resume/researchagent-20261003-r2.md)、[证据附件](resume/researchagent-20261003-evidence.md) | 产品能力的已有量化结果；不把Codex编码表现或上述局部工程计数替代Harness效果 |
+| 检索/记忆等简历指标 | [当前简历](resume/researchagent-20261007.md)、[证据附件](resume/researchagent-20261003-evidence.md) | 产品能力的已有量化结果；不把Codex编码表现或上述局部工程计数替代Harness效果 |
 
 每个实验运行目录保存 `models/` 请求收据、`traces/` 工具轨迹、`coding-tools/` 宿主执行产物与代码快照、`coding-tasks.json` 实验配置、`result-assessment.json` 决策记录，以及原始报告。独立评分在 `independent-audit/`；归档更正另存，不覆盖原模型报告。活动任务的终态文件可能尚未生成。
 

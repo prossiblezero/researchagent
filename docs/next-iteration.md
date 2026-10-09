@@ -1,6 +1,6 @@
 # 本次交付已收尾（2026-10-03）
 
-A-MEM三组各40题终验已完成并归档，MMR留出收益未通过；双路Multi-Agent已实现、部署及真实评测，整体未证实提速。当前简历见[四条正文](resume/researchagent-20261003-r2.md)，完整结果见[证据附件](resume/researchagent-20261003-evidence.md)。完成本地版本保存后本轮停止，下面均为历史排期，不再自动续跑A-MEM或新增优化。
+A-MEM三组各40题终验已完成并归档，MMR留出收益未通过；双路Multi-Agent已实现、部署及真实评测，整体未证实提速。当前简历见[六条正文](resume/researchagent-20261007.md)，完整结果见[证据附件](resume/researchagent-20261003-evidence.md)。完成本地版本保存后本轮停止，下面均为历史排期，不再自动续跑A-MEM或新增优化。
 
 # 历史执行入口（2026-10-02）
 

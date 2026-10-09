@@ -92,6 +92,18 @@ class Contracts(unittest.TestCase):
         self.assertEqual(self.retriever.retrieve(self.a,'XYSECRET')['results'],[])
         with self.assertRaises(ValueError):self.retriever.read(self.b,hits[0]['ref_id'])
 
+    def test_document_scope_is_applied_before_lexical_candidate_limit(self):
+        target=self.document(self.a,'Requested paper','The needle is described in the requested original paragraph.')
+        self.lib.save(self.a,{'kind':'document','title':'needle','url':'','canonical_id':'distractor',
+            'metadata':{},'data':None,'warnings':[],'boundary':'test source',
+            'chunks':[{'text':'needle needle needle in another paper about needle retrieval.',
+                       'page':1,'section':'needle','line_start':1,'line_end':1}
+                      for _ in range(210)]})
+        self.retriever._dense_attempted=True  # Exercise the production lexical fallback without model weights.
+        hits=self.retriever.retrieve(self.a,'needle',artifact_ids=[target['id']])['results']
+        self.assertTrue(hits,'Other documents must not exhaust the candidate limit before scope filtering')
+        self.assertEqual({h['owner_id'] for h in hits},{target['id']})
+
     def test_stale_source_changed_or_deleted_cannot_be_read(self):
         item=self.document(self.a,'paper','A verified record states recall is 73 percent on this dataset.')
         hit=self.retriever.retrieve(self.a,'recall')['results'][0]

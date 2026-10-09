@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import Mock,patch
 from research_agent.contracts import Evidence,Source,ModelDecision
-from research_agent.verify import check_answer,answer_blocks,apply_answer_patch,partial_answer,repair_message
+from research_agent.verify import check_answer,answer_blocks,apply_answer_patch,partial_answer,repair_message,original_citations
 from research_agent.models import OpenAICompatibleModel
 from research_agent.loop import ResearchAgent
 from research_agent.workbench import route_intent
@@ -63,6 +63,33 @@ class VerificationFlowTests(unittest.TestCase):
         self.assertEqual(data['current_answer_chars'], len('RT-DETR. [E1]\n\nWrong extension.'))
         with self.assertRaisesRegex(ValueError, 'answer length'):
             apply_answer_patch(json.dumps({'append': ['x' * 12000]}), previous)
+
+    def test_supported_refusal_is_incomplete_and_can_be_replaced_without_unlocking_facts(self):
+        model, _ = self.verifier([('fact', True, ['E1'], 'supported'),
+                                 ('uncertainty', True, [], 'Need the measured runtime')], covered=False)
+        checked = check_answer(model, 'What architecture and measured runtime?',
+                               'RT-DETR. [E1]\n\nI cannot determine the runtime.', self.evidence, self.sources)
+        self.assertTrue(checked['grounded'])
+        self.assertFalse(checked['complete'])
+        self.assertFalse(checked['ready'])
+        self.assertEqual(checked['state'], 'incomplete')
+        fact, refusal = checked['blocks']
+        message = repair_message(checked)
+        data = json.JSONDecoder().raw_decode(message[message.index('{"requirements"'):])[0]
+        self.assertEqual([b['block_id'] for b in data['editable']], [refusal['block_id']])
+        self.assertEqual([b['block_id'] for b in data['verified']], [fact['block_id']])
+        patch_text = json.dumps({'replace': [{'block_id': refusal['block_id'], 'text': 'Newly read measurement. [E2]'}]})
+        revised = apply_answer_patch(patch_text, checked)
+        self.assertIn(fact['text'], revised)
+        self.assertNotIn('cannot determine', revised)
+        with self.assertRaisesRegex(ValueError, 'verified or unknown'):
+            apply_answer_patch(patch_text.replace(refusal['block_id'], fact['block_id']), checked)
+
+        justified, _ = self.verifier([('uncertainty', True, [], 'The question asks whether this can be determined')])
+        result = check_answer(justified, 'Can the runtime be determined from this excerpt?',
+                              'The available evidence is insufficient.', self.evidence, self.sources)
+        self.assertTrue(result['ready'])
+        self.assertTrue(result['grounded'] and result['complete'])
 
     def test_verifier_keeps_complete_original_when_context_budget_allows(self):
         original = 'Introduction. ' * 700 + 'Dataset has 809 training claims and 5,183 abstracts. ' + 'Methods. ' * 1600
@@ -437,6 +464,103 @@ class VerificationFlowTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):model.complete([],[])
         self.assertEqual([call.kwargs['timeout'] for call in network.call_args_list],[180,78])
         self.assertEqual(len(model.usage_records),2)
+
+    def test_slow_verification_completes_once_within_the_existing_allowance(self):
+        from io import BytesIO
+        for parent_seconds, expected_wait, elapsed in [(None, 90, 60), (70, 70, 60), (240, 240, 120)]:
+            with self.subTest(parent_seconds=parent_seconds):
+                model=OpenAICompatibleModel('https://example.org','test','test')
+                model.usage_purpose='answer_verification'
+                model.request_deadline=100+parent_seconds if parent_seconds else None
+                clock=[100.0]
+                def response(request, timeout):
+                    # Slow but valid responses must fit the enclosing task's allowance.
+                    self.assertAlmostEqual(timeout,expected_wait)
+                    self.assertNotIn('max_tokens',json.loads(request.data))
+                    if timeout < elapsed:raise TimeoutError('premature verification cutoff')
+                    clock[0]+=elapsed
+                    return BytesIO(b'{"choices":[{"message":{"content":"checked"}}],"usage":{"total_tokens":123}}')
+                with patch('research_agent.models.time.monotonic',side_effect=lambda:clock[0]), \
+                     patch('research_agent.models.urlopen',side_effect=response) as network:
+                    self.assertEqual(model.complete([],[]).content,'checked')
+                self.assertEqual(network.call_count,1)
+                self.assertEqual(len(model.usage_records),1)
+                self.assertEqual(model.usage_records[0]['total_tokens'],123)
+
+    def test_grounded_abstention_stops_but_answerable_gap_is_repaired(self):
+        from dataclasses import asdict
+        draft='The document describes the dataset. [E1]\n\nI cannot determine its size from the available evidence.'
+        for answerable in (False, True):
+            with self.subTest(answerable=answerable):
+                evidence=[Evidence('E1','S1','The dataset contains 100 items.' if answerable else 'Dataset description without a size.', 'local:D1-0')]
+                state={'question':'How big is the dataset?','messages':[],
+                    'sources':[asdict(s) for s in self.sources],'evidence':[asdict(e) for e in evidence],
+                    'counters':[1,1,0,0,1],'cache':[],'next_iteration':1,
+                    'pending_decision':asdict(ModelDecision('final',content=draft))}
+                calls=[];events=[]
+                def complete(messages,tools):
+                    calls.append(model.usage_purpose)
+                    if model.usage_purpose=='answer_repair':
+                        return ModelDecision('final',content=json.dumps({'replace':[
+                            {'block_id':answer_blocks(draft)[1]['block_id'],'text':'The dataset contains 100 items. [E1]'}]}))
+                    self.assertEqual(model.usage_purpose,'answer_verification')
+                    data=json.loads(messages[-1]['content'])['UNTRUSTED_DOCUMENT_DATA']
+                    covered=any('100 items' in b['text'] for b in data['blocks'])
+                    return ModelDecision('final',content=json.dumps({
+                        'requirements':[{'id':'R1','requirement':'Give the dataset size.','addressed':covered,
+                            'abstention_supported':not answerable,'block_ids':['P2'],'reason':'No size evidence' if not answerable else 'E1 gives 100 items'}],
+                        'blocks':[{'block_id':b['block_id'],'kind':'uncertainty' if 'cannot determine' in b['text'] else 'fact',
+                            'supported':True,'evidence_ids':[] if 'cannot determine' in b['text'] else ['E1'],'reason':'supported'}
+                            for b in data['blocks'] if not b['cached']]}))
+                model=Mock(complete=complete,usage_purpose='answer',name='fixture',request_deadline=None,supports_answer_verification=True)
+                result=ResearchAgent(Mock(),model,self.root/'traces',max_tool_calls=1,resume_state=state,on_event=events.append).run(state['question'])
+                self.assertEqual(result.status,'ok')
+                self.assertEqual(result.termination,'model_final' if answerable else 'evidence_insufficient')
+                self.assertEqual(calls,['answer_verification','answer_repair','answer_verification'] if answerable else ['answer_verification'])
+                last=next(e for e in reversed(events) if e['event']=='answer_checked')
+                self.assertEqual(last['complete'],answerable)
+                self.assertEqual(last['ready'],answerable)
+                self.assertEqual(last['abstained'],not answerable)
+                self.assertNotIn('尚未完成',result.answer)
+
+    def test_abstention_flag_cannot_approve_unsupported_or_unread_claims(self):
+        base,_=self.verifier([('fact',True,['E1'],'asserted support')],covered=False)
+        def complete(messages,tools):
+            response=base.complete(messages,tools)
+            data=json.loads(response.content)
+            data['requirements'][0]['abstention_supported']=True
+            return ModelDecision('final',content=json.dumps(data))
+        model=Mock(complete=complete,usage_purpose='answer')
+        for evidence,answer in [([], 'No sources.'),
+                               ([Evidence('E1','S1','Preview','local-snippet:D1-0')], 'No size. [E1]'),
+                               (self.evidence, 'No size. [E999]')]:
+            with self.subTest(answer=answer):
+                checked=check_answer(model,'Size?',answer,evidence,self.sources)
+                self.assertFalse(checked['abstained'])
+                self.assertFalse(checked['ready'])
+
+    def test_preview_relabel_requires_unique_containing_read_original(self):
+        preview=Evidence('E2','S1','The layout model','local-snippet:D1-0')
+        answer='RT-DETR. [E2] [E999]'
+        fixed,changes=original_citations(answer,[*self.evidence,preview])
+        self.assertEqual(fixed,'RT-DETR. [E1] [E999]')
+        self.assertEqual(changes,{'E2':'E1'})
+        for originals in [[],[Evidence('E1','S2',preview.content,'local:D2-0')],
+                          [Evidence('E1','S1','Different text','local:D1-0')],
+                          [*self.evidence,Evidence('E3','S1',preview.content,'local:D1-1')]]:
+            self.assertEqual(original_citations(answer,[preview,*originals]),(answer,{}))
+
+    def test_terminal_verification_and_repair_request_json_at_transport(self):
+        from io import BytesIO
+        model=OpenAICompatibleModel('https://example.org','test','test')
+        for purpose,tools,constrained in [('answer_verification',[],True),('answer_repair',[],True),('answer',[],False),
+                                          ('answer_repair',[{'type':'function','function':{'name':'read'}}],False)]:
+            model.usage_purpose=purpose
+            with patch('research_agent.models.urlopen',return_value=BytesIO(b'{"choices":[{"message":{"content":"{}"}}]}')) as network:
+                model.complete([{'role':'user','content':'Return JSON'}],tools)
+            payload=json.loads(network.call_args.args[0].data)
+            self.assertEqual(payload.get('response_format'),{'type':'json_object'} if constrained else None)
+            self.assertNotIn('max_tokens',payload)
 
     def test_patch_contract_survives_compaction_and_final_only(self):
         owner=self;requests=[]
