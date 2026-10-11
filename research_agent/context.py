@@ -180,11 +180,15 @@ def _compact_tool_pair(pair: list[dict[str, Any]], question: str, read_limit: in
     if not isinstance(payload, dict) or not isinstance(payload.get("results"), list):
         return output
     results = []
-    for item in payload["results"][:8]:
+    rows = payload["results"] if payload.get("kind") == "lookup_papers" else payload["results"][:8]
+    for item in rows:
         if not isinstance(item, dict):
             continue
         row = {key: item[key] for key in (
-            "evidence_id", "source_id", "title", "url", "published_at", "publisher"
+            "evidence_id", "source_id", "title", "url", "published_at", "publisher",
+            "ref_id", "owner_id", "artifact_id", "work_id", "doi", "urls", "publication_year",
+            "identity_check", "shared_coauthors", "source_title", "source_id", "target_id", "target", "evidence",
+            "authors", "author", "identity_match", "shared_paper_affiliations", "version_note"
         ) if key in item}
         if isinstance(item.get("snippet"), str):
             row["snippet"] = _excerpt(item["snippet"], question, 500)
@@ -498,6 +502,11 @@ class ContextCheckpoint:
                     summary=result;break
                 except Exception as exc:
                     error_text=str(exc)[:200]
+                    # Transport retries already ran in the client. Optional compression
+                    # must fall back to deterministic bounds instead of repeating them.
+                    if not isinstance(exc, ValueError):
+                        self.failures=2
+                        break
                     payload['correction_error']=error_text+f'; 输出必须进一步缩短，JSON 总字符数不超过 {int(summary_budget*.65)}，仅保留核心事实和有效证据编号。'
         finally:
             self.model.usage_purpose=previous

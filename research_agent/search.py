@@ -329,6 +329,24 @@ def summarize_content(value: str, limit: int = 1600) -> str:
     return text[:limit].rstrip() + "\n[summary truncated]"
 
 
+def unreadable_body(title: str, content: str, *, truncated: bool = False) -> str:
+    """Reject response shells, without rejecting articles merely discussing CAPTCHA."""
+    heading = title.strip().casefold()
+    challenge = re.fullmatch(r"(?:making sure you(?:'|’)re not a bot[!.]?|just a moment[.!…]*|"
+        r"(?:security|browser) (?:check|verification)|attention required!?\s*\|\s*cloudflare|"
+        r"verify (?:you are|you're) human[.!]?)", heading)
+    challenge_body = len(content) < 5000 and re.search(
+        r"(?:verifying|checking) (?:that )?(?:you are human|your browser)|"
+        r"enable javascript and cookies to continue|performing security verification|"
+        r"please (?:complete the captcha|verify (?:that )?you are (?:a )?human)", content, re.I)
+    if challenge or challenge_body:
+        return 'access_challenge'
+    navigation_only = bool(content) and all(re.fullmatch(
+        r"(?:skip to (?:main )?content|(?:collapse|expand) sidebar|scroll breadcrumbs (?:left|right))",
+        line.strip(), re.I) for line in content.splitlines() if line.strip())
+    return 'incomplete_body' if not content.strip() or navigation_only or truncated else ''
+
+
 def _text_response(
     original_url: str,
     final_url: str,
@@ -338,13 +356,10 @@ def _text_response(
     truncated: bool,
 ) -> ReadResponse:
     title, content = extract_html_text(text) if media_type == "text/html" else ("", text.strip())
-    # A clipped HTML header is not a successfully read article.
-    navigation_only = bool(content) and all(re.fullmatch(
-        r"(?:skip to (?:main )?content|(?:collapse|expand) sidebar|scroll breadcrumbs (?:left|right))",
-        line.strip(), re.I) for line in content.splitlines() if line.strip())
-    if not content or navigation_only or (media_type == "text/html" and truncated):
-        return ReadResponse(False, original_url, error={"code": "incomplete_body",
-            "message": "No complete readable body: empty/navigation-only content or HTML download limit reached. Find an accessible original or report the reading gap."},
+    problem = unreadable_body(title, content, truncated=media_type == 'text/html' and truncated)
+    if problem:
+        return ReadResponse(False, original_url, error={"code": problem,
+            "message": "No usable original: access challenge, empty/navigation-only content or HTML download limit. Try another observed URL for the same DOI/title, or search its exact title for a public original; do not retry this page or cite its shell."},
             network_requests=network_requests, media_type=media_type, final_url=final_url,
             title=title, truncated=truncated)
     return ReadResponse(

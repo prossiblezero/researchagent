@@ -162,7 +162,7 @@ class Contracts(unittest.TestCase):
         class LocalModel:
             name='local-test'
             def complete(model,messages,tools):
-                self.assertEqual({t['function']['name'] for t in tools},{'retrieve','read_evidence'})
+                self.assertEqual({t['function']['name'] for t in tools},{'retrieve','read_evidence','lookup_papers'})
                 data=next((json.loads(m['content'])['UNTRUSTED_TOOL_DATA'] for m in reversed(messages) if m['role']=='tool'),None)
                 if not data:return ModelDecision('tool_call',tool_name='retrieve',arguments={'query':'Zeta','corpus':'documents'},call_id='r')
                 if data['kind']=='retrieve':return ModelDecision('tool_call',tool_name='read_evidence',arguments={'ref_id':data['results'][0]['ref_id']},call_id='e')

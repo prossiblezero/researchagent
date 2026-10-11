@@ -15,7 +15,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import quote, unquote, urljoin, urlsplit
 
-from .search import canonical_url, resolve_public_addresses, _request_once, _media_type, extract_html_text
+from .search import canonical_url, resolve_public_addresses, _request_once, _media_type, extract_html_text, unreadable_body
 
 MAX_FILE_BYTES = 25 * 1024 * 1024
 MAX_TEXT = 500_000
@@ -244,6 +244,10 @@ def read_material(url, fetch=fetch_public, checkpoint=lambda *args: None, max_by
     meta, title, pdf_url = {}, '', ''
     if media == 'text/html':
         text = data.decode(charset,'replace'); parser = PaperHTML(text)
+        web_title, body = extract_html_text(text)
+        problem = unreadable_body(web_title, body)
+        if problem == 'access_challenge':
+            raise ValueError(problem + ': no readable original; use another public version of the same paper')
         def first(*keys):
             return next((parser.meta[k][0] for k in keys if parser.meta.get(k)), '')
         title = first('citation_title','dc.title','og:title') or extract_html_text(text)[0]
@@ -279,6 +283,9 @@ def read_material(url, fetch=fetch_public, checkpoint=lambda *args: None, max_by
         raise ValueError('此地址没有可阅读的论文或文本；未将二进制内容当正文')
     text = data.decode(charset,'replace')
     web_title, text = extract_html_text(text) if media == 'text/html' else ('',text)
+    problem = unreadable_body(web_title, text)
+    if problem:
+        raise ValueError(problem + ': no readable original')
     return {'kind':'document','title':title or web_title or final_url,'url':url,'canonical_id':identifier(url,meta),
             'metadata':meta,'chunks':split_pages([(None,text[:MAX_TEXT])]),
             'warnings':['文本超过限额，尾部未索引'] if len(text)>MAX_TEXT else [],'boundary':'网页正文；不包括链接到的其他页面和文件。',

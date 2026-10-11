@@ -486,15 +486,18 @@ class MaterialReader:
         self.records=[]
 
     def read(self,url):
+        requests=0
         if not (re.search(r'/(?:pdf|abs)/|\.pdf(?:$|\?)',url,re.I) or identifier(url).startswith('arxiv:') or github_repo(url)):
             response=self.fallback.read(url)
             if response.ok and response.content:
                 self.records.append({'kind':'document','title':response.title or url,'url':url,'canonical_id':identifier(url),
                     'metadata':{'retrieved_at':response.retrieved_at},'chunks':split_pages([(None,response.content)]),
                     'warnings':['网页正文已截断'] if response.truncated else [],'boundary':'实际读取的网页文本，不含链接到的其他页面。','data':None})
-            return response
+            if response.ok or response.media_type!='application/pdf' or (response.error or {}).get('code')!='unsupported_media_type':
+                return response
+            # Publisher download URLs may have no .pdf suffix. Reuse the bounded PDF reader.
+            requests=response.network_requests
         try:
-            requests=0
             def fetch(*args,**kwargs):
                 nonlocal requests
                 requests+=1

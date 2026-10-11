@@ -8,6 +8,7 @@ import os
 import ssl
 import socket
 import time
+from http.client import IncompleteRead
 from dataclasses import asdict
 from uuid import uuid4
 from .streaming import public_text, read_chat_stream
@@ -219,7 +220,7 @@ class OpenAICompatibleModel:
         else:
             if isinstance(cause, URLError):
                 cause = cause.reason
-            if not isinstance(cause, (TimeoutError, ConnectionError, ssl.SSLEOFError, socket.gaierror)):
+            if not isinstance(cause, (TimeoutError, ConnectionError, ssl.SSLEOFError, socket.gaierror, IncompleteRead)):
                 return None
         return min(10.0, max(0.0, delay)) if math.isfinite(delay) else float(2 ** attempt)
 
@@ -269,7 +270,7 @@ class OpenAICompatibleModel:
             raise RuntimeError(f"model request failed: HTTP {exc.code}: {shorten(redact(detail), 800)}") from exc
         except TimeoutError as exc:
             raise RuntimeError(f"模型服务响应超时（本次等待上限 {getattr(self,'_active_timeout',self.timeout):g} 秒），请稍后重试。") from exc
-        except (URLError, OSError, UnicodeError, json.JSONDecodeError) as exc:
+        except (URLError, OSError, UnicodeError, json.JSONDecodeError, IncompleteRead) as exc:
             raise RuntimeError(f"model request failed: {shorten(redact(exc), 500)}") from exc
 
         try:

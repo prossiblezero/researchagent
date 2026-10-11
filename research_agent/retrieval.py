@@ -12,6 +12,7 @@ from collections import OrderedDict
 from contextlib import closing
 from functools import lru_cache
 from pathlib import Path
+from .paper_relations import PaperRelations, TOOL as PAPER_RELATIONS_TOOL
 
 MODEL = 'BAAI/bge-m3'
 REVISION = '5617a9f61b028005a4858fdac845db406aefb181'
@@ -29,6 +30,7 @@ TOOLS = [
     {'type':'function','function':{'name':'read_evidence','description':'Read original E ID or retrieve ref. For a question about one saved paper, use document=true: reads a page of the saved document with separate paragraph citations and coverage metadata. Otherwise reads the matching passage and neighbors; follow next_offset. Previews or omissions cannot prove absence.',
         'parameters':{'type':'object','properties':{'ref_id':{'type':'string'},'document':{'type':'boolean','description':'Read the saved document page containing this ref, up to 24000 characters. Follow document_next_ref/document_previous_ref for other pages. Applies only to documents.'},'offset':{'type':'integer','minimum':0,'description':'Character offset; continue at next_offset.'},'adjacent':{'type':'integer','minimum':0,'maximum':2},'max_chars':{'type':'integer','minimum':1,'maximum':12000,'description':'Passage characters; default 1800. Neighbors at most 1800. Context may shorten the window; follow next_offset.'}},'required':['ref_id'],'additionalProperties':False}}}
 ]
+TOOLS.append(PAPER_RELATIONS_TOOL)
 
 
 def digest(text):
@@ -87,6 +89,8 @@ def lexical(text):
 
 
 def initialize(db):
+    from .paper_relations import initialize as initialize_paper_relations
+    initialize_paper_relations(db)
     db.executescript('''
     CREATE TABLE IF NOT EXISTS retrieval_index_state (
       ref_id TEXT PRIMARY KEY, space_id TEXT NOT NULL, corpus TEXT NOT NULL,
@@ -215,6 +219,26 @@ class Retriever:
         self.error = ''
         self._dense_attempted = dense is not None
         self._synced = {}
+
+    def lookup_papers(self, space_id, **kwargs):
+        with self.lock:
+            self.sync(space_id, 'documents')
+            return PaperRelations(self.store, self.library).lookup(space_id, **kwargs)
+
+    def verification_context(self, space_id, question, evidence=()):
+        with self.lock:
+            context = PaperRelations(self.store, self.library).verification_context(space_id, question, evidence)
+            if context['documents']:
+                self.sync(space_id, 'documents')
+            return context
+
+    def has_papers(self, space_id):
+        return any(p['kind']=='paper' and p['status']!='unreadable' and self.library.authorized(p)
+                   for p in self.library.list(space_id))
+
+    def discover_author_papers(self, space_id, **kwargs):
+        self.sync(space_id, 'documents')
+        return PaperRelations(self.store, self.library).discover_author_papers(space_id, **kwargs)
 
     def prepare(self):
         if self._dense_attempted:
@@ -534,7 +558,7 @@ class Retriever:
         start,end=0,len(current['content'])
         result={'ok':True,'kind':'read_evidence','ref_id':ref_id,'corpus':row['corpus'],'title':row['title'],
                 'content':current['content'][start:end],'content_hash':digest(current['content'][start:end]),
-                'chunk_id':row['chunk_id'],'artifact_id':row['owner_id'],'page':current.get('page'),
+                'chunk_id':row['chunk_id'],'ordinal':current.get('ordinal'),'artifact_id':row['owner_id'],'page':current.get('page'),
                 'section':row['section'],'start_offset':start,'end_offset':end,'match_offset':row['start_offset'],
                 'url':f'/api/spaces/{space_id}/materials/{row["owner_id"]}/reader#local-L{row["chunk_id"]}' if row['corpus']=='documents' else '',
                 'provenance':current.get('source_refs',''),'space_id':space_id,

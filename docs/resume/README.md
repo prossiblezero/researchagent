@@ -2,9 +2,17 @@
 
 [ResearchAgent 简历正文（2026-10-09，最终实现与项目成果）](researchagent-20261009.md) · [指标证据与面试说明](researchagent-20261009-evidence.md)
 
-本版采用“技术栈＋项目描述＋五条主要工作”，第4条为“多Agent写作与Auto Research”，采用多Agent专项32项事实及引用核对全部通过、SciFact开发集证据分类macro-F1从45.04%提升为49.00%的结果；其余按任务执行、检索、记忆和评测组织。正文直接写具体做法与结果，减少术语堆叠。正文采用“任务完成率从25%提升至75%”的自然表述，版本日期、原始分母和复核过程放在证据附件。任务指标采用09-29修复前旧版与当前版在同24题上的实测对照：严格完成6/24→18/24（25.0%→75.0%）、多工具协议失败14/24→0/24；检索与记忆召回指标保持各自范围。该基线是明确阶段的旧版，不称为项目最初雏形。
+本版采用“技术栈＋项目描述＋五条主要工作”，第2条为“Agentic RAG 与跨文档问答”，明确 Agent 根据中间证据调整查询、交替检索与原文阅读，并核验跨文档结论的引用；第4条为“多Agent写作与Auto Research”，采用多Agent专项32项事实及引用核对全部通过、SciFact开发集证据分类macro-F1从45.04%提升为49.00%的结果；其余按任务执行、记忆和评测组织。正文直接写具体做法与结果，减少术语堆叠。正文第1条突出超长资料问答相对单次API＋Prompt的收益：同模型与单次16K上下文预算下，14题子集任务完成率为85.7%（12/14），较原文按序截取的基线35.7%（5/14）提高50个百分点；其中公开数据集SciFact的6题问答子集以5,183篇摘要为语料，完成率100%（6/6），同条件API＋Prompt为33.3%（2/6）。这6题包含在14题中。分组规则、历史结果复用和评分依据放在证据附件；09-29修复前旧版Agent到当前版的同24题25%→75%保留为历史阶段证据。检索与记忆召回指标保持各自范围。
 
-历史31.25%→75.0%与近期70.8%→75.0%分别保留为阶段记录，见[优化进展](../optimization-history/10-original-reading-and-delivery.md)及[评测报告](../../research-notes/subset-e2e-20261009/final-report.md)。该09-29旧版源码已[独立恢复](../../research-notes/baseline-recovery-20261009/report.md)，并完成[同24题重新实测](../../research-notes/legacy-24-20261009/report.md)，旧版新成绩不预设为历史31.25%。上一版[2026-10-07 场景版](researchagent-20261007.md)、[2026-10-03 六条稿](researchagent-20261003-r2.md)、[四条稿](researchagent-20261003.md)及更早版本保留。
+2026-10-10 补测原始资料＋单次API＋Prompt基线（本地档案：`research-notes/direct-api-24-20261010/report.md`）：同24题流式实测12/24（50.0%），优化版Agent历史结果18/24（75.0%）。直接API输入采用单次16K预算下的固定语料前缀，9道可答题缺关键证据；完整资料子集直接API为7/10、Agent为6/10，不能据总分声称纯推理能力提升。原简历25%仍指旧版Agent；非流式传输失败轮单独保留。详见证据附件。
+
+2026-10-11 完成两条核验故障的专项恢复，累计完成记录18＋2＝20/24。首次运行与累计记录分别保留，正文不新增基线比较；详见[结果口径报告](../research/rag-comparison-20261011.md)和[优化历程](../optimization-history/12-agentic-rag-and-verification-recovery.md)。
+
+正文第1条的结果可用[项目价值与具体案例](researchagent-value-20261010.md)在面试中展开：在预先定义的14题超长资料子集中，单次原文前缀API基线35.7%，项目85.7%，差50个百分点；强调从大资料库定位和组织证据，并展示实际检索、原文阅读及修订链路。
+
+第2条先写 Agentic RAG 的多轮检索、阅读和核验，再写自建团队论文多跳检索与关系问答任务集的任务完成率80%，随后介绍混合检索实现及 SciFact 指标。10题分母、6/10→8/10严格完成和8/10→10/10成功交付的前后对照保留在[证据附件](researchagent-20261009-evidence.md)及优化后报告（本地档案：`research-notes/author-relations-20261010/report.md`）。语料为五篇团队论文与一篇干扰论文；q04、q10虽成功交付，仍有内容或引用缺项。该成绩与 SciFact 检索指标、24题整体任务完成率分别记录。
+
+历史31.25%→75.0%与近期70.8%→75.0%分别保留为阶段记录，见[优化进展](../optimization-history/10-original-reading-and-delivery.md)及评测报告（本地档案：`research-notes/subset-e2e-20261009/final-report.md`）。该09-29旧版源码已独立恢复（本地档案：`research-notes/baseline-recovery-20261009/report.md`），并完成同24题重新实测（本地档案：`research-notes/legacy-24-20261009/report.md`），旧版新成绩不预设为历史31.25%。上一版[2026-10-07 场景版](researchagent-20261007.md)、[2026-10-03 六条稿](researchagent-20261003-r2.md)、[四条稿](researchagent-20261003.md)及更早版本保留。
 
 以下均为历史版本记录，当前投递仅使用上方正文链接。
 
@@ -98,13 +106,13 @@ Auto Research移至首项，明确研究LLM自主选择工具、Codex承担编�
 
 r9 保留真实检索、记忆、压缩、恢复和策略指标，补充有效样本数；Codex 条目描述已接通的持久工具、方案版本、异步委派和实测反馈，不用排序代码成绩证明研究 Agent 贡献。Auto Research 完整真实课题仍在验收，尚未作为可靠自主科研成果。当前后端400/400、前端32/32通过；旧产品benchmark冻结版370/31与原始模型成绩不变。
 
-研究控制器、工具入口与项目准备已接通当前工作区，主服务尚未部署本轮代码。真实原生环境准备通过，Luna路由7/7；SciFact首次课题已以blocked结束，未产生有效实验指标，完整验收尚未通过。当前状态与下一步见[目标差距](../auto-research-goal-gap-20260929.md)和[执行验收](../../evals/reports/auto-research-foundation-20260929/report.md)。
+研究控制器、工具入口与项目准备已接通当前工作区，主服务尚未部署本轮代码。真实原生环境准备通过，Luna路由7/7；SciFact首次课题已以blocked结束，未产生有效实验指标，完整验收尚未通过。当前状态与下一步见[目标差距](../auto-research-goal-gap-20260929.md)和执行验收（本地档案：`evals/reports/auto-research-foundation-20260929/report.md`）。
 
 # 2026-09-29 历史投递版本：r8
 
 当前文案：[r8：研究工作台、实测记忆与Coding Agent执行基础](researchagent-20260929-r8.md)；[指标证据与实现范围](researchagent-20260929-r8-evidence.md)。保留[r7](researchagent-20260929-r7.md)及此前全部版本。
 
-r8补入历史真实记忆20/20、两次压缩事实/约束22/24、LongMemEval 25道保留题的历史会话Recall@5 8.33%→37.47%，以及查询规划候选Recall@5 64.92%→72.14%。恢复改写为复用已有成果、仅续跑核验；Codex条目描述注册实验中已经接通的执行、测量、最多3轮迭代、预算与恢复，移除用排序候选分数证明研究Agent贡献的写法。完整Auto Research与研究LLM自主调用Codex尚未接通，不提前写成成果。未新增真实模型成绩或改动原始结果；当前工作区381项后端回归另存[执行基础报告](../../evals/reports/auto-research-foundation-20260929/report.md)。
+r8补入历史真实记忆20/20、两次压缩事实/约束22/24、LongMemEval 25道保留题的历史会话Recall@5 8.33%→37.47%，以及查询规划候选Recall@5 64.92%→72.14%。恢复改写为复用已有成果、仅续跑核验；Codex条目描述注册实验中已经接通的执行、测量、最多3轮迭代、预算与恢复，移除用排序候选分数证明研究Agent贡献的写法。完整Auto Research与研究LLM自主调用Codex尚未接通，不提前写成成果。未新增真实模型成绩或改动原始结果；当前工作区381项后端回归另存执行基础报告（本地档案：`evals/reports/auto-research-foundation-20260929/report.md`）。
 
 目标与当前差距见[说明](../auto-research-goal-gap-20260929.md)。新持久CodingTool已有实现和单元测试，但尚未接入工作台和研究LLM工具集，不能写成已交付的自主研究闭环。
 
@@ -116,7 +124,7 @@ r6新增实际问答原文重排与收据恢复、最多3轮Coding Agent实验�
 
 三条真实失败检查点分别只用1次核验恢复、零新增检索/整答生成/局部修订，旧成绩不覆盖。V4对照2轮无改善保留基线，原文候选1轮开发达标早停，9道同源可回答终验Recall@5 88.89%→100%；另列内容重排成本。最终358项后端、31项前端、V1 6/6、V2 5/5通过。
 
-[本轮总报告](../../evals/reports/evidence-qa-20260927/report.md) · [独立来源结果](../../evals/reports/evidence-qa-20260927/independent-r1/review-summary/report.md) · [源码与运行归因](../../evals/reports/evidence-qa-20260927/source-provenance.json) · [回归记录](../../evals/reports/evidence-qa-20260927/regression.json)。当前默认策略仍为原基线；简历可写已实现能力及小样本实测，不声称广泛泛化或完整成本节省。
+本轮总报告（本地档案：`evals/reports/evidence-qa-20260927/report.md`） · 独立来源结果（本地档案：`evals/reports/evidence-qa-20260927/independent-r1/review-summary/report.md`） · 源码与运行归因（本地档案：`evals/reports/evidence-qa-20260927/source-provenance.json`） · 回归记录（本地档案：`evals/reports/evidence-qa-20260927/regression.json`）。当前默认策略仍为原基线；简历可写已实现能力及小样本实测，不声称广泛泛化或完整成本节省。
 
 # 2026-09-25 历史投递版本
 
@@ -124,13 +132,13 @@ r6新增实际问答原文重排与收据恢复、最多3轮Coding Agent实验�
 
 r5保留既有查询规划、端到端问答及引用核验指标，新增有实测依据的V4检索改善：历史30题Recall@5 64.92%→94.84%、跨文档10题36.43%→92.86%，新同源事实终验9题88.89%→100%；同24份模型响应回放，接口解析回退9/24→0/24。191/191只表示原文引文一致性。新增结果不能替换旧完整问答指标，不能写成“答案正确率100%”。
 
-证据：[简要报告](../../evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/report.md)、[指标](../../evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/metrics.json)、[用量](../../evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/usage.json)、[隔离审计](../../evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/security-audit.json)。实测模型gpt-5.6-luna；源码提交可由本文件本次git log定位，实测原始指纹与后续守卫修补分别归档。评测后发现并修复文档标签副本可读，已保存轨迹未见访问，保留限制不称严格盲测。默认普通问答策略保留。
+证据：简要报告（本地档案：`evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/report.md`）、指标（本地档案：`evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/metrics.json`）、用量（本地档案：`evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/usage.json`）、隔离审计（本地档案：`evals/reports/v4-first-cycle-20260923/ranking-repair-20260925/security-audit.json`）。实测模型gpt-5.6-luna；源码提交可由本文件本次git log定位，实测原始指纹与后续守卫修补分别归档。评测后发现并修复文档标签副本可读，已保存轨迹未见访问，保留限制不称严格盲测。默认普通问答策略保留。
 
 # 简历版本与证据
 
 历史投递文案：[2026-09-23 r4 版](researchagent-20260923-r4.md)。保留[首版](researchagent-20260923.md)、[r2：引用核验与恢复](researchagent-20260923-r2.md)、[r3：V4首个闭环](researchagent-20260923-r3.md)。
 
-r4保留此前有效的检索、问答和核验数字，新增开发失败反馈、独立终验与283/29回归结果。第四次真实Luna尝试172.015秒交付候选，使用264134累计token，但开发Recall@5 90%→80%、测试64.92%→43.89%，未达标且未启用；前三次失败（两次超时、一次工具/输出预算终止）全部保留。该实测支撑工程闭环及退化拦截，不支撑新增算法收益。详见[反馈报告](../../evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/report.md)。
+r4保留此前有效的检索、问答和核验数字，新增开发失败反馈、独立终验与283/29回归结果。第四次真实Luna尝试172.015秒交付候选，使用264134累计token，但开发Recall@5 90%→80%、测试64.92%→43.89%，未达标且未启用；前三次失败（两次超时、一次工具/输出预算终止）全部保留。该实测支撑工程闭环及退化拦截，不支撑新增算法收益。详见反馈报告（本地档案：`evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/report.md`）。
 
 ## 更新约定
 
@@ -140,21 +148,24 @@ r4保留此前有效的检索、问答和核验数字，新增开发失败反馈
 
 每次替换指标需要记录：对应源码提交、数据/模型/预算、评测日期、原始输出位置、旧值/新值及变化原因。结果下降也保留；当前简历不必随每一次随机波动改写，更换依据应是版本或评测条件的实质更新。
 
-2026-09-23 第1步增量版：[researchagent-20260923-r2.md](researchagent-20260923-r2.md)。首版保留；增量版保留原检索和端到端数字，新增三条列表旧失败稿0/3→3/3、负例3/3与恢复成果，并更新回归数量为256/27。依据为[核验回放报告](../../evals/reports/harness-strategies-20260921/verification-recovery-20260923/report.md)。这是相同草稿/原文的核验阶段对照，不是新端到端benchmark；恢复先注入中断再用真实模型续跑，发现补充断言引用不足后局部修订一次，主段落复用。对应源码为本次修复提交（可由本文件git log定位），模型gpt-5.6-luna、核验输入14080 token、12次请求；交付指纹与所有输出保存在报告目录。这是r2保存时点的历史记录；V4当前状态以r4及反馈报告为准。
+2026-09-23 第1步增量版：[researchagent-20260923-r2.md](researchagent-20260923-r2.md)。首版保留；增量版保留原检索和端到端数字，新增三条列表旧失败稿0/3→3/3、负例3/3与恢复成果，并更新回归数量为256/27。依据为核验回放报告（本地档案：`evals/reports/harness-strategies-20260921/verification-recovery-20260923/report.md`）。这是相同草稿/原文的核验阶段对照，不是新端到端benchmark；恢复先注入中断再用真实模型续跑，发现补充断言引用不足后局部修订一次，主段落复用。对应源码为本次修复提交（可由本文件git log定位），模型gpt-5.6-luna、核验输入14080 token、12次请求；交付指纹与所有输出保存在报告目录。这是r2保存时点的历史记录；V4当前状态以r4及反馈报告为准。
 
 ## 历史版本数字出处
 
 | 简历内容 | 依据 | 面试时能展开的范围 |
 | --- | --- | --- |
-| 60题、四组消融，Recall@5/10、MRR和送达率 | [控制集指标](../../evals/reports/harness-strategies-20260921/control-retrieval-metrics.json)、[选型记录](../../evals/reports/harness-strategies-20260921/selection.json) | 20题开发选型，40题历史控制含30题可回答；不是新盲测 |
-| 最终8题16次、5/8→6/8、152.9→131.4秒 | [最终指标](../../evals/reports/harness-strategies-20260921/release-live/live-metrics.json)、[逐题复核](../../evals/reports/harness-strategies-20260921/release-live/review-notes.json) | 一项基线失败来自核验超时；成绩是系统整条任务的结果，不是纯检索因果收益；首轮也保留 |
-| 78/78原文快照一致 | [原文审计](../../evals/reports/harness-strategies-20260921/release-live/trace-audit-metrics.json) | 比较保存的原文内容及哈希；不等于78条事实都正确，也不等于通读全文 |
-| 283后端、29前端 | [V4反馈回归](../../evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/regression.json) | 工程回归数量，不是模型回答正确率；含 UTF-8、重复测量和缓存身份回归 |
-| 新增反馈编码172秒交付候选、退化门槛拦截 | [V4反馈指标](../../evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/metrics.json) | 单次编码耗时，非全部流程时间；候选退化，执行完成不等于优化成功 |
-| 反馈、策略版本、启用门槛与回退 | [实现说明](../harness-strategies.md)、[门槛结果](../../evals/reports/harness-strategies-20260921/release-live/gate-audit.json) | 能力已实现；本候选因基线计量不完整而未启用，用户研究区仍用原基线 |
+| 60题、四组消融，Recall@5/10、MRR和送达率 | 控制集指标（本地档案：`evals/reports/harness-strategies-20260921/control-retrieval-metrics.json`）、选型记录（本地档案：`evals/reports/harness-strategies-20260921/selection.json`） | 20题开发选型，40题历史控制含30题可回答；不是新盲测 |
+| 最终8题16次、5/8→6/8、152.9→131.4秒 | 最终指标（本地档案：`evals/reports/harness-strategies-20260921/release-live/live-metrics.json`）、逐题复核（本地档案：`evals/reports/harness-strategies-20260921/release-live/review-notes.json`） | 一项基线失败来自核验超时；成绩是系统整条任务的结果，不是纯检索因果收益；首轮也保留 |
+| 78/78原文快照一致 | 原文审计（本地档案：`evals/reports/harness-strategies-20260921/release-live/trace-audit-metrics.json`） | 比较保存的原文内容及哈希；不等于78条事实都正确，也不等于通读全文 |
+| 283后端、29前端 | V4反馈回归（本地档案：`evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/regression.json`） | 工程回归数量，不是模型回答正确率；含 UTF-8、重复测量和缓存身份回归 |
+| 新增反馈编码172秒交付候选、退化门槛拦截 | V4反馈指标（本地档案：`evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/metrics.json`） | 单次编码耗时，非全部流程时间；候选退化，执行完成不等于优化成功 |
+| 反馈、策略版本、启用门槛与回退 | [实现说明](../harness-strategies.md)、门槛结果（本地档案：`evals/reports/harness-strategies-20260921/release-live/gate-audit.json`） | 能力已实现；本候选因基线计量不完整而未启用，用户研究区仍用原基线 |
 
-完整依据：[V4反馈报告](../../evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/report.md) · [Harness报告](../../evals/reports/harness-strategies-20260921/report.md)、[V3报告](../../evals/reports/roadmap-v3-20260921/report.md)。后续优先级：[下一轮迭代建议](../next-iteration.md)。
+完整依据：V4反馈报告（本地档案：`evals/reports/v4-first-cycle-20260923/feedback-improvement-20260923/report.md`） · Harness报告（本地档案：`evals/reports/harness-strategies-20260921/report.md`）、V3报告（本地档案：`evals/reports/roadmap-v3-20260921/report.md`）。后续优先级：[下一轮迭代建议](../next-iteration.md)。
 
 ## 本地版本保存范围
 
 首个 Git 版本保存现有源码、测试、依赖清单、公开评测数据、文档、简历以及当前 Harness/V3 可读验收产物。`.env`、虚拟环境、用户数据库、Chroma 索引、运行缓存和历史源码副本留在本机，不加入 Git；`.env.example` 只保留配置样例。此前大量旧评测继续原地保留，文档中的历史链接在本机仍可查阅；新克隆不会带回被忽略的旧报告。数据库备份继续使用既有 `data/backups/`，Git 不替代数据备份。
+
+
+本地研究档案不随源码上传；公开累计对照与逐题结果见[评测报告](../research/rag-comparison-20261011.md)，归档范围见[发布说明](../github-publication.md)。
