@@ -9,6 +9,7 @@ ROOT_FILES = set("""
 .dockerignore .env.example .gitattributes .gitignore Dockerfile README.md main.py server.py
 requirements.txt requirements-retrieval.lock.txt setup_retrieval.py
 stage1_agent.py start-researchagent.ps1 scripts/export_source.py
+docs/_config.yml docs/_layouts/guide.html docs/assets/guide.css
 """.split())
 SOURCE_DIRS = {"research_agent", "web", "fixtures", "datasets", "tests", ".github"}
 # Keep CI, research/evidence/agent benchmarks and all their shared test dependencies.

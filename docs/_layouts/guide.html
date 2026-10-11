@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ page.description | escape }}">
+  <meta name="color-scheme" content="light">
+  <title>{{ page.title | escape }}</title>
+  <link rel="stylesheet" href="{{ '/assets/guide.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip-link" href="#article">跳到正文</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">ResearchAgent <span>/ 学习手记</span></a>
+      <nav aria-label="项目资源">
+        <a href="https://github.com/prossiblezero/researchagent">代码仓库</a>
+        <a href="https://github.com/prossiblezero/researchagent/blob/main/docs/tutorial/README.md">源码教程</a>
+        <a href="https://github.com/prossiblezero/researchagent/blob/main/docs/research/rag-comparison-20261011.md">实验记录</a>
+      </nav>
+    </div>
+  </header>
+  <div class="reading-shell">
+    <aside class="contents" aria-label="文章目录">
+      <details open>
+        <summary>阅读目录</summary>
+        <nav aria-label="章节导航">
+          <a href="#motivation"><span>01</span> 为什么做这个项目</a>
+          <a href="#task"><span>02</span> 一次任务怎样走完</a>
+          <a href="#loop"><span>03</span> Agent 的工具循环</a>
+          <a href="#rag"><span>04</span> Agentic RAG 在哪里</a>
+          <a href="#retrieval"><span>05</span> 检索与原文阅读</a>
+          <a href="#relations"><span>06</span> 论文的关系网络</a>
+          <a href="#evidence"><span>07</span> 引用、核验与修订</a>
+          <a href="#context"><span>08</span> 上下文和记忆</a>
+          <a href="#recovery"><span>09</span> 长任务怎样恢复</a>
+          <a href="#auto-research"><span>10</span> 调研、编码与实验</a>
+          <a href="#evaluation"><span>11</span> 怎样理解实验数字</a>
+          <a href="#failures"><span>12</span> 从真实失败中学习</a>
+          <a href="#practice"><span>13</span> 边运行边读源码</a>
+          <a href="#next"><span>14</span> 还值得做什么</a>
+        </nav>
+      </details>
+      <a class="back-top" href="#top">↑ 回到开头</a>
+    </aside>
+    <main id="article" class="article" tabindex="-1">
+      {{ content }}
+    </main>
+  </div>
+  <footer class="site-footer">
+    <p>让每一个设计回到具体问题，让每一个结论回到证据。</p>
+    <a href="https://github.com/prossiblezero/researchagent/blob/main/docs/index.md">阅读 Markdown 原稿</a>
+  </footer>
+</body>
+</html>

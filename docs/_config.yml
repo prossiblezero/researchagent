@@ -1,0 +1,14 @@
+title: ResearchAgent / 学习手记
+description: 从论文调研任务出发，理解 Agentic RAG、证据核验与可恢复的研究流程。
+lang: zh-CN
+url: https://prossiblezero.github.io
+baseurl: /researchagent
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+exclude:
+  - tutorial
+  - optimization-history
+  - resume
+  - research

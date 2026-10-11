@@ -5,6 +5,7 @@
 ## 保留什么
 
 - `research_agent/`、Web 页面、CLI / 服务入口、依赖、启动与 CI 配置。
+- 学习手记网页的三个明确文件：`docs/_config.yml`、`docs/_layouts/guide.html`、`docs/assets/guide.css`。不因此放开 `docs/` 中任意 HTML、配置或运行结果。
 - `docs/` 中的 Markdown 文档，包括 `docs/tutorial/` 教程和 [docs/optimization-history/](optimization-history/README.md) 优化迭代历程（阶段改动、结果摘要、失败、提交索引与原始报告指纹）。
 - 完整 `datasets/`，包括任务、标签、语料、来源与许可证说明及 `manifest.json`。导出不改写数据集，保留原始 SHA-256；`.gitattributes` 禁止 Git 转换数据集的换行符。
 - `tests/` 和 `fixtures/`。两组原本依赖报告的回归测试改用 `tests/fixtures/` 中的小型固定输入。
@@ -62,3 +63,13 @@ git push -u origin main
 ```
 
 后续提交继续使用这个新仓库；不要把原开发仓库的旧分支 merge 进来。需要同步本地开发进展时，重新导出到新目录，再审查差异并更新公开仓库的文件。
+
+## 学习手记网页
+
+[在线阅读](https://prossiblezero.github.io/researchagent/)的正文是 [docs/index.md](index.md)，与 GitHub 中的 Markdown 原稿共用一份内容。页面使用 GitHub Pages 内置的 Jekyll / Kramdown 渲染，只有一份 HTML 布局和 CSS，没有前端构建依赖、第三方脚本或外部字体。
+
+Pages 的发布源设为 `main` 分支的 `/docs` 目录。推送这些文件后，由 GitHub 的 Pages 构建与部署流程更新网页；项目原有 Offline acceptance 独立运行。检查新提交对应的两条流程，并实际打开网页核对目录跳转和资源路径，不能只把 push 成功当作网站已经上线。
+
+正文链接直接指向仓库中的源码和报告；代码讲解及历史指标固定到文中标明的源码快照。修改实现后，应一起复核相关章节和快照链接。`_config.yml` 中的 `baseurl` 是仓库名 `/researchagent`；若将来改名或迁移到账号主页，再同步调整。
+
+本地只改文档时，至少检查章节锚点、仓库链接、命令、指标口径和导出内容，并运行 `python -B -m unittest discover -s tests -p 'test_export_source.py' -v`。新增网页资源必须明确加入导出白名单及该回归，避免后续同步漏掉样式或模板。首次启用 Pages 时需在仓库 Settings → Pages 选择上述分支和目录；已启用后无需重复设置。

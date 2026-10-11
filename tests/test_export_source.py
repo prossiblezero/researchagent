@@ -14,10 +14,13 @@ class SourceExportTests(unittest.TestCase):
             root.mkdir()
             subprocess.run(["git", "init", "-q", str(root)], check=True)
             keep = {"README.md", ".env.example", "datasets/tasks.json",
-                    "tests/fixtures/input.json", "evals/run_all.py", "docs/tutorial/README.md"}
+                    "tests/fixtures/input.json", "evals/run_all.py", "docs/tutorial/README.md",
+                    "docs/index.md", "docs/_config.yml", "docs/_layouts/guide.html",
+                    "docs/assets/guide.css"}
             exclude = {".env", "evals/reports/run.json", "evals/archives/old.py",
                        "evals/live_report.json", "evals/build_control_report.py",
-                       "docs/snapshot.zip", "data/state.db", "traces/session.jsonl"}
+                       "docs/snapshot.zip", "data/state.db", "traces/session.jsonl",
+                       "docs/private.html", "docs/assets/run.json", "docs/secret.yml"}
             for name in keep | exclude:
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
