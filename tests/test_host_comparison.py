@@ -62,7 +62,8 @@ class HostComparisonTests(unittest.TestCase):
     def test_new_plan_compares_separate_scripts_using_earlier_host_scored_baseline(self):
         job, state, tasks = self.setup_run()
         result = self.app.auto_research.assess_results(job, state, {'targets':[]}, 2)
-        self.assertEqual(result['recommendation'], 'review_required')
+        self.assertEqual(result['recommendation'], 'verify_implementation')
+        self.assertEqual(result['comparable_pairs'][0]['implementation_checks']['status'], 'missing')
         pair = result['comparable_pairs'][0]
         self.assertEqual(pair['baseline_task_id'], tasks[0]['id'])
         self.assertEqual(pair['candidate_metrics']['answer_f1'], 1)

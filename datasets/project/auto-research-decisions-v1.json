@@ -1,0 +1,15 @@
+{
+  "schema": "auto-research-decisions/v1",
+  "split": "development",
+  "description": "Eight decision checkpoints from three historical campaigns. One next action only; not eight independent research tasks or a scientific-effect benchmark.",
+  "cases": [
+    {"id": "amem-cli-recovery", "archive": "amem-live-20261002-luna-r6-mmr-correction", "request": "models/011/requests/001.json", "rule": "baseline_cli", "plan_version": 1, "inspect_paths": ["run_baseline.py"]},
+    {"id": "amem-missing-result", "archive": "amem-live-20261002-luna-r6-mmr-correction", "request": "models/092/requests/001.json", "rule": "baseline_cli", "plan_version": 1, "inspect_paths": ["run_baseline.py", "results/r6_baseline.json"]},
+    {"id": "amem-remeasure", "archive": "amem-live-20261002-luna-r6-mmr-correction", "request": "models/097/requests/001.json", "rule": "remeasure", "plan_version": 2, "inspect_paths": ["run_fixed_retrieval.py", "tests/test_mmr_regression.py"]},
+    {"id": "amem-provider-failure", "archive": "amem-live-20261002-luna-r6-mmr-correction", "request": "models/134/requests/001.json", "rule": "honest_recovery", "plan_version": 2, "inspect_paths": ["run_fixed_retrieval.py"]},
+    {"id": "qasper-assess", "archive": "auto-research-live-20260930-luna-qasper-v2-assessment-r1", "request": "models/015/requests/001.json", "rule": "assess", "plan_version": 1, "inspect_paths": []},
+    {"id": "qasper-remeasure", "archive": "auto-research-live-20260930-luna-qasper-v2-assessment-r1", "request": "models/021/requests/001.json", "rule": "remeasure", "plan_version": 2, "inspect_paths": ["run_retrieval.py"]},
+    {"id": "scifact-remeasure", "archive": "auto-research-live-20260930-luna-iteration-r2", "request": "models/025/requests/001.json", "rule": "remeasure", "plan_version": 2, "inspect_paths": ["evaluate.py", "algorithms.py"]},
+    {"id": "amem-unverified-conclusion", "archive": "amem-live-20261002-luna-r6-mmr-correction", "request": "models/136/requests/001.json", "rule": "honest_recovery", "plan_version": 2, "inspect_paths": ["run_baseline.py", "run_fixed_retrieval.py"]}
+  ]
+}

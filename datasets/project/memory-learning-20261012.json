@@ -1,0 +1,122 @@
+[
+  {
+    "id": "memory-01", "category": "history",
+    "query": "之前我们查过一种‘重启就忘记进度’的检查点实现。现在我的开发机需要关机后继续昨天的任务，只有本地磁盘，没有数据库服务。依据历史记录和原文，指出之前是哪种实现、现在应换哪种，以及是否还需要保持相同 thread_id。",
+    "reference": "历史记录讨论 MemorySaver/InMemorySaver，检查点在 RAM，进程重启丢失；本地持久化可用 SqliteSaver；同一线程续跑需同一 thread_id。",
+    "evidence": [["langgraph", "MemorySaver"], ["langgraph", "thread_id"]]
+  },
+  {
+    "id": "memory-02", "category": "history",
+    "query": "沿用之前研究过的查询扩展组件：本次 num_queries=3，但生成模型返回9条建议。同步与异步路径各最多采用几条生成查询？算上用户原问，分别最多执行几种查询？说明限制来自提示词还是实际代码。",
+    "reference": "QueryFusionRetriever 同步和异步均切片 queries[:self.num_queries-1]，最多2条生成查询，加原问最多3种；提示词要求数量且代码实际截断。",
+    "evidence": [["llama", "queries[: self.num_queries - 1]"], ["llama", "def _aget_queries"]]
+  },
+  {
+    "id": "memory-03", "category": "history",
+    "query": "之前那种相对分数融合规则，现在遇到两份结果：第一份所有分数都是0.7，第二份全部为0。两份检索器权重均为0.4，num_queries=2。只计算每个结果集归一化并按权重/查询数缩放后的单项贡献，不做重复节点合并，分别是多少？请回查以前的依据。",
+    "reference": "采用 relative score fusion：相等正分归一化1.0，再乘0.4/2得0.2；全零归一化0，贡献0。不能把0.7直接乘权重。",
+    "evidence": [["llama", "max_score == min_score"], ["llama", "self._retriever_weights[retriever_idx]"]]
+  },
+  {
+    "id": "memory-04", "category": "history",
+    "query": "上次那篇缓解语音识别错误的问答论文，我们已区分过语音转写质量与问答质量。现在给出同一测试集上的两个结果：A的WER=20%、EM=50、F1=60，B的WER=22%、EM=55、F1=65。按之前论文评估‘答案质量’的口径应优先比较哪两列、这组记录中哪个更好？不要把WER的排序直接当问答排名。",
+    "reference": "论文使用 EM 和 macro-averaged F1 / SQuAD官方脚本评价答案；WER描述转写错误。就用户给定同一测试集数字，B的EM/F1均更高；不主张所有场景普遍更优。",
+    "evidence": [["spoken", "macro"], ["spoken", "22.7"]]
+  },
+  {
+    "id": "memory-05", "category": "history",
+    "query": "之前读过一个会把真实对话整理成训练材料的流程自动化助手。我现在要为同类系统建两个导出表：训练对话管理器和训练领域实体识别器。根据那次记录及原文，各表至少应保留哪些关键字段？不要只回答‘保存聊天全文’。",
+    "reference": "IPA structured dialogue acquisition：对话管理器使用(User Request, Next Action, Response)三元组；NER保留抽取实体及其在话语中的位置。可补充dialogue-index/turn-index。",
+    "evidence": [["ipa", "Next Action"], ["ipa", "position"]]
+  },
+  {
+    "id": "memory-06", "category": "comparison",
+    "query": "结合之前的研究记录和当前本地文档，比较 LangGraph checkpointer 与 Pi compaction：它们分别解决任务状态保存还是模型上下文变长？如果已经用Pi摘要，是否就可以继续用MemorySaver并承诺重启恢复？给出依据。",
+    "reference": "checkpointer保存线程级状态/检查点；Pi compaction总结旧消息释放模型上下文；摘要机制不能让RAM里的MemorySaver获得进程重启持久性，需持久化checkpointer。",
+    "evidence": [["langgraph", "MemorySaver"], ["pi", "Summarize old messages"]]
+  },
+  {
+    "id": "memory-07", "category": "comparison",
+    "query": "研究助手既要跨任务保留方法经验，也可能收集对话做后续训练。比较我们之前读过的 IPA 对话采集与 LangGraph checkpoint/Store：前者的数据为什么能供后续训练，后两者各自保存什么范围的状态？这些‘保存’操作本身是否等于更新模型参数？",
+    "reference": "IPA保存动作三元组、实体/位置等训练材料；checkpointer是thread级短期状态，Store用于跨thread数据；保存记录本身不等于模型权重更新，IPA说可用于后续训练。",
+    "evidence": [["ipa", "Next Action"], ["langgraph", "Store"], ["langgraph", "thread"]]
+  },
+  {
+    "id": "memory-08", "category": "comparison",
+    "query": "我要给研究助手写两个适配器：一个接Docling自定义模型，一个接ReAct论文中的Wikipedia lookup。结合本地原文，分别说明Docling __call__ 的输入输出单位、如何附加预测结果，以及lookup返回一个页面全文还是下一个匹配句。不要把两种接口都抽象成‘输入字符串，输出全文’。",
+    "reference": "Docling __call__ 输入page objects迭代器，输出增强后的page objects迭代器，扩展PagePredictions；ReAct lookup返回当前页包含目标字符串的下一句，非全文。",
+    "evidence": [["docling", "__call__"], ["react", "lookup[string]"]]
+  },
+  {
+    "id": "memory-09", "category": "comparison",
+    "query": "把之前读过的 IPA 与 MCScript 放在一起比较数据采集方式：哪一种从系统与用户交互中积累动作/实体信息，哪一种通过众包分别收集故事与问题？MCScript提问者是否先看到要回答的那篇具体故事？这对问题设计有何作用？",
+    "reference": "IPA从交互累积结构化数据；MCScript众包故事和基于情景的问题，提问者不看具体故事，减少只围绕某篇文本细节的问题，使问题可跨同情景文本并需要常识推断。",
+    "evidence": [["ipa", "Next Action"], ["mcscript", "not show workers any specific texts"], ["mcscript", "20 texts"]]
+  },
+  {
+    "id": "memory-10", "category": "comparison",
+    "query": "比较ReAct的实体search失败处理与LlamaIndex的多查询融合：前者找不到实体时返回什么，后者用什么代码限制额外查询数量？面对一个含糊实体名，能否把ReAct的相似实体建议直接视为已经读到目标实体事实？",
+    "reference": "ReAct search实体不存在返回top5相似实体建议；LlamaIndex生成查询切片num_queries-1。建议只是定位线索，需确认实体并读取页面，不能当作目标实体的事实证据。",
+    "evidence": [["react", "search[entity]"], ["llama", "queries[: self.num_queries - 1]"]]
+  },
+  {
+    "id": "memory-11", "category": "method",
+    "query": "我们打算复现实验：沿用Docling报告的处理速度数据作参考，但新实验只有20页、关闭OCR，并在另一台CPU上运行。先核查报告原实验的页数、材料构成、选项和硬件，再判断能否把总耗时直接相减作为优化收益。",
+    "reference": "原测试默认选项，3篇arXiv论文+2本IBM Redbooks共225页，两种PDF后端，M3 Max与Ubuntu20.04服务器Xeon E5-2690。不同页数、选项和硬件不能直接比较总耗时作为优化收益，应对齐条件/报告每页速度等。",
+    "evidence": [["docling", "225 pages"], ["docling", "E5-2690"]]
+  },
+  {
+    "id": "memory-12", "category": "method",
+    "query": "我按MCScript的数据收集流程做一个小复现，某个文本—问题对由5个人标成：2个text-based、2个script-based、1个unknown。原流程会把它直接放入最终数据集吗？如果问题与文本情景相关但找不到答案，应和完全不合文本的问题使用同一个标签吗？",
+    "reference": "没有至少3/5多数则不纳入数据集；合理但找不到答案是unknown，完全不合理是unfitting，不同标签。",
+    "evidence": [["mcscript", "majority vote"], ["mcscript", "unfitting"]]
+  },
+  {
+    "id": "memory-13", "category": "method",
+    "query": "我要画UTCNN结构图。原文说的三个卷积层/窗口，能直接画成依次串联的三层并宣称这是模型总深度吗？请读相关原文，说明三种窗口对应什么、之后有哪些池化与输出部件，并区分文中直接陈述与自己推断。",
+    "reference": "原文三个卷积对应unigram/bigram/trigram窗口，不能仅凭这一句断言串联深度或全模型总层数；之后max pooling、对三路输出average pooling，结合user/topic/document信息进入fully-connected+softmax。",
+    "evidence": [["utcnn", "unigram"], ["utcnn", "average pooling"], ["utcnn", "softmax"]]
+  },
+  {
+    "id": "memory-14", "category": "method",
+    "query": "给LlamaIndex融合规则设计一个边界检查：一个结果集分数全是-2，分别使用relative和dist_based模式。两种模式各得到什么归一化结果？说明dist_based在这一案例中的均值、标准差和范围，先不计算后续权重。",
+    "reference": "全相等负分均走max==min且max<=0分支，归一化0。dist_based均值-2标准差0，min=max=-2；relative观察min=max=-2。",
+    "evidence": [["llama", "mean_score"], ["llama", "max_score == min_score"]]
+  },
+  {
+    "id": "memory-15", "category": "method",
+    "query": "新一轮研究要用Hermes滚动摘要保存进度。请只核对_defrag_rolling_summary的实现：重写成功时如何改摘要条目、是否拼接消息或移动游标；模型返回空摘要时返回什么、已有摘要会否被替换？请分别读成功和失败分支后作答。",
+    "reference": "成功原位改marker content并清除持久化标记，更新rolling summary，不splice、不移动cursor；空摘要返回False，先于写回，不替换已有摘要。",
+    "evidence": [["hermes", "def _defrag_rolling_summary"], ["hermes", "if not fresh_summary"], ["hermes", "no splice"]]
+  },
+  {
+    "id": "memory-16", "category": "boundary", "unanswerable": true,
+    "query": "我们的新部署计划需要一个恢复时间SLA。根据之前读过的LangGraph持久化指南，给出PostgresSaver相对SqliteSaver的同机恢复P95加速倍数，并据此选更快的一个。如果资料不支持这项比较，明确还缺什么测量。",
+    "reference": "指南无同机PostgresSaver与SqliteSaver恢复P95及相同条件测量，不能给倍数或据此排速度；需相同硬件负载数据量下实测两者延迟分布。",
+    "evidence": [["langgraph", ""]]
+  },
+  {
+    "id": "memory-17", "category": "boundary",
+    "query": "有人给融合模块写了断言：dist_based输出一定在[0,1]，因为它本质上还是用样本最小最大值且最后会裁剪。请用LlamaIndex原文检查这三个说法；若一个分数恰为均值+4倍标准差（标准差>0），权重处理前的公式结果是多少？",
+    "reference": "dist_based用均值±3σ而非观察min/max，源码不裁剪，值可超出[0,1]；(μ+4σ-(μ-3σ))/(6σ)=7/6。",
+    "evidence": [["llama", "mean_score"], ["llama", "max_score == min_score"]]
+  },
+  {
+    "id": "memory-18", "category": "boundary",
+    "query": "我们要仿照MCScript做阅读理解数据，因此同事建议‘让出题者先通读每篇目标故事，全部问题都取自这篇故事的细节，这样最符合原论文方案’。这是否符合论文最后采用的流程？说明具体区别，不把早期试验方案当最终方案。",
+    "reference": "不符合。早期基于文本的试验产生过于具体或不能迁移的问题；最终针对情景收问题、不展示具体文本，故事与问题独立收集后配对并分类。",
+    "evidence": [["mcscript", "not show workers any specific texts"], ["mcscript", "unfitting"]]
+  },
+  {
+    "id": "memory-19", "category": "boundary",
+    "query": "我想在系统介绍里写：‘IPA仅把用户对话存成结构化记录，就会在每次对话后自动更新模型权重，实现无训练参数学习。’依据我们读过的IPA论文，这句话哪些部分有依据、哪些没有？给出一句准确的替代表述。",
+    "reference": "有依据：交互产生结构化且一定程度标注的数据，可供后续训练/再训练对话模块与NER。无依据：只存储就每轮自动更新权重、无训练却参数更新。替代表述区分采集与后续训练，不否认论文有再训练。",
+    "evidence": [["ipa", "Next Action"], ["ipa", "re-training"]]
+  },
+  {
+    "id": "memory-20", "category": "boundary", "unanswerable": true,
+    "query": "现在只凭既有的IPA、ReAct和LangGraph文献，估算我这个ResearchAgent加入历史经验后在20道新题上能提高多少个百分点、每题能省多少token。请给可作为实验结果写进简历的具体数字；若这些资料不足以给数值，就直接说明原因和需要测的两项结果。",
+    "reference": "这些文献没有本项目20题、相同模型预算的对照结果，不能估算成实测数字；需要关键词记忆基线与最终记忆方案各自任务通过率和实际token/耗时对照。可给实验建议，不能伪造数字。",
+    "evidence": []
+  }
+]

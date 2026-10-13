@@ -94,6 +94,7 @@ def coding_command(workspace, private_paths=(), token_budget=60000, *, readonly_
         'shell_environment_policy.filters': {'*KEY*': 'exclude', '*TOKEN*': 'exclude', '*SECRET*': 'exclude'},
         'shell_environment_policy.set': {'PYTHONDONTWRITEBYTECODE': '1', 'PYTHONUTF8': '1', 'PYTHON_DOTENV_DISABLED': '1', 'GIT_OPTIONAL_LOCKS': '0'},
         'allow_login_shell': False, 'project_doc_max_bytes': 0,
+        'tool_output_token_limit': 4000,
         'skills.max_context_tokens': 1000,
         'features.apps': False, 'features.remote_plugin': False, 'features.hooks': False,
         'features.memories': False, 'features.multi_agent': False, 'agents.enabled': False,

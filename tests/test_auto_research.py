@@ -68,12 +68,17 @@ class AutoResearchTests(unittest.TestCase):
 
     def measured(self, task_id, score):
         # Only the external coding result is simulated here; executor tests exercise process receipts separately.
-        self.app.coding.save(task_id, {'summary': 'Candidate implemented', 'measurements': [
+        self.app.coding.save(task_id, {'summary': 'Candidate implemented', 'after': {'method.py': 'fixed'}, 'measurements': [
             {'name': role, 'role': role, 'valid': True, 'metrics': {'score': value},
              'script_sha256': 'frozen-evaluator', 'metric_origin': 'test fixture', 'result': {
                  'config': {'dataset': 'fixture', 'dataset_version': 'v1', 'split': 'test', 'seeds': [1]}},
              'receipt': {'termination': 'completed', 'exit_code': 0, 'seconds': .1}}
-            for role, value in [('baseline', .6), ('candidate', score), ('ablation', .55)]]}, 'completed')
+            for role, value in [('baseline', .6), ('candidate', score), ('ablation', .55)]] + [
+                {'name': 'verify', 'role': 'diagnostic', 'valid': True, 'metrics': {'score': 1},
+                 'script_sha256': 'check-script', 'metric_origin': 'test fixture',
+                 'result': {'config': {'dataset': 'tiny'}},
+                 'receipt': {'termination': 'completed', 'exit_code': 0},
+                 'implementation_checks': {'status': 'passed', 'case_count': 2}}]}, 'completed')
 
     def test_assess_results_records_target_based_next_step(self):
         job = self.start(targets=[{'name': 'score', 'direction': 'higher', 'value': .8}])
@@ -151,7 +156,7 @@ class AutoResearchTests(unittest.TestCase):
             data = self.app.coding.get(self.space, task['id'])['state']
             data['after'] = {'evaluate.py': 'fixed', 'method.py': str(version)}
             data['measurements'] = [m for m in data['measurements']
-                                    if m['role'] == ('baseline' if version == 1 else 'candidate')]
+                                    if m['role'] in {'diagnostic', 'baseline' if version == 1 else 'candidate'}]
             self.app.coding.save(task['id'], data, 'completed')
             state['coding'].append(task['id'])
             tasks.append(task['id'])
@@ -223,6 +228,7 @@ class AutoResearchTests(unittest.TestCase):
         self.assertEqual(final['status'], 'completed', final['error'])
         detail = self.app.auto_research.detail(self.space, job['id'])
         self.assertEqual(detail['outcome'], 'goal_met')
+        self.assertIn('已比较 2 个样例', final['summary'])
         self.assertEqual(len(detail['plans']), 2)
         self.assertEqual(len(detail['research']), 2)
         self.assertEqual(len(detail['coding']), 2)
@@ -412,6 +418,100 @@ class AutoResearchTests(unittest.TestCase):
         feedback = json.loads(messages[-1]['content'])['UNTRUSTED_TOOL_DATA']
         self.assertEqual(feedback['measurements'][1]['metrics']['score'], .4)
 
+    def test_code_only_delegation_and_actionable_field_errors(self):
+        job = self.start()
+        request = {'plan_version': 1, 'task': 'Implement first; measure separately'}
+        self.model.complete.side_effect = [call('save_plan', plan(), 1), call('coding_agent', request, 2)]
+        self.step(); self.step()
+        state = self.state(job)
+        self.assertIn('waiting', state)
+        task = self.app.coding.get(self.space, state['waiting']['id'])
+        self.assertEqual(task['request']['commands'], [])
+        self.app.coding.save(task['id'], {}, 'completed')
+        self.app.auto_research.tick()
+        current = self.store.claim_next()
+        for arguments, missing in [({'task': 'x', 'surprise': 1}, 'plan_version'),
+                                   ({'plan_version': 1}, 'task')]:
+            with self.subTest(arguments=arguments), self.assertRaisesRegex(ValueError, missing):
+                self.app.auto_research.dispatch(current, state,
+                    asdict(call('coding_agent', arguments, 3)), {})
+        with self.assertRaisesRegex(ValueError, 'commands'):
+            self.app.auto_research.dispatch(current, state,
+                asdict(call('run_experiments', {'plan_version': 1}, 4)), {})
+
+    def test_unchecked_high_score_requires_source_bound_implementation_checks(self):
+        job = self.start(targets=[{'name': 'score', 'direction': 'higher', 'value': .8}])
+        job = self.store.claim_next()
+        state = self.state(job)
+        proposal = {**plan(), 'version': 1, 'call_id': 'p1'}
+        state['plans'] = [proposal]
+        request = {k: v for k, v in coding().items() if k != 'plan_version'}
+        task = self.app.coding.submit(job, 'candidate', {**request, 'plan': json.dumps(proposal)})
+        state['coding'] = [task['id']]
+        self.measured(task['id'], .9)
+        data = self.app.coding.get(self.space, task['id'])['state']
+        data['after'] = {'method.py': 'candidate = 1'}
+        data['measurements'] = [m for m in data['measurements'] if m['role'] != 'diagnostic']
+        self.app.coding.save(task['id'], data, 'completed')
+        config = json.loads(job['payload'])['auto_research']
+        result = self.app.auto_research.assess_results(job, state, config, 1)
+        self.assertEqual(result['recommendation'], 'verify_implementation')
+        self.assertTrue(result['comparable_pairs'][0]['targets'][0]['met'])
+        decision = asdict(call('finish_research', {'outcome': 'goal_met', 'summary': 'score met', 'limitations': ''}))
+        state['assessments'] = [result]
+        with self.assertRaises(Conflict):
+            self.app.auto_research.dispatch(job, state, decision, config)
+        checks = self.app.coding.submit(job, 'checks', {**request, 'plan': json.dumps(proposal)})
+        state['coding'].append(checks['id'])
+        checked = {'after': dict(data['after']), 'measurements': [{
+            'name': 'verify', 'role': 'diagnostic', 'valid': True,
+            'receipt': {'termination': 'completed', 'exit_code': 0},
+            'implementation_checks': {'status': 'passed', 'case_count': 2}}]}
+        self.app.coding.save(checks['id'], checked, 'completed')
+        passed = self.app.auto_research.assess_results(job, state, config, 1)
+        self.assertEqual(passed['recommendation'], 'goal_met')
+        state['assessments'] = [passed]
+        self.assertEqual(self.app.auto_research.dispatch(job, state, decision, config)['outcome'], 'goal_met')
+        for change in ('failed_check', 'different_source', 'invalid_receipt', 'failed_without_json', 'redacted_source_collision'):
+            with self.subTest(change=change):
+                changed = json.loads(json.dumps(checked))
+                if change == 'failed_check': changed['measurements'][0]['implementation_checks']['status'] = 'failed'
+                if change == 'different_source': changed['after']['method.py'] = 'candidate = 2'
+                if change == 'invalid_receipt': changed['measurements'][0]['valid'] = False
+                if change == 'failed_without_json':
+                    changed['measurements'].append({'name': 'rerun-check', 'role': 'diagnostic', 'valid': False,
+                                                    'receipt': {'termination': 'timeout', 'exit_code': None}})
+                if change == 'redacted_source_collision':
+                    data['readonly_source_sha256'] = {'method.py': 'a' * 64}
+                    self.app.coding.save(task['id'], data, 'completed')
+                    changed['readonly_source_sha256'] = {'method.py': 'b' * 64}
+                self.app.coding.save(checks['id'], changed, 'completed')
+                self.assertEqual(self.app.auto_research.assess_results(job, state, config, 1)['recommendation'], 'verify_implementation')
+                with self.assertRaises(Conflict):
+                    self.app.auto_research.dispatch(job, state, decision, config)
+
+    def test_coding_defaults_use_remaining_budget_and_replay_frozen_allocation(self):
+        job = self.start(budget={'coding_seconds': 360, 'coding_tokens': 400000})
+        request = {k: v for k, v in coding().items() if k not in {'seconds', 'token_budget'}}
+        self.model.complete.side_effect = [call('save_plan', plan(), 1), call('coding_agent', request, 2)]
+        self.step(); self.step()
+        state = self.state(job)
+        self.assertIn('waiting', state)
+        task = self.app.coding.get(self.space, state['waiting']['id'])
+        advertised = next(t['function']['parameters']['properties'] for t in self.model.complete.call_args.args[1]
+                          if t['function']['name'] == 'coding_agent')
+        self.assertNotIn('seconds', advertised)
+        self.assertNotIn('token_budget', advertised)
+        self.assertEqual((task['request']['seconds'], task['request']['token_budget']), (360, 400000))
+        self.app.coding.save(task['id'], {'coding': {'seconds': 40, 'tokens': 50000}}, 'completed')
+        self.app.auto_research.tick()
+        current = self.store.claim_next()
+        self.app.auto_research.dispatch(current, state, asdict(call('coding_agent', request, 2)), {})
+        self.assertEqual(state['waiting']['id'], task['id'])
+        self.app.auto_research.dispatch(current, state, asdict(call('coding_agent', request, 3)), {})
+        next_task = self.app.coding.get(self.space, state['waiting']['id'])
+        self.assertEqual((next_task['request']['seconds'], next_task['request']['token_budget']), (320, 350000))
+
     def test_failed_experiment_stderr_reaches_research_decision_with_bounded_logs(self):
         job = self.start()
         self.model.complete.side_effect = [call('save_plan', plan(), 1), call('coding_agent', coding(), 2),
@@ -444,6 +544,64 @@ class AutoResearchTests(unittest.TestCase):
         self.assertTrue(feedback['log_tail'].endswith('before import'))
         self.assertEqual(len(feedback['log_tail']), 3000)
         self.assertIn('宿主模型请求id重复', json.dumps(result['measurements'], ensure_ascii=False))
+
+    def test_execution_feedback_survives_history_eviction_without_trusting_self_report(self):
+        job = self.start()
+        job = self.store.claim_next()
+        state = self.state(job)
+        proposal = {**plan(), 'version': 1, 'call_id': 'plan-1'}
+        state['plans'] = [proposal]
+        request = {k: v for k, v in coding().items() if k != 'plan_version'}
+        task = self.app.coding.submit(job, 'failed-run', {**request, 'plan': json.dumps(proposal)})
+        state['coding'] = [task['id']]
+        self.app.coding.save(task['id'], {
+            'summary': 'Unverified self-test score 0.99', 'error': 'Experiment failed',
+            'measurements': [{'name': 'baseline', 'role': 'baseline', 'valid': False, 'metrics': {},
+                'error': 'Missing baseline.json', 'receipt': {'exit_code': 0, 'termination': 'completed',
+                                                             'stderr': 'artifact contract mismatch'}}]}, 'failed')
+        old_feedback = self.app.auto_research.coding_result(job, task['id'])
+        state['messages'] = [
+            {'role': 'assistant', 'content': 'old failure'},
+            {'role': 'tool', 'tool_call_id': 'failed-run', 'content': json.dumps({'UNTRUSTED_TOOL_DATA': old_feedback})},
+            {'role': 'assistant', 'content': 'large inspection'},
+            {'role': 'user', 'content': 'old log ' * 30000},
+            {'role': 'assistant', 'content': 'later inspection'},
+            {'role': 'user', 'content': 'latest source window'}]
+        self.model.complete.return_value = call('inspect', {'kind': 'coding', 'id': task['id']})
+        self.app.auto_research.decide(job, state, json.loads(job['payload'])['auto_research'], lambda *a, **k: None)
+        messages = self.model.complete.call_args.args[0]
+        self.assertNotIn('old failure', json.dumps(messages))
+        self.assertTrue('Missing baseline.json' in json.dumps(messages), 'The model lost the host artifact failure after history eviction')
+        feedback = json.loads(messages[1]['content'])['recent_execution_feedback']
+        row = feedback['items'][0]
+        self.assertEqual(row['task_id'], task['id'])
+        self.assertEqual(row['valid_measurement_count'], 0)
+        self.assertEqual(row['failed_measurement']['command'], request['commands'][0])
+        self.assertEqual(row['failed_measurement']['error'], 'Missing baseline.json')
+        self.assertEqual(row['failed_measurement']['stderr_tail'], 'artifact contract mismatch')
+        self.assertNotIn('0.99', json.dumps(feedback))
+        # Feedback is derived from receipts and must not mutate durable state.
+        self.assertEqual(self.app.coding.get(self.space, task['id'])['state']['summary'], 'Unverified self-test score 0.99')
+
+    def test_execution_feedback_bounds_large_commands_and_checks_job_scope(self):
+        job = self.start()
+        job = self.store.claim_next()
+        state = self.state(job)
+        request = {k: v for k, v in coding().items() if k != 'plan_version'}
+        request['commands'][0]['args'] = ['x' * 2000] * 48
+        task = self.app.coding.submit(job, 'large-command', {**request, 'plan': json.dumps(plan())})
+        self.app.coding.save(task['id'], {'error': 'host failure', 'measurements': [{
+            'name': 'baseline', 'role': 'baseline', 'valid': False,
+            'receipt': {'stderr': 'x' * 10000 + 'actual cause'}}]}, 'failed')
+        state['coding'] = [task['id']]
+        feedback = self.app.auto_research.execution_feedback(job, state)
+        self.assertLessEqual(len(json.dumps(feedback, ensure_ascii=False)), 6100)
+        row = feedback['items'][0]
+        self.assertTrue(row['failed_measurement']['stderr_tail'].endswith('actual cause'))
+        self.assertEqual(row['failed_measurement']['command'], {'details_omitted': True})
+        self.assertTrue(row['details_omitted'])
+        with self.assertRaises(NotFound):
+            self.app.auto_research.execution_feedback({**job, 'id': 'other-job'}, state)
 
     def test_waiting_coding_does_not_block_other_conversation_or_poll_model(self):
         job = self.start()

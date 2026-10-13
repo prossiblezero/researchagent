@@ -57,7 +57,13 @@ class GenerationComparisonTests(unittest.TestCase):
         settings = baseline['comparison_contract']['requested_generation_parameter_sets']
         self.assertEqual(len(settings), 2)
         self.assertEqual({row['temperature'] for row in settings}, {.3, 1})
-        self.assertEqual(controller.assess_results(job, state, {'targets':[{'name':'answer_f1', 'direction':'higher', 'value':.8}]}, 2)['recommendation'], 'goal_met')
+        targets = {'targets':[{'name':'answer_f1', 'direction':'higher', 'value':.8}]}
+        self.assertEqual(controller.assess_results(job, state, targets, 2)['recommendation'], 'verify_implementation')
+        tasks[1]['state']['measurements'].append({'name': 'check', 'role': 'diagnostic', 'valid': True,
+            'receipt': {'termination': 'completed', 'exit_code': 0},
+            'implementation_checks': {'status': 'passed', 'case_count': 2}})
+        self.persist(tasks)
+        self.assertEqual(controller.assess_results(job, state, targets, 2)['recommendation'], 'goal_met')
 
     def test_legacy_identity_unchanged_and_invalid_or_partly_unknown_settings_rejected(self):
         _, _, tasks = self.setup_run()

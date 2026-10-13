@@ -8,11 +8,11 @@ description: 从论文调研任务出发，读懂 Agentic RAG、原文证据、�
 
 # ResearchAgent：从一次回答到可追溯的研究流程
 
-**项目学习手记 · 2026-10-11**
+**项目学习手记 · 2026-10-11 初稿 · 2026-10-13 补充 Auto Research 设计与案例**
 
 项目地址：[prossiblezero/researchagent][repo]。本文按问题展开，解释一个研究任务怎样经过检索、阅读、核验与恢复，最后成为可以检查的交付。适合先顺着读一遍，再对照源码拆开看。
 
-代码说明对应公开仓库的 [7e3a3be 快照][snapshot]；实验引用各自报告中的历史测量，不是本文编写时重新跑出的成绩。文章借鉴了 [YYHDBL 的项目手记][reference]从动机、具体例子讲到设计取舍和不足的组织方式，内容与实现均围绕 ResearchAgent。
+原有章节的代码说明对应公开仓库的 [7e3a3be 快照][snapshot]；Auto Research 章节于 2026-10-13 按当前实现补充开源参考、反馈流程和两项实验案例。实验数字来自各自保存的运行与预测记录。文章借鉴了 [YYHDBL 的项目手记][reference]从动机、具体例子讲到设计取舍和不足的组织方式，内容与实现均围绕 ResearchAgent。
 
 如果只有半小时，先读第一至四节、第七节和第十一节；准备动手时，再看第十三节。逐文件练习仍放在[分章源码教程][tutorial]中。
 
@@ -375,11 +375,21 @@ Resume 从有效检查点继续同一 Job；Retry 新建 Job，并保留与旧�
 
 ## 十、从调研到实验：Auto Research 多了一层什么？
 
-回答“论文用了什么方法”，和“基于这个方法做一个可比较实验”，是不同任务。后者需要保存假设、实现代码、运行评测，再根据实际结果决定是否继续。
+读完一篇方法论文，下一句话很自然会是：“能不能把这个想法实现出来，和现有方法跑一下比较？”到这里，任务就从解释已有知识，变成了提出假设、实现代码、运行评测，再根据结果决定下一步。
 
-Auto Research 在普通研究 Agent 外面增加一层控制器。研究模型选择调研、保存方案、委派编码、执行实验、检查结果或结束；内层 ResearchAgent 完成一次定向资料研究。
+只把整段要求交给编码工具，还缺少一个持续掌握研究目标的角色：它要记住为什么改、用什么基线、上一次测到了什么，以及现在值得继续做哪件事。Auto Research 因此在普通研究 Agent 外面增加一层控制器；内层负责一次定向资料研究，外层把资料、方案和实验连接起来。
 
-### 10.1 研究模型、Codex、宿主各做什么？
+### 10.1 这层循环从哪些开源项目得到启发？
+
+第一个参考是 **Microsoft RD-Agent**。它的 [RDLoop][inspiration-rdagent] 从已有研究轨迹提出假设，将假设转成实验，再把编码、运行和反馈写回历史。这里最有用的连接是“下一轮研究能看到上一轮实验”。在本项目里，`save_plan` 保存假设与方案，`assess_results` 保存比较，下一次 `decide()` 同时读取最近方案、实测比较和执行反馈，再选择补资料、改方法或继续实验。
+
+第二个参考是 **Sakana AI-Scientist**。它的[实验执行流程][inspiration-ai-scientist] 把研究想法、基线和运行上限交给 coder，实际运行程序，再读取结构化结果回传。这个思路在本项目中落到 `CodingTool`：编码 Agent 负责实现，宿主负责执行命令、收回预测和指标。由此，研究主控得到的是可以继续分析的实验结果，失败时也能得到退出码与错误信息。
+
+再往前看，任务开始时还要把用户的一段对话整理成研究目标。**LangChain Open Deep Research** 的[目标澄清与研究简报][inspiration-open-deep-research] 提供了这一层参考。本项目由 `route_intent()` 形成 `brief` 和 `assumptions`，Auto Research 每轮带着简报、用户目标和预算做决定，避免长任务逐步丢掉最初的问题。
+
+这三个参考分别解决目标整理、研究反馈和实验执行。项目围绕本地工作台继续补上方案版本、源码快照、持久任务与结果追溯。最初的阅读记录见 [V1 设计][brief-design]和 [V4 设计][auto-design]；想扩展阅读，还可以从 [Awesome-Auto-Research-Tools][awesome-auto-research] 查找其他实现。
+
+### 10.2 研究模型、Codex、宿主各做什么？
 
 | 角色 | 负责的工作 | 交付依据 |
 | --- | --- | --- |
@@ -389,11 +399,13 @@ Auto Research 在普通研究 Agent 外面增加一层控制器。研究模型�
 
 Codex 在总结里说“提升了 5%”，不会自动变成实测成绩。宿主需要回收实际产物；baseline、candidate、ablation 要有各自的角色和结果路径。在支持的评测合同内还能复算预测和指标。
 
-不过，可复算只证明评分链条可以检查，并不自动证明 baseline 的实现公平或者研究结论具有泛化性。这两部分仍需要设计审查和更多实验。
+把三个角色连起来，可以沿一条具体路径读源码：先用 `save_plan` 保存基线、假设、方法与验证方式，再将 `plan_version` 交给编码 Agent；宿主保存源码快照并执行命令，把测量送回 `assess_results`；下一次 `decide()` 据此选择继续或结束。已有代码只需复测时，可以直接调用 `run_experiments`。
+
+长实验运行期间，主控把等待的子任务 ID 写入持久状态并让出 worker；子任务结束后，`tick()` 恢复调度。这样，一次较长的研究可以跨越多次后台调度，方案、实现与结果仍能按版本对应起来。
 
 实验需要调用模型时，可以通过宿主管理的 JSONL 批次或 stdio 交互接口取得响应。凭据由宿主管理，用量归入任务预算；编码和实验不需要自行持有真实密钥。
 
-### 10.2 为什么只做有限的双路研究？
+### 10.3 为什么只做有限的双路研究？
 
 有些子问题可以独立做，例如一条研究方法，另一条研究评测协议。`research_parallel` 一次原子创建两个子研究，每个都有独立模型上下文、证据和检查点；主控等待两路终态，再根据分项结果继续。
 
@@ -403,13 +415,13 @@ Codex 在总结里说“提升了 5%”，不会自动变成实测成绩。宿�
 
 项目确实测到过双路任务时间重叠，但一组历史配对总耗时是 **651.984 秒 → 706.297 秒**，没有证明总体提速。共享资源、调度和模型生成路径都可能抵消并发收益。该负结果及口径保留在[并行研究优化记录][history-08]。
 
-### 10.3 报告交付和研究目标达成要分别判断
+### 10.4 报告交付和研究目标达成要分别判断
 
 后台状态 `completed` 表示生命周期结束；Auto Research 的 `reported` 表示交付了报告，`goal_met` 还需要冻结的数值目标获得有效测量支持。假设没有提升、预算耗尽或外部依赖阻塞，都应该成为可解释结果。
 
 目前代码执行主要面向本机 Windows 原生 Codex 环境，存在平台和隔离边界；不能把它当作任意不可信代码的完整虚拟机。普通资料研究无需启用这条执行路径。
 
-阅读顺序：[auto_research.py][src-auto] → [coding_tool.py][src-coding] → [experiment_process.py][src-process]。具体操作和合同看[Auto Research 教程][chapter-auto]及[并行研究教程][chapter-parallel]。
+这套流程实际产出了哪些候选方案，可以接着看[下文的 SciFact 与 HotpotQA 案例](#auto-research-results)。源码阅读顺序是 [auto_research.py][src-auto] → [coding_tool.py][src-coding] → [experiment_process.py][src-process]；操作细节看 [Auto Research 教程][chapter-auto]及[并行研究教程][chapter-parallel]。
 
 <a id="evaluation"></a>
 
@@ -478,6 +490,25 @@ Recall@5 看相关材料在前五个候选中的召回情况；MRR@5 更关注�
 所以现有实验不能支撑“更快、更省 token”。它呈现的是用额外执行成本换取部分任务的完成和证据可追溯性。下一步若要优化成本，应冻结同一批任务，同时报告质量、时延、调用数、token 和失败率。
 
 项目还记录了历史检索、重复压缩、并行研究和自动实验等专项结果，它们各自验证不同层面。不要把“320 条评测任务”解释成 320 道全部完成的在线问答，也不要把多次运行中的事实检查数当成独立题目数。
+
+<a id="auto-research-results"></a>
+
+### 11.6 Auto Research 提出的方案，实际让任务变好了吗？
+
+前面介绍了研究循环，现在把它落到一个具体问题：在 SciFact 中，给定科学论断和候选文档，能否更准确地判断证据关系？这类固定任务可以直接运行算法对照，适合观察自动研究提出的方案有没有效果。
+
+这次实验的基线是**词级、字符级 TF-IDF 加类别平衡的逻辑回归**。候选保留这条分类路径，加入词项重叠、Jaccard、论断覆盖、长度比例、否定及交互特征；还安排了去掉否定交互的消融。使用 train 训练、dev 评估，开发集 300 条论断展开为 340 条候选文档记录。保存预测复算后，macro-F1 从 **45.04% 提升到 49.00%**，增加 **3.96 个百分点**；消融组为 **48.49%**。
+
+这样，前面讲的机制就有了具体内容：方案里保存“准备加什么特征”，编码 Agent 实现分类器，执行器留下三组预测，研究主控拿到可比较的结果。开发集上的候选优于起始基线，也给下一轮是否保留这些特征提供了依据。
+
+另一项 HotpotQA 实验从**正文 BM25 检索**出发，让候选检索器调整正文计分并加入标题加权。在保存的 64 题证据检索子集上，Recall@2 从 **59.38% 提升到 65.63%**，增加 **6.25 个百分点**；逐题看是 15 题改善、42 题不变、7 题退步。
+
+| 固定实验任务 | 起始算法 | 自动生成的候选方案 | 已测结果 |
+| --- | --- | --- | --- |
+| SciFact 开发集证据分类 | 词／字符 TF-IDF＋逻辑回归 | 增加重叠、长度、否定及交互特征 | macro-F1 **45.04% → 49.00%** |
+| HotpotQA 64 题证据检索 | 正文 BM25，取前两篇 | 调整正文计分并加入标题加权 | Recall@2 **59.38% → 65.63%** |
+
+这两个案例比较的是各自任务的起始算法与生成候选。HotpotQA 候选的文档频率计算偏离标准 BM25，原轮也在超出预算后未收尾报告；候选分数与这些执行记录一并保留。因此上表展示已有候选的任务效果，研究流程的交付情况另行记录。算法细节、预测复算和运行档案索引见 [Auto Research 指标依据][auto-metrics]。
 
 <a id="failures"></a>
 
@@ -641,6 +672,13 @@ Linux / macOS 命令、在线配置和向量准备见[仓库快速开始][quicks
 [src-sessions]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/sessions.py
 [src-trace]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/trace.py
 [src-usage]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/usage.py
-[src-auto]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/auto_research.py
-[src-coding]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/coding_tool.py
+[src-auto]: https://github.com/prossiblezero/researchagent/blob/main/research_agent/auto_research.py
+[src-coding]: https://github.com/prossiblezero/researchagent/blob/main/research_agent/coding_tool.py
 [src-process]: https://github.com/prossiblezero/researchagent/blob/7e3a3be3b735d0859fbd767285a5dab9f0c88550/research_agent/experiment_process.py
+[inspiration-rdagent]: https://github.com/microsoft/RD-Agent/blob/484776c211e4fbbeef03e0ec00d6bbee7362a4f4/rdagent/components/workflow/rd_loop.py
+[inspiration-ai-scientist]: https://github.com/SakanaAI/AI-Scientist/blob/1de1dbc1f4ee2c5f61e9c94348d55eb51d7fa2eb/ai_scientist/perform_experiments.py
+[inspiration-open-deep-research]: https://github.com/langchain-ai/open_deep_research/blob/1b7d2e80db9faa586165c60e09096dbbfd483a64/src/open_deep_research/deep_researcher.py
+[awesome-auto-research]: https://github.com/handsome-rich/Awesome-Auto-Research-Tools/tree/main
+[brief-design]: https://github.com/prossiblezero/researchagent/blob/main/docs/v1.md
+[auto-design]: https://github.com/prossiblezero/researchagent/blob/main/docs/auto-research-v4-redesign-20260929.md
+[auto-metrics]: https://github.com/prossiblezero/researchagent/blob/main/docs/resume/researchagent-20261009-evidence.md

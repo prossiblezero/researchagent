@@ -11,7 +11,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from research_agent.coding_tool import (CodingTool, audit_qasper_result, materialize_readonly_files,
+from research_agent.coding_tool import (CodingTool, audit_implementation_checks, audit_qasper_result, materialize_readonly_files,
                                          regular_file, reserved_resources, validate_request)
 from research_agent.workbench_store import Conflict, WorkbenchStore
 from research_agent.contracts import ModelDecision
@@ -528,6 +528,84 @@ class CodingToolTests(unittest.TestCase):
             self.tool.execute(self.space, self.task['id'])
         self.assertEqual(commands, [['codex'], ['sandbox']])
 
+    def test_implementation_examples_reject_empty_malformed_and_claimed_pass(self):
+        case = {'name': 'tiny', 'input': 'two values', 'reference': 'hand calculation',
+                'actual': [2, 3], 'expected': [2, 3]}
+        good = {'baseline_equivalence': [case], 'calculation_examples': [case]}
+        for invalid in ({}, {'status': 'passed', 'case_count': 2},
+                        {**good, 'calculation_examples': []},
+                        *[{**good, 'calculation_examples': [{**case, 'actual': value}]}
+                          for value in (True, [], [2], [2, 4], [2, float('nan')], [2, 10**400])],
+                        {**good, 'calculation_examples': [{**case, 'reference': ''}]}):
+            with self.subTest(payload=str(invalid)[:120]):
+                audit = audit_implementation_checks({'diagnostics': {'implementation_checks': invalid}})
+                self.assertEqual(audit['status'], 'failed')
+        self.assertEqual(audit_implementation_checks({'diagnostics': {'implementation_checks': good}})['status'], 'passed')
+        self.assertIsNone(audit_implementation_checks({'implementation_checks': {'status': 'passed'}}))
+
+    def test_host_rejects_wrong_document_frequency_in_executed_diagnostic(self):
+        import subprocess
+        import sys
+        workspace = self.tool.work_root / self.job['id']
+        workspace.mkdir(parents=True)
+        script = """import json
+from collections import Counter
+from pathlib import Path
+rows = [Counter('x x x y'.split()), Counter('x x z'.split())]
+df = Counter()
+for row in rows:
+    df.update(row)
+case = {'name': 'document_frequency', 'input': 'x appears 3 and 2 times in two documents',
+        'reference': 'Count documents containing x by hand: 2', 'actual': df['x'], 'expected': 2}
+result = {'role': 'diagnostic', 'implementation_checks': {'status': 'passed'},
+          'metrics': {'claimed_pass': 1}, 'config': {'dataset': 'tiny'},
+          'diagnostics': {'implementation_checks': {
+              'baseline_equivalence': [dict(case, name='zero_bonus_baseline')], 'calculation_examples': [case]}}}
+Path('checks.json').write_text(json.dumps(result))
+"""
+        (workspace / 'check.py').write_text(script, encoding='utf-8')
+        # A diagnostic must work inside a fixed dataset study without supplying rankings.
+        contract = {'name': 'qasper_fractional_recall_v1'}
+        for kind in ('tasks', 'corpus'):
+            (workspace / (kind + '.json')).write_bytes(b'[]')
+            contract[kind + '_path'] = kind + '.json'
+            contract[kind + '_sha256'] = hashlib.sha256(b'[]').hexdigest()
+        payload = json.loads(self.store.job(self.space, self.job['id'])['payload'])
+        payload['auto_research']['metric_contract'] = contract
+        with closing(self.store._connect()) as db, db:
+            db.execute('UPDATE research_jobs SET payload=? WHERE id=?', (json.dumps(payload), self.job['id']))
+        request = {**self.request, 'execution_only': True, 'seconds': 0, 'token_budget': 0,
+                   'commands': [{'name': 'verify', 'role': 'diagnostic', 'script': 'check.py',
+                                 'args': [], 'result_path': 'checks.json', 'seconds': 10}]}
+        def runner(args, directory, **kwargs):
+            done = subprocess.run([sys.executable, '-B', 'check.py'], cwd=directory,
+                                  capture_output=True, text=True, timeout=10)
+            return {'exit_code': done.returncode, 'termination': 'completed', 'seconds': .1,
+                    'stdout': done.stdout, 'stderr': done.stderr}
+        for index, fixed in enumerate((False, True)):
+            if fixed:
+                (workspace / 'check.py').write_text(script.replace('df.update(row)', 'df.update(row.keys())'), encoding='utf-8')
+            task = self.tool.submit(self.job, 'df-' + str(index), request)
+            with patch('research_agent.coding_tool.sandbox_command', return_value=['trusted-fixture']), \
+                 patch('research_agent.coding_tool.run_process', side_effect=runner):
+                self.tool.execute(self.space, task['id'])
+            state = self.tool.get(self.space, task['id'])['state']
+            measurement = state['measurements'][0]
+            self.assertEqual(measurement['valid'], fixed)
+            audit = measurement['implementation_checks']
+            self.assertEqual(audit['status'], 'passed' if fixed else 'failed')
+            self.assertEqual(audit['case_count'], 2)
+            self.assertTrue((self.tool.output_root / task['id'] / 'result-00.json').is_file())
+        request['commands'][0]['role'] = 'candidate'
+        task = self.tool.submit(self.job, 'not-a-diagnostic', request)
+        with patch('research_agent.coding_tool.sandbox_command', return_value=['trusted-fixture']), \
+             patch('research_agent.coding_tool.run_process', side_effect=runner):
+            self.tool.execute(self.space, task['id'])
+        measurement = self.tool.get(self.space, task['id'])['state']['measurements'][0]
+        self.assertFalse(measurement['valid'])
+        self.assertEqual(measurement['role'], 'candidate')
+        self.assertNotIn('implementation_checks', measurement)
+
     def test_nonfinite_diagnostics_cannot_break_report_archival(self):
         self.run_tool(extra_result={'diagnostics': {'latency': float('nan')}})
         result = self.tool.get(self.space, self.task['id'])
@@ -587,10 +665,14 @@ class CodingToolTests(unittest.TestCase):
             return receipt
         with patch.dict(os.environ, {'SUDOCODE_API_KEY': 'test-secret'}), \
              patch('research_agent.coding_tool.coding_command', return_value=['codex']), \
-             patch('research_agent.coding_tool.run_process', side_effect=interrupted_writer) as runner:
+             patch('research_agent.coding_tool.run_process', side_effect=interrupted_writer) as runner, \
+             patch('research_agent.coding_tool.time.time', return_value=1000):
             self.tool.execute(self.space, task['id'])
             self.tool.execute(self.space, task['id'])
         self.assertEqual(runner.call_count, 1)
+        context = json.loads(runner.call_args.kwargs['stdin'].splitlines()[-1])
+        self.assertEqual(context['user_goal'], 'goal')
+        self.assertEqual(context['coding_deadline_unix_seconds'], 1000 + runner.call_args.kwargs['timeout'])
         state = self.tool.get(self.space, task['id'])['state']
         self.assertEqual(state['coding']['termination'], 'timeout')
         self.assertEqual(len(state['coding']['event_errors']), 1)
@@ -600,6 +682,53 @@ class CodingToolTests(unittest.TestCase):
         self.assertTrue((self.tool.output_root/task['id']/'coding-source.json').is_file())
         self.assertFalse(state.get('coded'))
         self.assertFalse(state.get('measurements'))
+
+    def test_budget_defaults_obey_per_call_caps_and_preserve_explicit_limits(self):
+        request = {k: v for k, v in self.request.items() if k not in {'seconds', 'token_budget'}}
+        limits = {'coding_seconds': 28800, 'coding_tokens': 8000000}
+        value = validate_request(request, remaining=limits)
+        self.assertEqual((value['seconds'], value['token_budget']), (7200, 2000000))
+        explicit = validate_request(self.request, remaining=limits)
+        self.assertEqual((explicit['seconds'], explicit['token_budget']), (30, 2000))
+        for key, insufficient in [('coding_seconds', 29), ('coding_tokens', 1999)]:
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                validate_request(request, remaining={**limits, key: insufficient})
+        execution = validate_request({**request, 'execution_only': True},
+                                     remaining={'coding_seconds': 0, 'coding_tokens': 0})
+        self.assertEqual((execution['seconds'], execution['token_budget']), (0, 0))
+
+    def test_failed_coder_usage_is_charged_without_replay_or_measurement(self):
+        good = {'input_tokens': 2400, 'cached_input_tokens': 2000, 'output_tokens': 100}
+        cases = [
+            ('failed', [{'type': 'turn.failed', 'usage': good}], True, 2500),
+            ('timeout', [{'type': 'turn.completed', 'usage': good}], True, 2500),
+            ('missing', [{'type': 'turn.failed'}], False, 2000),
+            ('partial', [{'type': 'turn.completed', 'usage': good}, {'type': 'turn.started'}], False, 2500),
+            ('invalid', [{'type': 'turn.failed', 'usage': []}], False, 2000),
+            ('contradictory', [{'type': 'turn.failed', 'usage': {**good, 'total_tokens': 1}}], False, 2500),
+        ]
+        for name, events, complete, charge in cases:
+            with self.subTest(name=name):
+                task = self.tool.submit(self.job, name, self.request)
+                receipt = {'exit_code': 1, 'termination': 'timeout' if name == 'timeout' else 'nonzero_exit',
+                           'seconds': 2, 'stdout': '\n'.join(json.dumps(e) for e in events)}
+                with patch.dict(os.environ, {'SUDOCODE_API_KEY': 'test-secret'}), \
+                     patch('research_agent.coding_tool.coding_command', return_value=['codex']), \
+                     patch('research_agent.coding_tool.run_process', return_value=receipt) as runner:
+                    self.tool.execute(self.space, task['id'])
+                    self.tool.execute(self.space, task['id'])
+                runner.assert_called_once()
+                failed = self.tool.get(self.space, task['id'])
+                self.assertEqual(failed['status'], 'failed')
+                usage = failed['state']['coding']
+                self.assertEqual(usage['usage_complete'], complete)
+                self.assertEqual(usage.get('tokens'), charge if complete else None)
+                self.assertFalse(failed['state'].get('measurements'))
+                remaining = self.tool.remaining(self.store.job(self.space, self.job['id']))
+                self.assertEqual(remaining['coding_tokens'], 6000 - charge)
+                self.assertEqual(remaining['experiment_seconds'], 30)
+            with closing(self.store._connect()) as db, db:
+                db.execute('DELETE FROM coding_tasks WHERE id=?', (task['id'],))
 
     def test_overrun_charges_actual_tokens_and_allows_separately_budgeted_measurement(self):
         task = self.tool.submit(self.job, 'overrun', self.request)

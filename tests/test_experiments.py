@@ -113,6 +113,7 @@ class ExecutionTests(unittest.TestCase):
         with patch('research_agent.experiment_process.codex_path', return_value='codex.exe'):
             command = coding_command(self.root)
         self.assertIn('--ignore-user-config', command); self.assertIn('--ignore-rules', command)
+        self.assertIn('tool_output_token_limit=4000', command)
         self.assertNotIn('danger-full-access', ' '.join(command))
         policy = permissions(self.root)
         self.assertFalse(policy['network']['enabled'])

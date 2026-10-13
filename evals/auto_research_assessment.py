@@ -8,7 +8,7 @@ import math
 from research_agent.auto_research import AutoResearch
 
 
-def measurements_before(requests, tasks, request_index):
+def measurements_before(requests, tasks, request_index, *, include_invalid=False):
     """Host results available by this decision, not measurements produced later."""
     by_id = {task['id']: task for task in tasks}
     rows = {}
@@ -22,7 +22,7 @@ def measurements_before(requests, tasks, request_index):
             ready = False
         if ready:
             for m in AutoResearch.measurements_for_comparison(task):
-                if m.get('valid') is True:
+                if include_invalid or m.get('valid') is True:
                     rows[task['id'], m['measurement_index']] = m
     # Older receipts may lack timestamps; a matching visible result proves availability.
     for request in requests[:request_index + 1]:
@@ -40,9 +40,9 @@ def measurements_before(requests, tasks, request_index):
                 continue
             terminal = value.get('status') in {'completed', 'failed', 'cancelled'} and value['status'] == task.get('status')
             for m in AutoResearch.measurements_for_comparison(task):
-                if m.get('valid') is True and (terminal or any(
-                        isinstance(f, dict) and f.get('valid') is True and f.get('name') == m['name']
-                        and f.get('metrics') == m['metrics'] for f in value.get('measurements', []))):
+                if (include_invalid or m.get('valid') is True) and (terminal or any(
+                        isinstance(f, dict) and f.get('valid') == m.get('valid') and f.get('name') == m['name']
+                        and f.get('metrics') == m.get('metrics') for f in value.get('measurements', []))):
                     rows[task['id'], m['measurement_index']] = m
     return list(rows.values())
 
@@ -72,7 +72,10 @@ def assessment_evidence(requests, tasks, assessments, targets):
         call_id = assessment.get('call_id')
         version = assessment.get('plan_version')
         call = calls.get(call_id)
-        checks, seen_tasks = [], set()
+        checks, verified, seen_tasks = [], [], set()
+        # Frozen historical assessments retain their original policy; new ones must prove the gate.
+        requires_checks = assessment.get('implementation_checks_required') is True
+        check_rows = measurements_before(requests, tasks, call[0], include_invalid=True) if call and requires_checks else []
         pairs = assessment.get('comparable_pairs') or []
         valid = bool(call and call[1].get('arguments', {}).get('plan_version') == version)
         available = {}
@@ -131,9 +134,17 @@ def assessment_evidence(requests, tasks, assessments, targets):
                                     numeric and type(before) in (int, float) and math.isfinite(before)
                                     and sign * value > sign * before))
             checks.append(pair_checks)
+            implementation = AutoResearch.implementation_evidence(matched[0], check_rows) if requires_checks else None
+            verified.append(not requires_checks or implementation['status'] == 'passed')
+            if requires_checks:
+                valid = valid and implementation == pair.get('implementation_checks')
         expected = ('review_required' if not targets else 'goal_met'
                     if any(all(met for met, _ in group) for group in checks) else 'revise_method'
                     if any(improved for group in checks for _, improved in group) else 'continue_research')
+        if requires_checks and pairs:
+            expected = ('goal_met' if targets and any(ok and all(met for met, _ in group)
+                        for ok, group in zip(verified, checks)) else 'verify_implementation'
+                        if not all(verified) else expected)
         if not pairs:
             candidates = [(t, m) for t, m in host_available.values() if m.get('role') == 'candidate' and m['plan_version'] == version]
             host_rows = [m for _, m in host_available.values()]

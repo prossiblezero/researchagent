@@ -32,6 +32,22 @@ class SessionModelTests(unittest.TestCase):
         reply=self.store.message(self.a,self.ca,'assistant',answer)
         return user,reply
 
+    def test_workspace_history_ranks_relevance_globally_before_top_k(self):
+        self.retriever._dense_attempted=True
+        chats=[]
+        for label,text in [('a-noise','alpha unrelated weather forecast'),
+                           ('z-target','alpha beta gamma research evidence')]:
+            chat=self.store.create_conversation(self.a,label)['id']
+            with closing(self.store._connect()) as db,db:
+                db.execute('UPDATE conversations SET id=? WHERE id=?',(label,chat))
+            self.store.message(self.a,label,'assistant',text)
+            chats.append(label)
+        hit=self.retriever.retrieve(self.a,'alpha beta gamma',corpus='history',
+            conversation_id=self.ca,scope='workspace',top_k=1)['results'][0]
+        self.assertEqual(hit['source_conversation_id'],'z-target')
+        self.assertIn('beta gamma',self.retriever.read(self.a,hit['ref_id'],
+            conversation_id=self.ca,allow_workspace=True)['content'])
+
     def test_legacy_migration_is_idempotent_and_preserves_all_messages(self):
         self.turn();other=self.store.create_conversation(self.a,'旧独立聊天')['id']
         self.store.message(self.a,other,'user','独立历史')

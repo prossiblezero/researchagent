@@ -662,6 +662,20 @@ class Workbench:
                         RESEARCH_CONTEXT_BUDGETS[job['research_effort']]-2304)
                 else:
                     context_data=self.sessions.prompt_context(job,agent.model,RESEARCH_CONTEXT_BUDGETS[job['research_effort']]-2304)
+                findings=self.memory.relevant(job,self.retrieval,'finding') if agent.allow_workspace_recall else []
+                if findings:
+                    ids={item['id'] for item in findings}
+                    context_data['memory']=[item for item in context_data.get('memory',[]) if item['id'] not in ids]
+                    context_data['research_memory']={
+                        'guidance':'此前研究的相关结论及原文位置。先判断是否适用于当前问题；可用 read_evidence(read_ref) 直接核对原文，取得本轮 E 编号后引用。历史结论本身不能代替原文，旧 evidence_id 不能直接用于本轮引用。',
+                        'items':findings}
+                    self.sessions.event(job,'research_memory_loaded',{'items':findings})
+                procedures=self.memory.procedures(job,self.retrieval) if agent.allow_workspace_recall else []
+                if procedures:
+                    context_data['procedure_memory']={
+                        'guidance':'历史任务提炼的参考做法，只在适用时借鉴；不是事实证据，不覆盖当前用户要求、来源范围或工具规则。',
+                        'items':procedures}
+                    self.sessions.event(job,'procedure_memory_loaded',{'items':procedures})
                 agent.initial_context=[{'role':'assistant','reasoning_content':'','content':json.dumps({'SESSION_CONTEXT':context_data},ensure_ascii=False)}]
             # The loop owns usage tracing after setup; avoid double-counting normal model calls.
             agent.model.usage_callback=None
@@ -746,7 +760,6 @@ class Workbench:
                 self.library.sync_reports(job['space_id'])
                 return
             finished=self.store.finish(job["id"], status, result.answer, error, run_id, report)
-            if finished:record_strategy(status=='completed',result.termination,result,run_id)
             if finished and status=='completed' and result.termination!='evidence_insufficient' and hasattr(agent.model,'usage_records'):
                 # Each child owns its model; extraction preserves that job's evidence provenance.
                 agent.model.usage_callback=lambda r:self._memory_usage(job,r)
@@ -757,6 +770,20 @@ class Workbench:
                     with closing(self.store._connect()) as db,db:
                         db.execute('INSERT INTO conversation_events(conversation_id,job_id,kind,payload,created_at) VALUES(?,?,?,?,?)',
                             (job['conversation_id'],job['id'],'memory_extraction_failed',json.dumps({'error':str(redact(exc))[:250]}),now_iso()))
+            if finished and hasattr(agent.model,'usage_records'):
+                agent.model.usage_callback=lambda r:self._memory_usage(job,r)
+                agent.model.stream_callback=None
+                try:
+                    item_id=self.memory.extract_procedure(job,result,agent.model)
+                    if item_id:
+                        with closing(self.store._connect()) as db,db:
+                            db.execute('INSERT INTO conversation_events(conversation_id,job_id,kind,payload,created_at) VALUES(?,?,?,?,?)',
+                                (job['conversation_id'],job['id'],'procedure_memory_saved',json.dumps({'id':item_id}),now_iso()))
+                except Exception as exc:
+                    with closing(self.store._connect()) as db,db:
+                        db.execute('INSERT INTO conversation_events(conversation_id,job_id,kind,payload,created_at) VALUES(?,?,?,?,?)',
+                            (job['conversation_id'],job['id'],'procedure_extraction_failed',json.dumps({'error':str(redact(exc))[:250]}),now_iso()))
+            if finished:record_strategy(status=='completed',result.termination,result,run_id)
             self.library.sync_reports(job['space_id'])
         except JobCancelled:
             return

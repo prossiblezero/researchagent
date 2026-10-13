@@ -16,11 +16,16 @@ class SourceExportTests(unittest.TestCase):
             keep = {"README.md", ".env.example", "datasets/tasks.json",
                     "tests/fixtures/input.json", "evals/run_all.py", "docs/tutorial/README.md",
                     "docs/index.md", "docs/_config.yml", "docs/_layouts/guide.html",
-                    "docs/assets/guide.css"}
+                    "docs/assets/guide.css",
+                    "evals/run_intent_routing_eval.py", "evals/run_judge_calibration.py",
+                    "evals/run_memory_learning_benchmark.py", "evals/run_qasper_memory.py",
+                    "docs/research/intent-routing-results-20261012.json",
+                    "docs/research/llm-judge-results-20261013.json"}
             exclude = {".env", "evals/reports/run.json", "evals/archives/old.py",
                        "evals/live_report.json", "evals/build_control_report.py",
                        "docs/snapshot.zip", "data/state.db", "traces/session.jsonl",
-                       "docs/private.html", "docs/assets/run.json", "docs/secret.yml"}
+                       "docs/private.html", "docs/assets/run.json", "docs/secret.yml",
+                       "docs/research/unlisted-results.json"}
             for name in keep | exclude:
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)

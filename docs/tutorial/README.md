@@ -2,11 +2,13 @@
 
 > 模型选择下一步，程序约束执行，证据支撑结论。
 
-想先连续读懂设计思路，可以从新的[项目学习手记](../index.md)开始（[网页阅读](https://prossiblezero.github.io/researchagent/)）。长文按 2026-10-11 的实现补充 Agentic RAG、作者／引用关系、核验恢复与最新实验口径；本套分章教程保留原编写日期，适合继续逐模块练习。
+想先连续读懂设计思路，可以从新的[项目学习手记](../index.md)开始（[网页阅读](https://prossiblezero.github.io/researchagent/)）。长文按 2026-10-11 的实现讲解 Agentic RAG、作者／引用关系和核验恢复，并于 2026-10-13 补充 Auto Research 的开源启发、设计和实验案例；本套分章教程适合继续逐模块练习。
 
-这套教程面向“刚接手项目，想快速读懂代码，并在面试中讲清楚”的读者。只需要基本的 Python、HTTP 和数据库知识。内容以 **2026-10-03 的当前源码**为准（编写时源码基线 `59327cb`）；历史测量会标明日期、数据范围和限制。
+这套教程面向“刚接手项目，想快速读懂代码，并在面试中讲清楚”的读者。只需要基本的 Python、HTTP 和数据库知识。主体按 **2026-10-03 的源码快照**编写（基线 `59327cb`），后续补充在相应章节标注日期；历史测量会标明日期、数据范围和限制。
 
 项目已经有 Stage 1–7、H1–H3、V1–V4 等多条历史文档线。本教程按理解依赖重新组织：先跑最小循环，再看工作台如何保存任务，最后进入自动研究和实测评估。章节编号是阅读顺序，不表示仓库存在对应的独立历史版本。
+
+想集中理解 Auto Research，可以先读[学习手记第十节](../index.md#auto-research)的设计故事和[两项实验案例](../index.md#auto-research-results)，再读[第 08 章](08-auto-research.md)的开源机制映射、接口和源码练习。
 
 ## 先用一句话认识项目
 
@@ -53,7 +55,7 @@ flowchart LR
 | [05 混合检索与原文阅读](05-retrieval.md) | 召回候选之后还要打开原文 | `library.py`、`retrieval.py` |
 | [06 记忆与上下文](06-memory-context.md) | 原始记录、可用记忆和当前输入分层 | `sessions.py`、`memory.py`、`context.py` |
 | [07 长任务的恢复与可观察性](07-recovery.md) | 从已提交检查点继续，拒绝旧代次写回 | `sessions.py`、`trace.py`、`usage.py` |
-| [08 Auto Research 与编码实验](08-auto-research.md) | 研究决策、代码实现和宿主测量分工 | `auto_research.py`、`coding_tool.py` |
+| [08 Auto Research 与编码实验](08-auto-research.md) | 开源启发、研究反馈与两项实测案例 | `auto_research.py`、`coding_tool.py` |
 | [09 有限 Multi-Agent 并行](09-parallel-research.md) | 原子委派、独立上下文、等待汇合 | `auto_research.py`、`workbench_store.py` |
 | [10 评测与反馈策略](10-evaluation.md) | 每个数字都要有分母、条件和证据 | `evals/`、`datasets/`、`strategies.py` |
 | [11 面试讲解与演示](11-interview.md) | 用问题、机制、证据、取舍组织表达 | 上述模块与历史报告 |

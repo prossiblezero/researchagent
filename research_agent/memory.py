@@ -72,7 +72,7 @@ class Memory:
     def add(self,space_id,content,kind,refs,*,status='candidate',supersedes=None,scope='session'):
         if scope not in {'session','workspace','global'} or (scope=='global' and kind!='preference'):
             raise ValueError('只有用户偏好可以自动应用到所有研究区；结论请按需检索')
-        if not isinstance(content,str) or not 1<=len(content.strip())<=2000 or kind not in {'preference','finding','decision'}:
+        if not isinstance(content,str) or not 1<=len(content.strip())<=2000 or kind not in {'preference','finding','decision','procedure'}:
             raise ValueError('invalid memory content/kind')
         if not isinstance(refs,list) or not refs or any(not isinstance(r,dict) or not r.get('ref') for r in refs):
             raise ValueError('memory requires original source references')
@@ -158,7 +158,7 @@ class Memory:
     def snapshot(self,space_id,conversation_id,budget=1024,turn_seq=None):
         with closing(self.store._connect()) as db,db:
             conversation=self.store._require(db,'conversations',conversation_id,space_id)
-            records=[dict(r) for r in db.execute("SELECT * FROM memory_items WHERE (space_id=? OR (scope='global' AND kind='preference')) AND status IN ('confirmed','evidence_checked') AND deleted_at IS NULL AND (valid_until IS NULL OR valid_until>=?) ORDER BY kind='preference' DESC,updated_at DESC,id",(space_id,now_iso()[:10])) if self.visible(db,r,conversation_id,turn_seq)][:8]
+            records=[dict(r) for r in db.execute("SELECT * FROM memory_items WHERE (space_id=? OR (scope='global' AND kind='preference')) AND kind!='procedure' AND status IN ('confirmed','evidence_checked') AND deleted_at IS NULL AND (valid_until IS NULL OR valid_until>=?) ORDER BY kind='preference' DESC,updated_at DESC,id",(space_id,now_iso()[:10])) if self.visible(db,r,conversation_id,turn_seq)][:8]
             selected=[];remaining=budget*3
             for r in records:
                 item={'id':r['id'],'content':r['content'],'kind':r['kind'],'status':r['status'],'scope':r['scope'],'source_space_id':r['space_id'],'sources':json.loads(r['source_refs']),'updated_at':r['updated_at']}
@@ -167,6 +167,49 @@ class Memory:
                     selected.append(item);remaining-=size
             db.execute('UPDATE conversations SET memory_snapshot=? WHERE id=?',(json.dumps(selected,ensure_ascii=False),conversation_id))
             return selected
+
+    def procedures(self,job,retriever):
+        return self.relevant(job,retriever,'procedure')
+
+    def relevant(self,job,retriever,kind):
+        """Reuse up to two relevant findings or lessons from this workspace."""
+        if kind not in {'finding','procedure'}:
+            raise ValueError('invalid recalled memory kind')
+        if re.search(r'(?:不|不要|禁止)(?:使用|检索|读取|参考).{0,8}(?:历史|记忆|经验)',job['question']):
+            return []
+        with closing(self.store._connect()) as db:
+            if not db.execute("SELECT 1 FROM memory_items WHERE space_id=? AND kind=? AND status IN ('candidate','confirmed','evidence_checked') AND deleted_at IS NULL AND (valid_until IS NULL OR valid_until>=?) LIMIT 1",(job['space_id'],kind,now_iso()[:10])).fetchone():
+                return []
+        hits=retriever.retrieve(job['space_id'],job['question'][:2000],corpus='memory',
+            conversation_id=job['conversation_id'],turn_seq=job['turn_seq'],
+            scope='current' if kind=='procedure' else 'workspace',
+            top_k=6,token_budget=1200,memory_kind=kind)['results']
+        with closing(self.store._connect()) as db:
+            selected=[]
+            for hit in hits:
+                row=db.execute('SELECT * FROM memory_items WHERE id=? AND space_id=?',
+                    (hit['owner_id'],job['space_id'])).fetchone()
+                if (row and row['kind']==kind and (kind!='procedure' or row['scope']=='workspace') and not row['deleted_at']
+                        and row['status'] in ({'candidate','confirmed','evidence_checked'} if kind=='procedure' else {'confirmed','evidence_checked'})
+                        and (not row['valid_until'] or row['valid_until']>=now_iso()[:10])
+                        and row['id'] not in {r['id'] for r in selected}
+                        and self.visible(db,row)):
+                    selected.append({'id':row['id'],'content':row['content'][:800],
+                                     'sources':[{k:v for k,v in ref.items() if k!='quote'}
+                                                for ref in json.loads(row['source_refs'])]})
+                    if len(selected)==2:
+                        break
+            return selected
+
+    def extract_procedure(self,job,result,model):
+        from .experience import distill_procedure
+        item=distill_procedure(job['question'],result,model)
+        if not item:
+            return None
+        content='适用场景：'+item['when']+'\n建议做法：'+item['lesson']
+        return self.add(job['space_id'],content,'procedure',
+            [{'ref':job['id']+':procedure','job_id':job['id'],
+              'outcome':result.termination,'origin':'observed_task_trajectory'}],scope='workspace')
 
     def extract(self,job,result,model):
         """One low-priority extraction after a substantive answer; no inferred preferences."""
@@ -187,6 +230,8 @@ class Memory:
                 if not e or not isinstance(quote,str) or len(quote)<12 or quote not in e.content:
                     continue
                 ref={'ref':job['id']+':'+e.evidence_id,'job_id':job['id'],'evidence_id':e.evidence_id,'source_id':e.source_id,'content_hash':e.content_hash,'quote':quote}
+                if e.kind.startswith('local:') and e.provenance.get('chunk_id') is not None:
+                    ref.update(read_ref=e.kind.split(':',1)[1],source_title=e.title)
                 key=self.add(job['space_id'],item.get('content'),'finding',[ref])
                 if key:
                     saved.append({'id':key,'content':item['content'],'source':quote})

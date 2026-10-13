@@ -32,11 +32,13 @@ research工具会复用完整研究Agent进行定向检索、原文阅读和核�
 save_plan保存不可变方案版本，区分已读事实、待验证假设、方法变化、风险与验证。三个备选课题不等于同一方法的三个贡献。
 复现baseline时优先使用并固定官方实现，方案中记录论文公式/算法定义、来源版本及实际采用的设置。自写实现须先用可手算例子或官方实现对照核对关键计算，再修改方法；公式或设置不同应明确命名为变体，不能只因脚本能运行、指标可复算就称标准baseline已复现。评分器、数据和baseline实现应与候选方法分离并冻结，候选迭代不得顺带改变比较基线。
 coding_agent是你的工具，不是研究目标的决策者。保存方案后可按当前需要委派实现/复现/实验，宿主运行commands中的项目Python脚本并采集JSON metrics。若方案需要实验模型，coding_agent/run_experiments可声明model_requests；请求文件由编码代码生成，宿主在沙箱外调用指定模型并写回响应JSONL，实验代码永远拿不到模型凭据。
+固定数据和评分器已准备好时，围绕一个可检验的机制改动完成首轮对照。委派task须保留用户要求的最终产物与最小计算核验，不能把必需交付改为可选。已知可运行的评分命令时，同次委派在commands显式安排baseline/candidate，不要仅安排schema检查。编码Agent可以把开发集自测结果写入用户要求的提交文件并标注来源，但主控仍须等待宿主复测才能据此下结论；不能以等待宿主测量为由让提交文件一直缺失。先完成一次实现、对照与交付，再做额外调参。数据schema与少量失败样本足够指导首次实现时，不要反复读取完整数据。
 记忆演化等实验需要根据上次模型回答构造下次请求时，model_requests使用mode=stdio并指定model_id/max_requests/seconds，不指定文件路径。实验脚本逐行输出RESEARCH_MODEL_REQUEST 加 {id,messages} JSON并flush，再从stdin读取一行宿主响应；每个命令内id唯一，所有命令共享已授权模型预算。普通日志不能使用该保留前缀。批量JSONL模式继续使用input_path/output_path。
 编码工具summary属于编码Agent自述，可能包含自测数字；即使自述成功，也不能当作宿主实测。host_measurements_available为false时，先用run_experiments确认需要作为研究判断依据的结果，再将其表述为已测结论；可以根据自述提出待确认假设。最终数字与比较以有效measurements为准，不混用编码自测的时间或凭摘要补全缺失指标。
-每个commands条目输出自己独立的JSON，含metrics及config（dataset、dataset_version、split、seeds、参数）；baseline/candidate/ablation分别列出命令、role和不同result_path，可共用脚本和不同参数。只在自然语言要求三种实验却仅声明一个candidate命令，宿主无法识别全部实验。对比和消融应采用一致数据与评分方法；项目自写评分逻辑不是独立科学验证。样本gold标签或gold证据仅用于训练监督/评分，不能作为验证集输入特征或选文依据。收到有效宿主结果后，先调用assess_results记录同条件比较和下一步建议，再决定继续调研、保存新方案、重跑或finish_research；建议不是科学有效性结论。
+每个commands条目输出自己独立的JSON，含metrics及config（dataset、dataset_version、split、seeds、参数）；baseline/candidate/ablation分别列出命令、role和不同result_path，可共用脚本和不同参数。只在自然语言要求三种实验却仅声明一个candidate命令，宿主无法识别全部实验。对比和消融应采用一致数据与评分方法；项目自写评分逻辑不是独立科学验证。样本gold标签或gold证据仅用于训练监督/评分，不能作为验证集输入特征或选文依据。收到有效宿主结果后，先调用assess_results记录同条件比较和下一步建议；verify_implementation表示需补充或修复同源码diagnostic核验，即使数值已达标也不能直接goal_met，再决定继续调研、保存新方案、重跑或finish_research；建议不是科学有效性结论。
 代码报错时分析实现问题；代码正常而假设未获支持时检查方法和证据，可补调研、修订方案、再委派。失败的coding结果会列出可修复源码和宿主stderr；修复任务只编辑这些源码，不要把它们重新列入protected_files，修复后必须由宿主重新测量。不能只为分数改标签、评分器或研究目标。
-编码环境无网络；prepare_project可在宿主准备公开源码/数据和固定版本Python wheel依赖，再交给隔离编码环境使用。GitHub来源用仓库主页URL，自动锁定提交。不要自行在编码任务中创建.venv，独立环境由准备工具管理。仅支持wheel依赖，源码编译或外部GPU系统组件缺失时如实报告，不伪造结果。inspect的files/file读取当前项目目录/文件，id填current即可在编码之前检查数据schema；它不是资料库检索。protected_files指定整个课题跨轮次冻结的评分器/输入数据，后续委派会继承；不要把需要继续修改的算法文件或仍需写入的缓存、检查点、预测输出目录列入。目录保护涵盖所有子路径：已有只读缓存快照只冻结具体文件，新输出使用可写目录。遇到PermissionError先核对返回的protected_files与写入路径；受保护目录内换临时文件名仍不可写，不得修改ACL或解除保护来修复。run_experiments自动在单次测量期间冻结所有源码，无须为此加入protected_files。代码与评分混在一起时，应先分离固定评分入口和可变算法模块再冻结。编码token预算是累计输入（含缓存）加输出，并非单轮输出上限；CLI可能超出本次预留，宿主保留超限事实并按真实用量扣减。已有实现只需运行/复核时用run_experiments，不必再启动Codex；它使用独立实验时间预算，冻结本次代码并重新测量，不能直接相信旧JSON。每次委派应分配足以完成任务的预算，remaining_execution显示剩余额度。单次编码超额不等于累计预算耗尽，仍有次数和额度时可重新分配后续编码额度修复问题；不要因一次超额误报整项研究预算耗尽。预算确实不足时报告保留成果。
+recent_execution_feedback保留近期宿主执行事实，历史失败不表示当前仍未解决；结合后续测量判断，省略详情可用对应task_id的inspect(kind=coding)恢复。进程退出成功但结果缺失时先核对脚本实际输出与command.result_path；未产生有效宿主测量不能据编码自述判定方法有效。实验commands的seconds之和不能超过剩余experiment_seconds。昂贵模型实验前可单独委派不含model_requests的diagnostic检查参数、输出契约或关键计算；同次批量model_requests会先于commands执行，不能用它搭配诊断来节省该批调用。
+编码环境无网络；prepare_project可在宿主准备公开源码/数据和固定版本Python wheel依赖，再交给隔离编码环境使用。GitHub来源用仓库主页URL，自动锁定提交。不要自行在编码任务中创建.venv，独立环境由准备工具管理。仅支持wheel依赖，源码编译或外部GPU系统组件缺失时如实报告，不伪造结果。inspect的files/file读取当前项目目录/文件，id填current即可在编码之前检查数据schema；它不是资料库检索。protected_files指定整个课题跨轮次冻结的评分器/输入数据，后续委派会继承；不要把需要继续修改的算法文件或仍需写入的缓存、检查点、预测输出目录列入。目录保护涵盖所有子路径：已有只读缓存快照只冻结具体文件，新输出使用可写目录。遇到PermissionError先核对返回的protected_files与写入路径；受保护目录内换临时文件名仍不可写，不得修改ACL或解除保护来修复。run_experiments自动在单次测量期间冻结所有源码，无须为此加入protected_files。代码与评分混在一起时，应先分离固定评分入口和可变算法模块再冻结。编码token预算是累计输入（含缓存）加输出，并非单轮输出上限；CLI可能超出本次预留，宿主保留超限事实并按真实用量扣减。已有实现只需运行/复核时用run_experiments，不必再启动Codex；它使用独立实验时间预算，冻结本次代码并重新测量，不能直接相信旧JSON。coding_agent的时间/token由宿主按用户授权的剩余额度分配，工具参数不提供这两个额度字段；任务结束按实耗扣账，未用完额度可供后续任务继续使用。不要自行均分编码额度或凭输出长度估算额度。remaining_execution显示剩余额度。单次编码超额不等于累计预算耗尽，仍有次数和额度时可重新分配后续编码额度修复问题；不要因一次超额误报整项研究预算耗尽。预算确实不足时报告保留成果。
 编码返回source_changes是宿主实际源码差异；为空时仅表示复用或未改动，不得宣称已经实现新方法。protected_files列出已继承的冻结路径，repairable_files列出可继续修改的已测源码。
 完成时调用finish_research。reported表示本轮交付研究报告，blocked表示具体外部条件阻塞，budget_exhausted表示预算不足；均不冒充目标达成。
 goal_met仅当用户冻结的数值目标被宿主实测支持时允许；发表质量/全领域SOTA不能仅靠本项目分数证明。不输出私有思维链，只给可核查的决策理由。'''
@@ -53,7 +55,8 @@ PROTECTED_FILES = {**STRINGS, 'description': '整个课题跨轮次冻结的评�
 INTEGER = {'type': 'integer'}
 COMMAND = {'type': 'object', 'properties': {
     'name': STRING, 'role': {'type': 'string', 'enum': ['baseline', 'candidate', 'ablation', 'diagnostic']},
-    'script': STRING, 'args': STRINGS, 'result_path': STRING, 'seconds': {'type': 'integer'}},
+    'script': {**STRING, 'description': '项目内真实Python文件相对路径，如evaluate.py；不是任务描述。'},
+    'args': STRINGS, 'result_path': {**STRING, 'description': '本命令输出的项目内JSON相对路径，如results/candidate.json。'}, 'seconds': {'type': 'integer'}},
     'required': ['name', 'role', 'script', 'args', 'result_path', 'seconds'], 'additionalProperties': False}
 MODEL_REQUESTS = {'type': 'object', 'properties': {
     'mode': {'type': 'string', 'enum': ['stdio'], 'description': '连续交互设置stdio且不提供文件路径；批量JSONL省略mode并指定输入输出路径。'},
@@ -81,19 +84,20 @@ TOOLS = [
             'evidence': {'type': 'array', 'items': {'type': 'object', 'properties': {'job_id': STRING, 'evidence_id': STRING},
                                                    'required': ['job_id', 'evidence_id'], 'additionalProperties': False}}},
            ['title', 'baseline', 'hypothesis', 'method', 'validation', 'risks', 'contributions', 'evidence']),
-    schema('coding_agent', '委派Codex实现已保存方案；结果由宿主运行项目脚本采集，完成后回到本研究。',
+    schema('coding_agent', '委派Codex实现已保存方案；纯代码任务可省略commands或传[]，结果需后续run_experiments实测。',
            {'plan_version': {'type': 'integer'}, 'task': STRING, 'commands': {'type': 'array', 'items': COMMAND},
-            'seconds': {'type': 'integer'}, 'token_budget': {'type': 'integer'},
+            'seconds': {'type': 'integer', 'minimum': 30, 'maximum': 7200, 'description': '可省略：宿主使用剩余编码时间，最多7200秒。仅有明确短任务上限时填写。'},
+            'token_budget': {'type': 'integer', 'minimum': 2000, 'maximum': 2000000, 'description': '可省略：宿主使用剩余累计编码token，最多200万；含每次输入及缓存，不能按输出长度估算。'},
             'model_requests': MODEL_REQUESTS,
             'protected_files': PROTECTED_FILES},
-           ['plan_version', 'task', 'commands', 'seconds', 'token_budget']),
+           ['plan_version', 'task']),
     schema('run_experiments', '在已有方案和代码上直接运行实验；不调用Codex、不消耗编码次数/token，使用剩余实验时间。',
            {'plan_version': {'type': 'integer'}, 'commands': {'type': 'array', 'items': COMMAND},
             'model_requests': MODEL_REQUESTS,
             'protected_files': PROTECTED_FILES}, ['plan_version', 'commands']),
     schema('assess_results', '根据宿主有效 measurement 和同条件 baseline/candidate 配对生成可核查的下一步建议；不替代研究模型判断。',
            {'plan_version': INTEGER}, ['plan_version']),
-    schema('inspect', '查看本研究的历史子任务/编码结果，或读取项目文件、原文证据的指定窗口。',
+    schema('inspect', '查看历史任务、方案或证据。列目录用kind=files；读取文件正文用kind=file，path为项目内相对路径。',
            {'kind': {'type': 'string', 'enum': ['research', 'coding', 'files', 'file', 'evidence', 'plan']},
             'id': STRING, 'path': STRING, 'offset': {'type': 'integer'},
             'find_text': {'type': 'string', 'minLength': 1, 'maxLength': 200,
@@ -318,6 +322,25 @@ class AutoResearch:
                     raise ValueError('Inspection metadata exceeds the tool context budget')
                 content = content[:len(content) // 2]
 
+        if isinstance(result, dict) and isinstance(result.get('comparable_pairs'), list):
+            value = {key: result[key] for key in ('plan_version', 'measurement_count', 'input_fingerprint',
+                     'recommendation', 'next_action', 'reason', 'implementation_checks_required',
+                     'scientific_effect_verified') if key in result}
+            value['comparable_pairs'] = []
+            for pair in result['comparable_pairs'][:MODEL_TOOL_LIST_LIMIT]:
+                row = cls.context_result(pair)
+                if not row.get('task_id'):
+                    row = {key: pair[key] for key in ('task_id', 'candidate', 'baseline_task_id', 'baseline')}
+                    row['implementation_checks'] = {'status': pair.get('implementation_checks', {}).get('status'),
+                                                    'details_omitted': True}
+                proposal = {**value, 'comparable_pairs': [*value['comparable_pairs'], row]}
+                if len(json.dumps(proposal, ensure_ascii=False)) > MODEL_TOOL_RESULT_LIMIT:
+                    break
+                value = proposal
+            if len(value['comparable_pairs']) < len(result['comparable_pairs']):
+                value['_context_truncated'] = True
+            return value
+
         if isinstance(result, dict) and result.get('kind') == 'research_parallel':
             # Keep each branch identifiable even when a full pair of reports exceeds context.
             rows = []
@@ -396,6 +419,10 @@ class AutoResearch:
         def measurement_view(item, minimal=False):
             row = {key: item[key] for key in ('name', 'role', 'valid', 'metrics', 'failure_examples', 'input_summary',
                     'error', 'metric_origin', 'execution') if key in item}
+            audit = item.get('implementation_checks')
+            if isinstance(audit, dict):
+                row['implementation_checks'] = {key: audit[key] for key in ('status', 'case_count', 'error') if key in audit}
+                row['implementation_checks']['failed_cases'] = audit.get('failed_cases', [])[:3]
             if isinstance(row.get('input_summary'), dict):
                 summary = row['input_summary']
                 row['input_summary'] = {key: summary[key] for key in
@@ -668,6 +695,43 @@ class AutoResearch:
             result['omitted_files'] += 1
         return result
 
+    def execution_feedback(self, job, state):
+        """Keep recent host failures inspectable after old tool pairs are evicted.
+
+        This is historical feedback, not a claim that an earlier failure remains
+        unresolved. Agent summaries and self-reported scores are never copied.
+        """
+        rows = []
+        for task_id in state['coding'][-3:]:
+            task = self.app.coding.get(job['space_id'], task_id)
+            if task['job_id'] != job['id']:
+                raise NotFound('编码任务不属于当前目标')
+            request, result = task['request'], task['state']
+            measurements = result.get('measurements', [])
+            invalid = [m for m in measurements if m.get('valid') is not True]
+            row = {'task_id': task_id, 'status': task['status'],
+                   'operation': 'run_experiments' if request.get('execution_only') else 'coding_agent',
+                   'valid_measurement_count': sum(m.get('valid') is True for m in measurements),
+                   'invalid_measurement_count': len(invalid),
+                   'error': str(result.get('error') or '')[-400:]}
+            if invalid:
+                failed = invalid[0]
+                receipt = failed.get('receipt', {})
+                command = next((c for c in request.get('commands', []) if c['name'] == failed.get('name')), {})
+                row['failed_measurement'] = {
+                    'name': failed.get('name'), 'role': failed.get('role'), 'command': command,
+                    'error': str(failed.get('error') or receipt.get('model_error') or '')[-500:],
+                    'exit_code': receipt.get('exit_code'), 'termination': receipt.get('termination'),
+                    'stderr_tail': str(receipt.get('stderr') or '')[-700:]}
+                if len(json.dumps(row, ensure_ascii=False)) > 2400:
+                    # Never show a silently truncated argv as an executable command.
+                    row['failed_measurement']['command'] = {'details_omitted': True}
+                    row['details_omitted'] = True
+            rows.append(row)
+        while rows and len(json.dumps(rows, ensure_ascii=False)) > MODEL_TOOL_RESULT_LIMIT:
+            rows.pop(0)
+        return {'items': rows, 'omitted_tasks': len(state['coding']) - len(rows)}
+
     def decide(self, job, state, config, event):
         directory = self.store.path.resolve().parent / 'auto-research' / job['id']
         directory.mkdir(parents=True, exist_ok=True)
@@ -690,8 +754,15 @@ class AutoResearch:
         overview['reading_progress'] = self.reading_progress(state['messages'])
         overview['recent_experiment_comparisons'] = self.measurement_summary(job, state)['comparisons'][-60:]
         overview['recent_result_assessments'] = state.get('assessments', [])[-3:]
+        overview['recent_execution_feedback'] = self.execution_feedback(job, state)
         messages = [{'role': 'system', 'content': SYSTEM + '\n' + EXPERIMENT_RESULT_CONTRACT}, {'role': 'user', 'content': json.dumps(overview, ensure_ascii=False)}]
-        tools = TOOLS
+        # The host allocates authorized remaining resources; keep legacy fields
+        # in TOOLS so persisted calls can still be replayed with their original cap.
+        tools = json.loads(json.dumps(TOOLS))
+        for tool in tools:
+            if tool['function']['name'] == 'coding_agent':
+                for key in ('seconds', 'token_budget'):
+                    tool['function']['parameters']['properties'].pop(key)
         closing = overview['remaining_decisions_including_current'] == 1
         if closing:
             tools = [tool for tool in TOOLS if tool['function']['name'] == 'finish_research']
@@ -726,8 +797,16 @@ class AutoResearch:
         self.current(job)
         name, args, call_id = decision['tool_name'], decision['arguments'], decision['call_id']
         specification = next((t['function']['parameters'] for t in TOOLS if t['function']['name'] == name), None)
-        if not specification or not isinstance(args, dict) or set(args) - set(specification['properties']) or set(specification['required']) - set(args):
-            raise ValueError('未知工具或参数字段')
+        if not specification:
+            raise ValueError('未知工具：' + str(name))
+        if not isinstance(args, dict):
+            raise ValueError(name + '参数必须为对象')
+        missing = set(specification['required']) - set(args)
+        unknown = set(args) - set(specification['properties'])
+        if missing or unknown:
+            details = (['缺少必填字段：' + ', '.join(sorted(missing))] if missing else [])
+            details += ['未知字段：' + ', '.join(sorted(unknown))] if unknown else []
+            raise ValueError(name + '；' + '；'.join(details))
         if name == 'prepare_project':
             from .research_project import prepare
             result = prepare(self.app, job, args, call_id)
@@ -910,7 +989,7 @@ class AutoResearch:
                         prior.get('input_fingerprint') == item['input_fingerprint']
                         and prior.get('recommendation') == 'goal_met'
                         for prior in state.get('assessments', [])) for item in current):
-                    raise Conflict('请先调用assess_results核对当前方案与宿主测量；需同条件实测满足冻结目标，且测量与已保存评估一致。未达标可reported交付。')
+                    raise Conflict('请先调用assess_results核对当前方案与宿主测量；需同条件实测满足冻结目标、同源码实现核验通过，且测量与已保存评估一致。未达标可reported交付。')
             state.update(outcome=args['outcome'], summary=text_field(args['summary'], '研究结论', 12000),
                          limitations=text_field(args['limitations'], '限制与未完成项', 4000, empty=True))
             return {'ok': True, 'outcome': state['outcome']}
@@ -921,7 +1000,8 @@ class AutoResearch:
         """Derive comparison provenance from host receipts, never result JSON fields."""
         request, state = task['request'], task['state']
         version = json.loads(request['plan'])['version']
-        source = state.get('after')
+        # Prefer host byte hashes: persisted source text may have been redacted.
+        source = state.get('readonly_source_sha256') or state.get('after')
         revision = hashlib.sha256(json.dumps(source, sort_keys=True).encode()).hexdigest() if source else ''
         rows = []
         contract = request.get('metric_contract') or {}
@@ -988,6 +1068,24 @@ class AutoResearch:
         return [m for m in matches if m['plan_version'] == candidate['plan_version']
                 and candidate['source_revision'] and candidate['source_revision'] == m['source_revision']]
 
+    @staticmethod
+    def implementation_evidence(candidate, measurements):
+        """Only host diagnostic receipts for this exact plan/source can support completion."""
+        matches = [m for m in measurements if m.get('role') == 'diagnostic'
+                   and (m.get('implementation_checks') is not None or m.get('valid') is not True)
+                   and m['plan_version'] == candidate['plan_version']
+                   and candidate['source_revision'] and m['source_revision'] == candidate['source_revision']]
+        checks = []
+        for row in matches:
+            audit, receipt = row.get('implementation_checks') or {}, row.get('receipt', {})
+            passed = (row.get('valid') is True and receipt.get('termination') == 'completed'
+                      and receipt.get('exit_code') == 0 and audit.get('status') == 'passed'
+                      and type(audit.get('case_count')) is int and audit['case_count'] >= 2)
+            checks.append({'task_id': row['task_id'], 'name': row.get('name'),
+                           'status': 'passed' if passed else 'failed', 'case_count': audit.get('case_count', 0)})
+        return {'status': ('passed' if all(c['status'] == 'passed' for c in checks) else 'failed') if checks else 'missing',
+                'source_revision': candidate['source_revision'], 'checks': checks}
+
     def assess_results(self, job, state, config, plan_version):
         """Create a bounded, receipt-based next-step recommendation for the model."""
         measurements, receipts = [], []
@@ -1021,14 +1119,20 @@ class AutoResearch:
                           'baseline': baseline.get('name'), 'baseline_task_id': baseline['task_id'],
                           'baseline_plan_version': baseline['plan_version'],
                           'candidate_metrics': candidate.get('metrics', {}),
-                          'baseline_metrics': baseline.get('metrics', {}), 'targets': checks})
+                          'baseline_metrics': baseline.get('metrics', {}), 'targets': checks,
+                          'implementation_checks': self.implementation_evidence(candidate,
+                              [m for receipt in receipts for m in receipt['measurements']])})
         if not pairs:
             recommendation = 'collect_measurements' if not measurements or not candidates else 'blocked'
             next_action = 'run_experiments_or_repair' if recommendation == 'collect_measurements' else 'inspect_conditions'
             reason = '尚无同条件且有效的 baseline/candidate 宿主测量配对。'
-        elif targets and any(all(check['met'] for check in pair['targets']) for pair in pairs):
+        elif targets and any(pair['implementation_checks']['status'] == 'passed'
+                             and all(check['met'] for check in pair['targets']) for pair in pairs):
             recommendation, next_action = 'goal_met', 'finish_research_goal_met'
-            reason = '至少一组同条件 candidate 满足用户冻结的全部数值目标；仍需由研究模型核对方法与科学限制。'
+            reason = '至少一组同条件 candidate 满足全部冻结数值目标，且同源码的基线等价与计算样例核验通过；参考正确性、覆盖和科学效果仍待审查。'
+        elif any(pair['implementation_checks']['status'] != 'passed' for pair in pairs):
+            recommendation, next_action = 'verify_implementation', 'run_experiments_diagnostic'
+            reason = '实测分数已保留，但同方案、同源码的实现核验缺失或失败；先用diagnostic检查关闭改进后的基线等价性和关键计算样例，再评估。'
         elif targets:
             any_improvement = any(check['improved_over_baseline'] for pair in pairs for check in pair['targets'])
             recommendation, next_action = ('revise_method', 'research_then_save_new_plan') if any_improvement else ('continue_research', 'research_or_change_method')
@@ -1039,14 +1143,16 @@ class AutoResearch:
         # Preserve the evidence that determines the recommendation before either
         # the saved-pair limit or model-context compression truncates the list.
         pairs.sort(key=lambda pair: (
-            bool(targets) and all(check['met'] for check in pair['targets']),
+            recommendation == 'verify_implementation' and pair['implementation_checks']['status'] != 'passed',
+            bool(targets) and pair['implementation_checks']['status'] == 'passed' and all(check['met'] for check in pair['targets']),
+            pair['implementation_checks']['status'] == 'passed',
             any(check['improved_over_baseline'] for check in pair['targets'])), reverse=True)
         return {'plan_version': plan_version, 'measurement_count': len(measurements),
                 'input_fingerprint': self.decision_fingerprint('assess_results', {
                     'plan': state['plans'][plan_version - 1], 'targets': targets, 'receipts': receipts}),
                 'comparable_pairs': pairs[:60], 'recommendation': recommendation,
                 'next_action': next_action, 'reason': reason,
-                'scientific_effect_verified': False}
+                'implementation_checks_required': True, 'scientific_effect_verified': False}
 
     @staticmethod
     def comparable(candidate, baseline, require_script=True):
@@ -1237,6 +1343,15 @@ class AutoResearch:
             lines.append('\n'.join(table))
         else:
             lines.append('尚无有效宿主测量；编码 Agent 自述或项目中的旧 JSON 不计入此表。')
+        lines += ['## 实现核验',
+                  '目标完成还要求同方案、同源码的基线等价与关键计算样例通过宿主比较。样例与预期值由项目提供，通过不等于参考正确、覆盖充分或科学效果已证实。']
+        checks = [m for m in measured['measurements'] if m.get('implementation_checks')]
+        for item in checks:
+            audit = item['implementation_checks']
+            status = '通过' if item['valid'] is True and audit['status'] == 'passed' else '失败'
+            lines.append(f"- 方案 {item['plan_version']} / {cell(item['name'])}：{status}；已比较 {audit['case_count']} 个样例。")
+        if not checks:
+            lines.append('尚无实现核验记录，不能仅凭分数达标判定目标完成。')
         if measured['host_models']:
             lines.append('## 宿主实验模型调用')
             for item in measured['host_models']:

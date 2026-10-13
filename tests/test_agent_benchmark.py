@@ -93,6 +93,8 @@ class BenchmarkChecks(unittest.TestCase):
                     return ModelDecision('final',content='The report uses TableFormer. ['+payload['evidence_id']+']')
                 elif '提取值得跨会话' in prompt:
                     result={'items':[]}
+                elif '提炼至多一条' in prompt:
+                    result={'skip':True}
                 else:
                     result={'criteria':[{'id':0,'met':True,'reason':'The statement matches the quoted source.'}],'grounded':True,'contradictions':[]}
                 return ModelDecision('final',content=json.dumps(result))
@@ -103,8 +105,8 @@ class BenchmarkChecks(unittest.TestCase):
             args=SimpleNamespace(model='default',judge='default',download_root=Path(folder)/'downloads')
             row=workbench_trial(spec,case,args,corpus,Path(folder))
             self.assertTrue(row['passed'])
-            self.assertEqual(row['model_requests'],5)
-            self.assertEqual(row['usage']['complete_token_total']['total_tokens'],75)
-            self.assertEqual([c['phase'] for c in row['calls']],['route','workbench','workbench','workbench','workbench','judge'])
+            self.assertEqual(row['model_requests'],6)
+            self.assertEqual(row['usage']['complete_token_total']['total_tokens'],90)
+            self.assertEqual([c['phase'] for c in row['calls']],['route','workbench','workbench','workbench','workbench','workbench','judge'])
 
 if __name__=='__main__':unittest.main()

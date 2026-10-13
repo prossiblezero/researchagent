@@ -152,6 +152,8 @@ Auto Research 运行中，新消息仍按用户意图区分：状态询问/解�
 
 ## 10. 已查阅的开源实现与取舍
 
+2026-10-13补充：开源机制与当前代码的集中映射、设计说明和面试表达见[Auto Research 教程](tutorial/08-auto-research.md)“开源启发与本项目的设计”一节；本节保留最初阅读记录。
+
 2026-09-29 只读查询公开 GitHub，并阅读以下固定提交实现，没有运行其代码或安装依赖：
 
 - [RD-Agent RDLoop](https://github.com/microsoft/RD-Agent/blob/484776c211e4fbbeef03e0ec00d6bbee7362a4f4/rdagent/components/workflow/rd_loop.py)：`_propose` 从 trace 生成假设，`_exp_gen` 转实验，`coding/running/feedback/record` 把实测反馈写回历史。借鉴“实验反馈进入下一轮研究假设”的连接；沿用本项目简单控制器，不移植其框架、并行 DAG 或金融场景。

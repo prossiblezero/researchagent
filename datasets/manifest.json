@@ -1,6 +1,6 @@
 {
   "schema": "researchagent-dataset-catalog/v1",
-  "generated_at": "2026-09-29",
+  "generated_at": "2026-10-13",
   "canonical_root": "datasets/",
   "interpretation": {
     "active_benchmark_claim": "公开基准固定子集 + 项目历史回归；按真实产品调用链分轨报告，非官方榜单成绩。旧 mixed-v1 仅为简化规则诊断，不是产品能力。",
@@ -856,6 +856,18 @@
       "sha256": "9496e53a83e4741657baee4ecc484d82666dfd74f8635ba620b76b72b8956ee4"
     },
     {
+      "id": "auto-research-decisions-v1",
+      "path": "datasets/project/auto-research-decisions-v1.json",
+      "kind": "decision_replay_regression",
+      "provenance": "project_authored_from_historical_campaigns",
+      "status": "used",
+      "case_count": 8,
+      "source_run_count": 3,
+      "split": "development",
+      "description": "Eight next-action checkpoints from three historical SciFact, QASPER and A-MEM campaigns; correlated development cases, not independent research tasks or scientific-effect verification.",
+      "sha256": "22b95ceaace111629d97d51b74e5acffefff8f746b7a2c9cce8d3ed45aa5f2e3"
+    },
+    {
       "id": "parallel-research-v1",
       "path": "datasets/project/parallel-research-v1.json",
       "kind": "paired_research_protocol",
@@ -864,6 +876,51 @@
       "task_count": 4,
       "description": "2独立问题一组，2组x2重复x2调度配置；真实主控和子Agent，16子调研。比较单worker和双worker，不是官方benchmark成绩。",
       "sha256": "d925f2358cb5dc806c28e9b06601980284f103b2758718f063bc8dac2adb04a0"
+    },
+    {
+      "id": "auto-research-short-v1",
+      "path": "datasets/project/auto-research-short-v1.json",
+      "kind": "autonomous_short_research_protocol",
+      "provenance": "public_source_fixed_subset",
+      "status": "prepared_screening",
+      "description": "Three short retrieval-method tasks; frozen before/after/direct Codex arms, 360 seconds and 400k total input+output tokens per attempt. Not full scientific effectiveness.",
+      "sha256": "26feca18a6bbd8b9cd319bde5c42705cf9dc5078eadccb3e604226aad9cfc241"
+    },
+    {
+      "id": "memory-learning-20261012",
+      "path": "datasets/project/memory-learning-20261012.json",
+      "kind": "paired_memory_qa",
+      "provenance": "self_authored_questions_external_references",
+      "status": "used",
+      "description": "20道后续研究任务；10条既有公开任务轨迹生成记忆，关键词历史与完整记忆两组各执行一次。题目与评分参考不参与经验提炼；独立于原320条。",
+      "external_benchmark": "none",
+      "sha256": "a3f3749fd3baf1631c6c93ab3b64205df3e86db0fd787cc9333d1bfb52f67cf3",
+      "case_count": 20,
+      "split": "frozen paired evaluation; same source family as learning histories, new questions rather than held-out domains"
+    },
+    {
+      "id": "intent-routing-v1",
+      "path": "datasets/intent_routing/v1.json",
+      "kind": "intent_routing",
+      "provenance": "massive_subset_and_project_authored_scenarios",
+      "status": "used",
+      "description": "252 bilingual cases mapped to seven project intents; 32 MASSIVE source utterances and 220 authored scenarios. Not official MASSIVE accuracy or independent human annotation; prediction-blind label corrections are recorded in the panel.",
+      "external_benchmark": "MASSIVE v1.1 (project taxonomy adaptation)",
+      "case_count": 252,
+      "split": "42 development and 210 test cases",
+      "sha256": "c42da70b8add31750ddd4b84b9d210fdf91c6ae65da75598562ad03ea8145275"
+    },
+    {
+      "id": "judge-calibration-v1",
+      "path": "datasets/judge_calibration/v1.json",
+      "kind": "judge_calibration",
+      "provenance": "project_authored_controlled_answers_external_references",
+      "status": "used",
+      "description": "80 controlled answers from 10 existing task families: 20 valid and 60 invalid. Labels checked against original passages before judge calls; not independent human annotation or calibration of the runtime verifier.",
+      "external_benchmark": "none",
+      "case_count": 80,
+      "split": "frozen calibration panel; correlated variants from 10 task families",
+      "sha256": "2b0b7fd5e54b53f9e417aaa3f9a84228aa1929897add34085ff764fb20218e5d"
     }
   ],
   "open_source_benchmark_registry": [

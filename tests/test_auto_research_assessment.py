@@ -121,6 +121,9 @@ class AssessmentAcceptanceTests(unittest.TestCase):
             for m in values:
                 m.update(valid=True, script_sha256='fixed', result={'config': {
                     'dataset': 'test', 'dataset_version': '1', 'split': 'dev', 'seeds': [13]}})
+            values.append({'name': 'verify', 'role': 'diagnostic', 'valid': True, 'metrics': {'examples': 2},
+                           'receipt': {'termination': 'completed', 'exit_code': 0},
+                           'implementation_checks': {'status': 'passed', 'case_count': 2}})
             tasks.append({'id': str(index), 'job_id': 'job', 'status': 'completed',
                           'request': {'plan': json.dumps({'version': 1})},
                           'state': {'after': {'evaluate.py': 'fixed'}, 'measurements': values}})
@@ -144,6 +147,48 @@ class AssessmentAcceptanceTests(unittest.TestCase):
             {'purpose': 'auto_research', 'messages': [message('assess', compact)],
              'response': {'kind': 'tool_call', 'tool_name': 'finish_research'}}]
         self.assertTrue(assessment_evidence(requests, tasks, [assessment], targets)['passed'])
+        # A current receipt must not pass by retaining only a numeric goal_met label.
+        for task in tasks:
+            task['state']['measurements'][-1]['valid'] = False
+        self.assertFalse(assessment_evidence(requests, tasks, [assessment], targets)['passed'])
+        assessment = auto.assess_results({'id': 'job', 'space_id': 'space'},
+            {'plans': [{'version': 1}], 'coding': ['0', '1', '2']}, {'targets': targets}, 1)
+        self.assertEqual(assessment['recommendation'], 'verify_implementation')
+        assessment['call_id'] = 'assess'
+        requests[0]['messages'] = [message(t['id'], {'id': t['id'], 'status': 'completed',
+            'measurements': t['state']['measurements']}) for t in tasks]
+        requests[1]['messages'] = [message('assess', assessment)]
+        self.assertTrue(assessment_evidence(requests, tasks, [assessment], targets)['passed'])
+
+    def test_missing_check_candidate_survives_pair_and_context_limits(self):
+        from types import SimpleNamespace
+        from research_agent.auto_research import AutoResearch
+        config = {'dataset': 'tiny', 'dataset_version': '1', 'split': 'dev', 'seeds': [1]}
+        def task(ident, checked, count):
+            values = [{'name': 'base', 'role': 'baseline', 'valid': True, 'metrics': {'score': .2},
+                       'script_sha256': 'fixed', 'result': {'config': config}}]
+            values += [{**values[0], 'name': str(i), 'role': 'candidate'} for i in range(count)]
+            if checked:
+                values.append({'name': 'check', 'role': 'diagnostic', 'valid': True,
+                    'receipt': {'termination': 'completed', 'exit_code': 0},
+                    'implementation_checks': {'status': 'passed', 'case_count': 2}})
+            return {'id': ident, 'job_id': 'job', 'status': 'completed',
+                    'request': {'plan': json.dumps({'version': 1})},
+                    'state': {'after': {'method.py': ident}, 'measurements': values}}
+        tasks = {'checked': task('checked', True, 60), 'missing': task('missing', False, 1)}
+        auto = AutoResearch(SimpleNamespace(store=None, coding=SimpleNamespace(get=lambda space, ident: tasks[ident])))
+        result = auto.assess_results({'id': 'job', 'space_id': 'space'},
+            {'plans': [{'version': 1}], 'coding': list(tasks)},
+            {'targets': [{'name': 'score', 'direction': 'higher', 'value': .8}]}, 1)
+        self.assertEqual(result['recommendation'], 'verify_implementation')
+        self.assertEqual(result['comparable_pairs'][0]['task_id'], 'missing')
+        compact = auto.context_result(result)
+        self.assertEqual(compact['recommendation'], 'verify_implementation')
+        self.assertEqual(compact['comparable_pairs'][0]['implementation_checks']['status'], 'missing')
+        feedback = auto.context_result({'measurements': [{'name': 'check', 'role': 'diagnostic', 'valid': False,
+            'metrics': {}, 'result': {'diagnostics': {'large': 'x' * 10000}},
+            'implementation_checks': {'status': 'failed', 'case_count': 2, 'failed_cases': ['df']}}]})
+        self.assertEqual(feedback['measurements'][0]['implementation_checks']['failed_cases'], ['df'])
 
     def test_frozen_scoring_distinguishes_partial_recall_from_hit_rate(self):
         from evals.audit_auto_research_results import score_rankings

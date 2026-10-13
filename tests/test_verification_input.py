@@ -28,6 +28,18 @@ class RecordingVerifier:
 
 
 class VerificationInputTests(unittest.TestCase):
+    def test_verification_keeps_cited_original_and_limits_extra_passages(self):
+        evidence = [Evidence('E1', 'S1', 'The trial used dataset Alpha.', 'local:D1-0')]
+        evidence += [Evidence(f'E{i}', f'S{i}', 'Unrelated background.', f'local:D{i}-0') for i in range(2, 40)]
+        evidence.append(Evidence('E40', 'S40', 'The dataset has a held-out test split.', 'local:D40-0'))
+        sources = [Source(e.source_id, 'Paper', 'https://example.org/' + e.source_id, '') for e in evidence]
+        model = RecordingVerifier(['E1'])
+        result = check_answer(model, 'Which dataset was used?', 'Dataset Alpha. [E1]', evidence, sources)
+        sent = {e['evidence_id'] for e in model.data['evidence']}
+        self.assertTrue(result['ready'])
+        self.assertTrue({'E1', 'E40'} <= sent)
+        self.assertLessEqual(len(sent), 7)
+
     def test_changed_source_scope_rechecks_cached_claims(self):
         evidence = [Evidence('E1', 'S1', 'The original describes the dataset.', 'local:D1-0')]
         sources = [Source('S1', 'Paper', 'https://example.org/paper', '')]

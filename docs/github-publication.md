@@ -9,7 +9,9 @@
 - `docs/` 中的 Markdown 文档，包括 `docs/tutorial/` 教程和 [docs/optimization-history/](optimization-history/README.md) 优化迭代历程（阶段改动、结果摘要、失败、提交索引与原始报告指纹）。
 - 完整 `datasets/`，包括任务、标签、语料、来源与许可证说明及 `manifest.json`。导出不改写数据集，保留原始 SHA-256；`.gitattributes` 禁止 Git 转换数据集的换行符。
 - `tests/` 和 `fixtures/`。两组原本依赖报告的回归测试改用 `tests/fixtures/` 中的小型固定输入。
+- 路由与裁判回归使用的两份固定复算输入：`docs/research/intent-routing-results-20261012.json`、`docs/research/llm-judge-results-20261013.json`；仅白名单保留这两份文件，不放开其他运行结果 JSON。
 - `scripts/export_source.py` 的 `CORE_EVALS` 列出的核心脚本：离线验收、V1/V2、检索、Agent / 证据问答、Auto Research、A-MEM、并行研究及其评分、审计依赖。
+- 新增的意图路由、裁判校准、记忆学习与 QASPER 记忆评测入口也在该白名单内。在线记忆实验仍需相应模型、检索权重及脚本指定的历史输入；导出源码不附带这些本地运行档案。
 
 ## 排除什么
 

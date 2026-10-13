@@ -10,6 +10,8 @@ ROOT_FILES = set("""
 requirements.txt requirements-retrieval.lock.txt setup_retrieval.py
 stage1_agent.py start-researchagent.ps1 scripts/export_source.py
 docs/_config.yml docs/_layouts/guide.html docs/assets/guide.css
+docs/research/intent-routing-results-20261012.json
+docs/research/llm-judge-results-20261013.json
 """.split())
 SOURCE_DIRS = {"research_agent", "web", "fixtures", "datasets", "tests", ".github"}
 # Keep CI, research/evidence/agent benchmarks and all their shared test dependencies.
@@ -21,6 +23,10 @@ run_h2_eval run_h3_eval run_harness_strategies run_verification_recovery
 run_agent_benchmark run_mixed_benchmark summarize_product_benchmark
 run_evidence_qa_acceptance run_auto_research_acceptance run_amem_acceptance
 run_parallel_research_acceptance prepare_locomo_case
+run_auto_research_decisions prepare_short_research run_short_research
+short_research_task report_short_research
+run_intent_routing_eval run_judge_calibration
+run_memory_learning_benchmark run_qasper_memory
 """.split())
 
 
