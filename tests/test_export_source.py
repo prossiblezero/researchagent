@@ -13,14 +13,24 @@ class SourceExportTests(unittest.TestCase):
             root = Path(temporary) / "source"
             root.mkdir()
             subprocess.run(["git", "init", "-q", str(root)], check=True)
-            keep = {"README.md", ".env.example", "datasets/tasks.json",
+            keep = {"requirements-router.txt", "config/decision_router.json", "config/decision_router_c1_4b.json",
+                    "evals/build_intent_routing_v2.py", "evals/build_intent_routing_v3.py", "evals/calibrate_decision_router.py",
+                    "evals/train_decision_router.py", "evals/run_decision_router_eval.py",
+                    "evals/report_decision_router_v3.py",
+                    "README.md", ".env.example", "datasets/tasks.json",
                     "tests/fixtures/input.json", "evals/run_all.py", "docs/tutorial/README.md",
                     "docs/index.md", "docs/_config.yml", "docs/_layouts/guide.html",
                     "docs/assets/guide.css",
                     "evals/run_intent_routing_eval.py", "evals/run_judge_calibration.py",
                     "evals/run_memory_learning_benchmark.py", "evals/run_qasper_memory.py",
                     "docs/research/intent-routing-results-20261012.json",
-                    "docs/research/llm-judge-results-20261013.json"}
+                    "docs/research/llm-judge-results-20261013.json",
+                    "docs/research/decision-router-results-20261018.json", "docs/research/decision-router-v3-results-20261018.json",
+                    "docs/research/decision-router-results-20261018-assets/training.png",
+                    "docs/research/decision-router-results-20261018-assets/training-plot-data.json"}
+            for group in ('B', 'C1', 'D', 'dev-C1', 'dev-D'):
+                keep.update(f'docs/research/decision-router-results-20261018-assets/{group}/{name}'
+                            for name in ('calibration.png', 'calibration-plot-data.json'))
             exclude = {".env", "evals/reports/run.json", "evals/archives/old.py",
                        "evals/live_report.json", "evals/build_control_report.py",
                        "docs/snapshot.zip", "data/state.db", "traces/session.jsonl",

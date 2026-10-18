@@ -65,3 +65,9 @@ A-MEM/LoCoMo开发与独立留出各40题的基线、MMR、Top10三组测量均�
 2026-10-02 修正后测量恢复：`project/auto-research-amem-corrected-measurement-v1/` 使用同40题/788轮记忆，冻结已通过数值检查的MMR修正，不引入旧预测。原r6因结果路径和SSL故障未完成，失败保留；新阶段只测量/解读，0编码，非新的方法发现或benchmark题量。
 
 2026-10-02 独立留出：`project/auto-research-amem-holdout-v1/` 从既有open/locomo划分原样导出conv-41/42共40题、1292轮，不新增题量。开发r7完整比较后固定正确MMR与官方baseline；终验空缓存构建同一共享记忆，标签宿主私有，0编码、不调参，全部指标与失败公开留档。
+
+
+2026-10-17 新增决策路由 v2：`intent_routing/v2.json`，{'train_v2': 1400, 'dev_v2': 70, 'test_v2': 140}；独立代理编写与复核，非人工标注。SHA-256：`ceacce8f793bb273191d9c83a7c6f7224cd848b45382af3adaf07e96d09936a9`。v1 仅作回归；v2 test 每组只运行一次。
+
+
+2026-10-18 新增独立保留集 v3：`intent_routing/v3.json`，只含 test_v3 160 题（常规105、自动研究边界35、口语20）。独立盲态代理编写与复核，非人工标注；相对 v1/v2 全集去重，scope 在每类内均衡。SHA-256：`a28b686618556f9fb6cb8bc51e970c729ad7e0e35cf0d5da697a558dfea86062`。每个预声明组只运行一次。

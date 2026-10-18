@@ -11,6 +11,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from .contracts import ModelDecision
+from .decision_router import select_router
 from .retrieval import Retriever
 from .memory import Memory
 from .research_records import ResearchRecords
@@ -266,7 +267,7 @@ class Workbench:
                         db.execute('INSERT INTO conversation_events(conversation_id,message_id,kind,payload,created_at) VALUES(?,?,?,?,?)',
                             (conversation_id,message['id'],'model_usage',json.dumps(record,ensure_ascii=False),now_iso()))
                 model.usage_callback=route_usage
-                route = route_intent(model, self.sessions.history_for_turn(space_id,conversation_id,message['turn_seq']), space, search_scope)
+                route = select_router(model, self.sessions.history_for_turn(space_id,conversation_id,message['turn_seq']), space, search_scope, on_decision=lambda event: trace.emit("intent_decision", **event))
                 trace.emit("intent_routed", search_scope=search_scope, **route)
                 if self.stop.is_set():
                     raise Conflict("服务正在关闭，未启动任务")
@@ -580,7 +581,12 @@ class Workbench:
                 space=self.store.space(job['space_id']);space['memory_snapshot']=self.memory.snapshot(job['space_id'],job['conversation_id'],turn_seq=job['turn_seq'])
                 space['local_material_count']=len(self.library.list(job['space_id']))
                 self.store.progress(job['id'],'routing','正在理解问题，判断是否需要查阅资料','')
-                route=route_intent(model,self.sessions.history_for_turn(job['space_id'],job['conversation_id'],job['turn_seq']),space,job['search_scope'])
+                def route_decision(event):
+                    self.sessions.event(job,'intent_decision',event)
+                    route_id='intent-pending-'+job['id']
+                    with closing(TraceWriter(self.trace_dir/(route_id+'.jsonl'),route_id,append=True)) as route_trace:
+                        route_trace.emit('intent_decision', **event)
+                route=select_router(model,self.sessions.history_for_turn(job['space_id'],job['conversation_id'],job['turn_seq']),space,job['search_scope'], on_decision=route_decision)
                 if route['intent'] == 'AUTO_RESEARCH':
                     payload = json.loads(job['payload'])
                     if not payload.get('execution_available'):

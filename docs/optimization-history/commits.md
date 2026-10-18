@@ -177,3 +177,32 @@
 | 公开 | [c630d7d](https://github.com/prossiblezero/researchagent/commit/c630d7d8601dc8b15d8424b4b3c8c0dcbe5ae973) | 迁移前源码检查点，标签 `pre-fastapi-20261009`。 |
 
 迁移版本的公开提交以[本阶段记录的 Git 历史](https://github.com/prossiblezero/researchagent/commits/main/docs/optimization-history/11-fastapi-service.md)为准。
+
+
+## 2026-10-17—10-18：决策模型式意图路由
+
+此处续记[第 13 阶段](13-decision-router.md)的本地实现与评测提交。本地 SHA 不是公开仓库中的可检出提交；公开同步提交以 GitHub 记录为准。
+
+### 2026-10-17
+
+| 时间 | 本地提交 SHA | 当时保存的变更摘要 |
+| --- | --- | --- |
+| 23:14:06 | `4803a601e224692273a06d7ebe6a9c57d44d58ab` | chore: checkpoint before decision router implementation |
+| 23:36:10 | `5f7b8aec6760abf301ef5b99f0800fb1a175df32` | wip: checkpoint decision router and evaluation tooling before data freeze |
+| 23:41:40 | `bf73cd9485cccde4fd397215a170014d0acdb7fc` | feat: freeze independently reviewed v2 intent routing dataset |
+| 23:53:23 | `fc91c41f4b0c1008f44070865bb14d90a204612b` | feat: calibrate router on frozen dev data and add reproducible study reports |
+
+### 2026-10-18
+
+| 时间 | 本地提交 SHA | 当时保存的变更摘要 |
+| --- | --- | --- |
+| 00:14:52 | `8a9fe4f525a150df08e3b4b4507c937e64fa7080` | fix: freeze router evaluation identities and retain complete study artifacts |
+| 00:30:16 | `7bc6673b1c03f743fae12b4ae737643cdbbd1565` | fix: preserve router calibration and failure contracts under reuse |
+| 00:47:50 | `e7da0d0e6476c11451195febec22eed6b52c6334` | feat: freeze dev-selected LoRA cascade before held-out evaluation |
+| 01:19:35 | `fc84227a9058d7fdd0511eb744161df652cfb2e2` | docs: record first decision router study and validation results |
+| 02:07:30 | `730073f57290735a71901f3830d3b1e4e94b77c5` | docs: checkpoint decision router follow-up plan before implementation |
+| 02:17:42 | `6ef0bef31c7be208735278602511589c5c6a7b97` | fix: require full LLM confirmation for cascade AUTO research |
+| 02:31:45 | `b8c40caee1d3223eeb09aef212722b837bc05caa` | data: freeze independently reviewed 160-case intent routing v3 holdout |
+| 02:47:43 | `f11fbb96c8f01de2a0163285275f26315ec13040` | feat(router): freeze 4B dev selection and v3 evaluation protocol |
+| 03:06:13 | `275aed1f7f2217d85620445f52d676ccdf2ab30d` | docs(router): preserve v3 first-run results and paired comparison |
+| 03:11:52 | `adbcec184853b4d0bda7ec80ca799bb150d2966e` | docs(router): record completed v3 export acceptance |

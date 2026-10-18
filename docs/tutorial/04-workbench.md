@@ -40,6 +40,8 @@ web/app.js 提交消息
 
 分类使用严格 JSON 合同：`intent`、`reply`、`brief`、`assumptions`、`effort`。格式纠正最多一次，已识别意图不能借纠正扩大工具权限。见 [workbench.py](../../research_agent/workbench.py) 的 `route_intent()`、`_parse_route()`。
 
+2026-10-18 起，两处路由调用都经过 `select_router()`。默认 `ROUTER_MODE=llm` 时行为与上面完全相同；设为 `cascade` 时，先由本地小模型给七类意图打分，高置信且无需生成文字的意图直接入队，低置信和 AUTO_RESEARCH 仍交给 `route_intent()`。设计、取舍与评测见[第 12 章专题](12-decision-router.md)。
+
 ## 数据模型：为什么不能只用一张聊天表？
 
 ```mermaid

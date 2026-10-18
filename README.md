@@ -20,6 +20,7 @@ ResearchAgent 将检索资料、阅读原文、整理证据、提出方案和运
 | **研究成果管理** | 保存报告版本、证据关系、创新假设、方案和实验记录，让结论与依据保持关联。 |
 | **Auto Research** | 研究模型选择调研、保存方案、委派 Codex、运行实验或结束；宿主反馈实际测量、失败信息与用量。 |
 | **双路并行调研** | 将两个独立子问题交给各自拥有工具循环、证据和检查点的研究 Agent，再由主控汇总；编码和实验仍串行执行。 |
+| **意图路由** | 七类意图路由；可选本地 Qwen3-0.6B 选项打分加 LLM 确认的级联，高置信常规请求直接入队，低置信与自动研究交 LLM 判定。默认仍为 LLM 路由。 |
 | **可观测与恢复** | 展示实时任务进度，保存 JSONL Trace、模型用量和执行检查点；支持取消、重试及满足条件的中断续跑。 |
 
 例如，你可以提出：
@@ -154,6 +155,8 @@ Remove-Item Env:RETRIEVAL_MODE -ErrorAction SilentlyContinue
 
 默认面向本机使用，HTTP 服务没有多用户登录体系。`.env`、数据库、Trace 和实验工作区留在本地，不提交到仓库。
 
+可选的本地决策路由使用 Qwen3-0.6B 完整选项打分、LoRA 与开发集置信校准。默认 `ROUTER_MODE=llm`；部署模型后可显式启用级联。安装与复现见[决策路由说明](docs/research/decision-router.md)，评测见[首次冻结实验报告](docs/research/decision-router-results-20261018.md)与[独立 v3 后续实验](docs/research/decision-router-v3-results-20261018.md)。
+
 ## 使用 Auto Research
 
 Auto Research 适用于需要“调研 → 实现 → 实验 → 根据结果调整”的任务。一次典型流程是：
@@ -219,6 +222,7 @@ researchagent/
 | 原文证据问答 | [`run_evidence_qa_acceptance.py`](evals/run_evidence_qa_acceptance.py) | 检索命中、实际阅读、引用与最终交付。 |
 | 自动研究与记忆实验 | [`run_auto_research_acceptance.py`](evals/run_auto_research_acceptance.py)、[`run_amem_acceptance.py`](evals/run_amem_acceptance.py) | 方案、执行、宿主测量与反馈闭环。 |
 | 并行研究 | [`run_parallel_research_acceptance.py`](evals/run_parallel_research_acceptance.py) | 单 / 双 worker 的调度、交付质量与成本对照。 |
+| 意图路由 | [`run_intent_routing_eval.py`](evals/run_intent_routing_eval.py)、[`run_decision_router_eval.py`](evals/run_decision_router_eval.py) | 七类准确率、自动研究误触发、校准误差、回退率、时延与远程调用；v2/v3 保留集先冻结后运行。 |
 
 在 PowerShell 中运行离线检查：
 
@@ -253,6 +257,7 @@ PYTHONUTF8=1 OFFLINE_MODE=1 RETRIEVAL_MODE=lexical .venv/bin/python evals/run_al
 | RAG、记忆与上下文如何协作 | [检索与原文回读](docs/tutorial/05-retrieval.md)、[记忆与上下文](docs/tutorial/06-memory-context.md) |
 | 如何把研究扩展为编码实验 | [Auto Research](docs/tutorial/08-auto-research.md)、[并行研究](docs/tutorial/09-parallel-research.md) |
 | 如何评价系统、介绍工程设计 | [评测口径](docs/tutorial/10-evaluation.md)、[面试讲解与演示](docs/tutorial/11-interview.md) |
+| 小模型怎样分担意图路由 | [决策模型式意图路由](docs/tutorial/12-decision-router.md)、[优化历程第 13 阶段](docs/optimization-history/13-decision-router.md) |
 
 ## 能力边界
 

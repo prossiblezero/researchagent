@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "calibrated": true,
+  "model": "Qwen3-0.6B",
+  "model_path": "data/models/Qwen3-0.6B",
+  "adapter_path": "data/models/decision-router-20261017/lr-0.0002/step-350/adapter",
+  "weights_sha256": "cc086dedf0733334d723f28ef64b5624c32926e1814c283ae2128523fbe77c5f",
+  "adapter_sha256": "c7aaea59eb477196433500f60465118d62c19eaad7692c7c84705f6b071166f2",
+  "prompt_sha256": "73ec56a7572c6a166cc55a7f470603a27e726d9f37f4183b169cc91d9a5b63a2",
+  "temperature": 1.9505786155883398,
+  "order": "average",
+  "max_chars": 6000,
+  "score_timeout_seconds": 30,
+  "tau_intent": 0.0,
+  "tau_margin": 0.8790325686725332,
+  "tau_auto": 0.9731674557425696,
+  "reject_all": false,
+  "calibration_split": "dev_v2",
+  "panel_sha256": "ceacce8f793bb273191d9c83a7c6f7224cd848b45382af3adaf07e96d09936a9",
+  "calibration_run": "D:\\project\\researchagent\\evals\\reports\\decision-router-20261017\\dev-D-average",
+  "calibration_results_sha256": "a1eb8e542793318ef2690e25dd4e83ce346ef61de3e5b7c91b7d8d2a0ea245b1",
+  "auto_research_policy": "llm_confirm"
+}

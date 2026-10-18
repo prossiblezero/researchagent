@@ -83,3 +83,20 @@
 | `data/fastapi-migration-20261009/http-regression-r2.log` | 1294 | `ecad7bd2b5977f1f37b12e62bb3952af79a4f5c57f58e6bc3c9e2c648550dd8f` |
 | `data/fastapi-migration-20261009/http-regression-r3.log` | 2881 | `6d76a4dc93532c9c5ed0947866caf1348f5c906271e1bdb8d709e55677848cb5` |
 | `data/fastapi-migration-20261009/http-regression-r4.log` | 362 | `627d712247d0f05a7ff0611e93ec0ac47cd381ad5853fcf6734bacf9bd7d674c` |
+
+
+## 2026-10-18：决策模型式意图路由指纹
+
+[第 13 阶段](13-decision-router.md)的设计、数据、配置与结果。前八项随源码公开；导出验收日志是本地档案，未上传。模型权重、LoRA adapter 与逐组运行目录（`data/models/`、`evals/reports/decision-router-*`）只保存在本地。
+
+| 文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| `datasets/intent_routing/v2.json` | 3273591 | `ceacce8f793bb273191d9c83a7c6f7224cd848b45382af3adaf07e96d09936a9` |
+| `datasets/intent_routing/v3.json` | 248338 | `a28b686618556f9fb6cb8bc51e970c729ad7e0e35cf0d5da697a558dfea86062` |
+| `config/decision_router.json` | 1056 | `e132757383b2424cbf4efffde864a25362e8039d674afc1db2a3f56cbe52189e` |
+| `config/decision_router_c1_4b.json` | 907 | `b426f01aa91942c431ac690cdae9874a6411f89b8ee912ae86fc0d69aba92342` |
+| `docs/research/decision-router-results-20261018.md` | 15859 | `f4ec5dce0a33b79f4cc14b694fc2e0a703d17619aa77b22ecf11f311c0125770` |
+| `docs/research/decision-router-results-20261018.json` | 8397612 | `232697a206931a37156ee352994d2a206fcbc179201a81a913622ecac0218aa8` |
+| `docs/research/decision-router-v3-results-20261018.md` | 7881 | `39fba75492061205163776b52d8ddd7dafa2fa8657fe4dcc45049f3f31f0e4e6` |
+| `docs/research/decision-router-v3-results-20261018.json` | 3908210 | `c71354392b9bf454a0e826b463ac615dc9c05dcb9faa6ec2f197ea225f858634` |
+| `data/decision-router-v3-validation/export-offline.log` | 3579 | `4a69659f3f402375e765d83d61885a086b02313c9d92700cc70aae688f22c350` |

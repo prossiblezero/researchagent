@@ -8,6 +8,8 @@
 
 项目已经有 Stage 1–7、H1–H3、V1–V4 等多条历史文档线。本教程按理解依赖重新组织：先跑最小循环，再看工作台如何保存任务，最后进入自动研究和实测评估。章节编号是阅读顺序，不表示仓库存在对应的独立历史版本。
 
+想了解 2026-10-18 补充的意图路由升级，直接读[第 12 章专题](12-decision-router.md)：本地小模型对七类意图做 log-prob 打分并经 LoRA 微调，低置信与自动研究请求交给 LLM 确认，以及三轮冻结评测的设计。
+
 想集中理解 Auto Research，可以先读[学习手记第十节](../index.md#auto-research)的设计故事和[两项实验案例](../index.md#auto-research-results)，再读[第 08 章](08-auto-research.md)的开源机制映射、接口和源码练习。
 
 ## 先用一句话认识项目
@@ -59,6 +61,7 @@ flowchart LR
 | [09 有限 Multi-Agent 并行](09-parallel-research.md) | 原子委派、独立上下文、等待汇合 | `auto_research.py`、`workbench_store.py` |
 | [10 评测与反馈策略](10-evaluation.md) | 每个数字都要有分母、条件和证据 | `evals/`、`datasets/`、`strategies.py` |
 | [11 面试讲解与演示](11-interview.md) | 用问题、机制、证据、取舍组织表达 | 上述模块与历史报告 |
+| [12 专题：决策模型式意图路由](12-decision-router.md) | 小模型做选择、大模型做生成，按置信度回退 | `decision_router.py`、`workbench.py` |
 
 ## 学习时始终追踪这条主线
 

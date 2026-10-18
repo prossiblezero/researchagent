@@ -7,11 +7,25 @@ import subprocess
 
 ROOT_FILES = set("""
 .dockerignore .env.example .gitattributes .gitignore Dockerfile README.md main.py server.py
-requirements.txt requirements-retrieval.lock.txt setup_retrieval.py
+requirements.txt requirements-retrieval.lock.txt requirements-router.txt config/decision_router.json config/decision_router_c1_4b.json setup_retrieval.py
 stage1_agent.py start-researchagent.ps1 scripts/export_source.py
 docs/_config.yml docs/_layouts/guide.html docs/assets/guide.css
 docs/research/intent-routing-results-20261012.json
 docs/research/llm-judge-results-20261013.json
+docs/research/decision-router-results-20261018.json
+docs/research/decision-router-v3-results-20261018.json
+docs/research/decision-router-results-20261018-assets/training.png
+docs/research/decision-router-results-20261018-assets/training-plot-data.json
+docs/research/decision-router-results-20261018-assets/B/calibration.png
+docs/research/decision-router-results-20261018-assets/B/calibration-plot-data.json
+docs/research/decision-router-results-20261018-assets/C1/calibration.png
+docs/research/decision-router-results-20261018-assets/C1/calibration-plot-data.json
+docs/research/decision-router-results-20261018-assets/D/calibration.png
+docs/research/decision-router-results-20261018-assets/D/calibration-plot-data.json
+docs/research/decision-router-results-20261018-assets/dev-C1/calibration.png
+docs/research/decision-router-results-20261018-assets/dev-C1/calibration-plot-data.json
+docs/research/decision-router-results-20261018-assets/dev-D/calibration.png
+docs/research/decision-router-results-20261018-assets/dev-D/calibration-plot-data.json
 """.split())
 SOURCE_DIRS = {"research_agent", "web", "fixtures", "datasets", "tests", ".github"}
 # Keep CI, research/evidence/agent benchmarks and all their shared test dependencies.
@@ -26,6 +40,7 @@ run_parallel_research_acceptance prepare_locomo_case
 run_auto_research_decisions prepare_short_research run_short_research
 short_research_task report_short_research
 run_intent_routing_eval run_judge_calibration
+build_intent_routing_v2 build_intent_routing_v3 calibrate_decision_router train_decision_router run_decision_router_eval report_decision_router_v3
 run_memory_learning_benchmark run_qasper_memory
 """.split())
 

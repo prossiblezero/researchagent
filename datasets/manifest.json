@@ -921,6 +921,45 @@
       "case_count": 80,
       "split": "frozen calibration panel; correlated variants from 10 task families",
       "sha256": "2b0b7fd5e54b53f9e417aaa3f9a84228aa1929897add34085ff764fb20218e5d"
+    },
+    {
+      "id": "intent-routing-v2",
+      "path": "datasets/intent_routing/v2.json",
+      "kind": "intent_routing",
+      "provenance": "independent_llm_agents_plus_unused_massive_subset",
+      "status": "frozen",
+      "sha256": "ceacce8f793bb273191d9c83a7c6f7224cd848b45382af3adaf07e96d09936a9",
+      "case_count": 1610,
+      "split": {
+        "train_v2": 1400,
+        "dev_v2": 70,
+        "test_v2": 140
+      }
+    },
+    {
+      "id": "decision-router-qwen3-tokenization",
+      "path": "datasets/intent_routing/qwen3-tokenization.json",
+      "kind": "tokenizer_contract",
+      "provenance": "measured_pinned_public_tokenizer",
+      "status": "frozen",
+      "sha256": "9632a728c4d81427142637679802b034d7c7e54548c5969cb705d914ffb1fef2"
+    },
+    {
+      "id": "intent-routing-v3",
+      "path": "datasets/intent_routing/v3.json",
+      "kind": "intent_routing",
+      "provenance": "independent_blind_llm_agents_not_human_annotation",
+      "status": "frozen",
+      "sha256": "a28b686618556f9fb6cb8bc51e970c729ad7e0e35cf0d5da697a558dfea86062",
+      "case_count": 160,
+      "split": {
+        "test_v3": 160
+      },
+      "parts": {
+        "regular": 105,
+        "auto_boundary": 35,
+        "colloquial": 20
+      }
     }
   ],
   "open_source_benchmark_registry": [
